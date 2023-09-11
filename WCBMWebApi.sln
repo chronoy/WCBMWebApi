@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33829.357
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Models", "Models\Models.csproj", "{A1B578ED-1A04-4FC2-A076-C664289E1DB9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Models", "Models\Models.csproj", "{A1B578ED-1A04-4FC2-A076-C664289E1DB9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "Services\Services.csproj", "{A1181FE5-F30B-412A-810C-1B893E4A4F66}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services", "Services\Services.csproj", "{A1181FE5-F30B-412A-810C-1B893E4A4F66}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Respository", "Respository\Respository.csproj", "{D0189CF8-EE74-4536-AABB-6B7EBB7F1D3C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Respository", "Respository\Respository.csproj", "{D0189CF8-EE74-4536-AABB-6B7EBB7F1D3C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CBMWebApi", "CBMWebApi\CBMWebApi.csproj", "{D2B92FE8-72D3-4478-A195-C405AB157341}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CBMWebApi", "CBMWebApi\CBMWebApi.csproj", "{D2B92FE8-72D3-4478-A195-C405AB157341}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CBMCenterApi", "CBMCenterApi\CBMCenterApi.csproj", "{98CCEF25-966D-4C4F-A368-2810BF5924DC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{D2B92FE8-72D3-4478-A195-C405AB157341}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D2B92FE8-72D3-4478-A195-C405AB157341}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D2B92FE8-72D3-4478-A195-C405AB157341}.Release|Any CPU.Build.0 = Release|Any CPU
+		{98CCEF25-966D-4C4F-A368-2810BF5924DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{98CCEF25-966D-4C4F-A368-2810BF5924DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{98CCEF25-966D-4C4F-A368-2810BF5924DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{98CCEF25-966D-4C4F-A368-2810BF5924DC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
