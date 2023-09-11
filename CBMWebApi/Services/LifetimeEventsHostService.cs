@@ -1,16 +1,20 @@
 ﻿
 
+using Models;
 namespace Services.Web
 {
     public class LifetimeEventsHostService : IHostedService
     {
         private readonly ILogger _logger;
         private readonly IHostApplicationLifetime _appLifetime;
+        private readonly IPDBService _pdbService;
         public LifetimeEventsHostService(ILogger<LifetimeEventsHostService> logger,
-                                         IHostApplicationLifetime appLifeTime)
+                                         IHostApplicationLifetime appLifeTime,
+                                         IPDBService pdbService)
         {
             _logger = logger;
             _appLifetime = appLifeTime;
+            _pdbService = pdbService;   
         }
 
         public Task StartAsync(CancellationToken cancellationToken)
@@ -29,6 +33,7 @@ namespace Services.Web
         public void OnStarted()
         {
             //Start a backgroud service
+            List<PDBTag> tags = _pdbService.GetAllPDBTags1();
             _logger.LogInformation("OnStarted has been called");
         }
         public void OnStopping()
