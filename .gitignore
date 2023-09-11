@@ -7,9 +7,9 @@
 /Models/obj
 /Respository/obj
 /Services/obj
-/CBMCenterApi/obj/Debug/net6.0
-/CBMCenterApi/bin/Debug/net6.0
-/Models/bin/Debug/net6.0
-/Respository/bin/Debug/net6.0
-/Services/bin/Debug/net6.0
 /CBMCenterApi/obj
+/CBMCenterApi/bin
+/CBMWebApi/bin
+/Models/bin
+/Respository/bin
+/Services/bin
