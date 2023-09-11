@@ -7,9 +7,18 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Models
 {
-    [Keyless]
+    [Table("tTag")]
     public class Tag
     {
+        [Key]
+        public int ID { get; set; } 
+        public string Name { get; set; }
+        public string Address { get; set; }
+        public int StationDeviceCollectID { get; set; }
+    }
+    public class PDBTag
+    {
+        [Key]
         public string Name { get; set; }
         public string Address { get; set; }
         public string Value { get; set; } = "????";

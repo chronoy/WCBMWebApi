@@ -9,6 +9,7 @@ namespace Respository
 {
     public interface ICheckRespository
     {
-        public IEnumerable<StationEquipmentCheckData> GetStationEquipmentCheckReport(string reportCategory, int equipmentID, string startDateTime, string endDateTime);
+        public List<StationEquipmentCheckData> GetStationEquipmentCheckReport(string reportCategory, int equipmentID, string startDateTime, string endDateTime);
+        public List<StationLoopCheckData> GetStationLoopCheckReport(string reportCategory, int loopID, string startDateTime, string endDateTime);
     }
 }

@@ -12,12 +12,12 @@ namespace Models
         public int ID { get; set; }
         public string Name { get; set; }
         public string AbbrName { get; set; }
-        public string Phone { get; set; }
-        public string Address { get; set; }
-        public string PostalCode { get; set; }
-        public string Description { get; set; }
+        public string? Phone { get; set; }
+        public string? Address { get; set; }
+        public string? PostalCode { get; set; }
+        public string? Description { get; set; }
         public int AreaID { get; set; }
-        public int CollectID { get; set; }
+        public int CollectorID { get; set; }
         [NotMapped]
         public List<StationLoop> Loops { get; set; } = new List<StationLoop>();
     }

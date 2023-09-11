@@ -12,7 +12,7 @@ namespace Models
         [Key]
         [Column("ID")]
         public int HisID { get; set; }
-        public string DateTime { get; set; }
+        public DateTime DateTime { get; set; }
         public int EquipmentID { get; set; }
 
         [Column("CheckDataStatus")]
@@ -40,14 +40,21 @@ namespace Models
 
     [Table("tHistoricalCheckDataABBGC")]
     public class ABBGCCheckData : StationEquipmentCheckData
-    { 
+    {
+        [Column("GCID")]
+        public int EquipmentID { get; set; }
+
     }
     [Table("tHistoricalCheckDataDanielGC")]
     public class DanielGCCheckData : StationEquipmentCheckData
     {
+        [Column("GCID")]
+        public int EquipmentID { get; set; }
     }
     [Table("tHistoricalCheckDataElsterGC")]
     public class ElsterGCCheckData : StationEquipmentCheckData
     {
+        [Column("GCID")]
+        public int EquipmentID { get; set; }
     }
 }

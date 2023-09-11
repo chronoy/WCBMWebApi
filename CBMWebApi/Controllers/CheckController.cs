@@ -50,10 +50,16 @@ namespace CBMWebApi.Controllers
         {
         }
         [HttpPost]
-        public async Task<IEnumerable<StationEquipmentCheckData>> CheckReport([FromForm] string vos)
+        public async Task<List<StationEquipmentCheckData>> EquipmentCheckReport([FromForm] string reportCategory)
         {
 
             return await _service.GetStationEquipmentCheckReport("",1,"",""); 
+        }
+        [HttpPost]
+        public async Task<List<StationLoopCheckData>> LoopCheckReport([FromForm] string reportCategory)
+        {
+
+            return await _service.GetStationLoopCheckReport("", 1, "", "");
         }
     }
 }

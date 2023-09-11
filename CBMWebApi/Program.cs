@@ -1,3 +1,9 @@
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Respository;
+using Services;
+using Services.Web;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -6,6 +12,12 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddDbContextPool<SQLServerDBContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("SQLConnection")));
+builder.Services.AddScoped<ICheckRespository, CheckRespository>();
+builder.Services.AddScoped<ICheckService, CheckService>();
+//builder.Services.AddSingleton<IPDBRespository, PDBRespository>();
+builder.Services.AddSingleton<IPDBService, PDBService>();
+builder.Services.AddHostedService<LifetimeEventsHostService>();
 
 var app = builder.Build();
 

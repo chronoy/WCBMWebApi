@@ -15,7 +15,7 @@ namespace Models
         [Key]
         [Column("ID")]
         public int HisID { get; set; }
-        public string DateTime { get; set; }
+        public DateTime DateTime { get; set; }
         public int LoopID { get; set; }
 
         [Column("CheckDataStatus")]
@@ -39,5 +39,57 @@ namespace Models
         public string CheckDataStatus { get; set; }
         [NotMapped]
         public string ReportMode { get; set; }
+    }
+    //Daniel
+    [Table("tHistoricalCheckDataDanielVOS")]
+    public class DanielVOSCheckData : StationLoopCheckData
+    {
+    }
+    [Table("tHistoricalCheckDataDanielFR")]
+    public class DanielFRCheckData : StationLoopCheckData
+    {
+    }
+    [Table("tHistoricalCheckDataDanielLoop")]
+    public class DanielLoopCheckData : StationLoopCheckData
+    {
+    }
+    //Elster
+    [Table("tHistoricalCheckDataElsterVOS")]
+    public class ElsterVOSCheckData : StationLoopCheckData
+    {
+    }
+    [Table("tHistoricalCheckDataElsterFR")]
+    public class ElsterFRCheckData : StationLoopCheckData
+    {
+    }
+    [Table("tHistoricalCheckDataElsterLoop")]
+    public class ElsterLoopCheckData : StationLoopCheckData
+    {
+    }
+    //Sick
+    [Table("tHistoricalCheckDataSickVOS")]
+    public class SickVOSCheckData : StationLoopCheckData
+    {
+    }
+    [Table("tHistoricalCheckDataSickFR")]
+    public class SickFRCheckData : StationLoopCheckData
+    {
+    }
+    [Table("tHistoricalCheckDataSickLoop")]
+    public class SickLoopCheckData : StationLoopCheckData
+    {
+    }
+    //Weise
+    [Table("tHistoricalCheckDataWeiseVOS")]
+    public class WeiseVOSCheckData : StationLoopCheckData
+    {
+    }
+    [Table("tHistoricalCheckDataWeiseFR")]
+    public class WeiseFRCheckData : StationLoopCheckData
+    {
+    }
+    [Table("tHistoricalCheckDataWeiseLoop")]
+    public class WeiseLoopCheckData : StationLoopCheckData
+    {
     }
 }

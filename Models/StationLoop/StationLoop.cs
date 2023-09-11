@@ -16,8 +16,6 @@ namespace Models
         public int EquipmentCategoryID { get; set; }
         public int StationID { get; set; }
         public int LineID { get; set; }
-        public string BrandName { get; set; }
-
  
         public string Caliber { get; set; }
         public string Customer { get; set; }

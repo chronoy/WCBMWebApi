@@ -9,6 +9,7 @@ namespace Services
 {
     public interface ICheckService
     {
-        public Task<IEnumerable<StationEquipmentCheckData>> GetStationEquipmentCheckReport(string reportCategory, int equipmentID, string startDateTime, string endDateTime);
+        public Task<List<StationEquipmentCheckData>> GetStationEquipmentCheckReport(string reportCategory, int equipmentID, string startDateTime, string endDateTime);
+        public Task<List<StationLoopCheckData>> GetStationLoopCheckReport(string reportCategory, int equipmentID, string startDateTime, string endDateTime);
     }
 }
