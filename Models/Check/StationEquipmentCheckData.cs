@@ -25,10 +25,6 @@ namespace Models
         [NotMapped]
         public string StationName { get; set; }
         [NotMapped]
-        public string LineName { get; set; }
-        [NotMapped]
-        public string Customer { get; set; }
-        [NotMapped]
         public string Manufacturer { get; set; }
         [NotMapped]
         public string Model { get; set; }

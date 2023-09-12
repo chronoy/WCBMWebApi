@@ -92,4 +92,17 @@ namespace Models
     public class WeiseLoopCheckData : StationLoopCheckData
     {
     }
+    //RMG
+    [Table("tHistoricalCheckDataRMGVOS")]
+    public class RMGVOSCheckData : StationLoopCheckData
+    {
+    }
+    [Table("tHistoricalCheckDataRMGFR")]
+    public class RMGFRCheckData : StationLoopCheckData
+    {
+    }
+    [Table("tHistoricalCheckDataRMGLoop")]
+    public class RMGLoopCheckData : StationLoopCheckData
+    {
+    }
 }
