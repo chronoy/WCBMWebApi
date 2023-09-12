@@ -21,6 +21,7 @@ namespace Respository
         public DbSet<Company> companies { get; set; }
         public DbSet<Area> Areas { get; set; }
         public DbSet<Station> Stations { get; set; }
+        public DbSet<Line> Lines { get; set; }
         public DbSet<StationEquipment> StationEquipments { get; set; }
         public DbSet<StationEquipmentDiagnosticData> StationEquipmentDiagnosticDatas { get; set; }
 
@@ -46,10 +47,15 @@ namespace Respository
         public DbSet<WeiseVOSCheckData> WeiseVOSCheckDatas { get; set; }
         public DbSet<WeiseFRCheckData> WeiseFRCheckDatas { get; set; }
         public DbSet<WeiseLoopCheckData> WeiseLoopCheckDatas { get; set; }
+        public DbSet<RMGVOSCheckData> RMGVOSCheckDatas { get; set; }
+        public DbSet<RMGFRCheckData> RMGFRCheckDatas { get; set; }
+        public DbSet<RMGLoopCheckData> RMGLoopCheckDatas { get; set; }
         //Equipment Check Data
         public DbSet<ABBGCCheckData> ABBGCCheckDatas { get; set; }
         public DbSet<DanielGCCheckData> DanielGCCheckDatas { get; set; }
         public DbSet<ElsterGCCheckData> ElsterGCCheckDatas { get; set; }
+
+        public DbSet<CheckDescriptionStatus> CheckDescriptionStatuses { get; set; }
         //public DbSet<VOSKeyCheckData> VOSKeyCheckDatas { get; set; }
         // public DbSet<LoopUncertain> LoopUncertains { get; set; }
         // public DbSet<DataItem> FlowrateData { get; set; }

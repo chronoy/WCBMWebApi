@@ -17,14 +17,14 @@ namespace Services
             _respository = checkRespository;
         }
 
-        public Task<List<StationEquipmentCheckData>> GetStationEquipmentCheckReport(string reportCategory, int equipmentID, string startDateTime, string endDateTime)
+        public Task<List<StationEquipmentCheckData>> GetStationEquipmentCheckReport(string reportCategory, string brandName, int equipmentID, DateTime startDateTime, DateTime endDateTime)
         {
-            return Task.Run(() => _respository.GetStationEquipmentCheckReport(reportCategory, equipmentID, startDateTime, endDateTime));
+            return Task.Run(() => _respository.GetStationEquipmentCheckReport(reportCategory, brandName, equipmentID, startDateTime, endDateTime));
         }
 
-        public Task<List<StationLoopCheckData>> GetStationLoopCheckReport(string reportCategory, int equipmentID, string startDateTime, string endDateTime)
+        public Task<List<StationLoopCheckData>> GetStationLoopCheckReport(string reportCategory, string brandName, int loopID, DateTime startDateTime, DateTime endDateTime)
         {
-            return Task.Run(() => _respository.GetStationLoopCheckReport(reportCategory, equipmentID, startDateTime, endDateTime));
+            return Task.Run(() => _respository.GetStationLoopCheckReport(reportCategory, brandName, loopID, startDateTime, endDateTime));
         }
     }
 }
