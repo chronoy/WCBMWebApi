@@ -7,14 +7,17 @@ namespace Services.Web
     {
         private readonly ILogger _logger;
         private readonly IHostApplicationLifetime _appLifetime;
-        private readonly IPDBService _pdbService;
+        private readonly IPDBService _PDBService;
+        private readonly IOPCClientService _OPCService;
         public LifetimeEventsHostService(ILogger<LifetimeEventsHostService> logger,
                                          IHostApplicationLifetime appLifeTime,
-                                         IPDBService pdbService)
+                                         IPDBService pdbService,
+                                         IOPCClientService OPCClientService)
         {
             _logger = logger;
             _appLifetime = appLifeTime;
-            _pdbService = pdbService;   
+            _PDBService = pdbService;  
+            _OPCService = OPCClientService;             
         }
 
         public Task StartAsync(CancellationToken cancellationToken)
@@ -33,7 +36,10 @@ namespace Services.Web
         public void OnStarted()
         {
             //Start a backgroud service
-            List<PDBTag> tags = _pdbService.GetAllPDBTags1();
+
+            _OPCService.SetOPCItems(_PDBService.GetAllPDBTags().ToList());
+            _OPCService.Run();
+            _PDBService.Run();
             _logger.LogInformation("OnStarted has been called");
         }
         public void OnStopping()
