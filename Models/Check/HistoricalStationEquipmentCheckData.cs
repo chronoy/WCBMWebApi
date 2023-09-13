@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Models
 {
-    public class StationEquipmentCheckData
+    public class HistoricalStationEquipmentCheckData
     {
         [Key]
         [Column("ID")]
@@ -35,20 +35,20 @@ namespace Models
     }
 
     [Table("tHistoricalCheckDataABBGC")]
-    public class ABBGCCheckData : StationEquipmentCheckData
+    public class ABBGCCheckData : HistoricalStationEquipmentCheckData
     {
         [Column("GCID")]
         public int EquipmentID { get; set; }
 
     }
     [Table("tHistoricalCheckDataDanielGC")]
-    public class DanielGCCheckData : StationEquipmentCheckData
+    public class DanielGCCheckData : HistoricalStationEquipmentCheckData
     {
         [Column("GCID")]
         public int EquipmentID { get; set; }
     }
     [Table("tHistoricalCheckDataElsterGC")]
-    public class ElsterGCCheckData : StationEquipmentCheckData
+    public class ElsterGCCheckData : HistoricalStationEquipmentCheckData
     {
         [Column("GCID")]
         public int EquipmentID { get; set; }

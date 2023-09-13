@@ -15,9 +15,9 @@ namespace Respository
         {
             _context = context;
         }
-        public List<StationEquipmentCheckData> GetStationEquipmentCheckReport(string reportCategory, string brandName, int equipmentID, DateTime startDateTime, DateTime endDateTime)
+        public List<HistoricalStationEquipmentCheckData> GetStationEquipmentCheckReport(string reportCategory, string brandName, int equipmentID, DateTime startDateTime, DateTime endDateTime)
         {
-            List<StationEquipmentCheckData> reports = new List<StationEquipmentCheckData>();
+            List<HistoricalStationEquipmentCheckData> reports = new List<HistoricalStationEquipmentCheckData>();
             try
             {
                 switch (brandName)
@@ -29,7 +29,7 @@ namespace Respository
                                 case "GCReport":
                                     {
                                         reports = (from report in _context.DanielGCCheckDatas.Where(checkdata => checkdata.EquipmentID == equipmentID && DateTime.Compare(checkdata.DateTime, startDateTime) >= 0 && DateTime.Compare(checkdata.DateTime, endDateTime) <= 0)
-                                                   select new StationEquipmentCheckData 
+                                                   select new HistoricalStationEquipmentCheckData 
                                                    {
                                                        HisID = report.HisID,
                                                        DateTime = report.DateTime,
@@ -50,7 +50,7 @@ namespace Respository
                                     {
                                        
                                         reports = (from report in _context.ElsterGCCheckDatas.Where(checkdata => checkdata.EquipmentID == equipmentID && DateTime.Compare(checkdata.DateTime, startDateTime) >= 0 && DateTime.Compare(checkdata.DateTime, endDateTime) <= 0)
-                                                   select new StationEquipmentCheckData
+                                                   select new HistoricalStationEquipmentCheckData
                                                    {
                                                        HisID = report.HisID,
                                                        DateTime = report.DateTime,
@@ -70,7 +70,7 @@ namespace Respository
                                 case "GCReport":
                                     {
                                         reports = (from report in _context.ABBGCCheckDatas.Where(checkdata => checkdata.EquipmentID == equipmentID && DateTime.Compare(checkdata.DateTime, startDateTime) >= 0 && DateTime.Compare(checkdata.DateTime, endDateTime) <= 0)
-                                                   select new StationEquipmentCheckData
+                                                   select new HistoricalStationEquipmentCheckData
                                                    {
                                                        HisID = report.HisID,
                                                        DateTime = report.DateTime,
@@ -91,7 +91,7 @@ namespace Respository
                            on stationEquipment.StationID equals station.ID
                            join checkStatus in _context.CheckDescriptionStatuses
                            on report.CheckDataStatusID equals checkStatus.ID
-                           select new StationEquipmentCheckData
+                           select new HistoricalStationEquipmentCheckData
                            {
                                HisID = report.HisID,
                                DateTime = report.DateTime,
@@ -116,9 +116,9 @@ namespace Respository
          
         }
 
-        public List<StationLoopCheckData> GetStationLoopCheckReport(string reportCategory, string brandName, int loopID, DateTime startDateTime, DateTime endDateTime)
+        public List<HistoricalStationLoopCheckData> GetStationLoopCheckReport(string reportCategory, string brandName, int loopID, DateTime startDateTime, DateTime endDateTime)
         {
-            List<StationLoopCheckData> reports = new List<StationLoopCheckData>();
+            List<HistoricalStationLoopCheckData> reports = new List<HistoricalStationLoopCheckData>();
             try
             {
                 switch (brandName)
@@ -129,17 +129,17 @@ namespace Respository
                             {
                                 case "FRReport":
                                     {
-                                        reports = (_context.DanielFRCheckDatas.Where(checkdata => checkdata.LoopID == loopID && DateTime.Compare(checkdata.DateTime, startDateTime) >= 0 && DateTime.Compare(checkdata.DateTime, endDateTime) <= 0)).ToList<StationLoopCheckData>();                                       
+                                        reports = (_context.DanielFRCheckDatas.Where(checkdata => checkdata.LoopID == loopID && DateTime.Compare(checkdata.DateTime, startDateTime) >= 0 && DateTime.Compare(checkdata.DateTime, endDateTime) <= 0)).ToList<HistoricalStationLoopCheckData>();                                       
                                         break;
                                     }
                                 case "VOSReport":
                                     {
-                                        reports = (_context.DanielVOSCheckDatas.Where(checkdata => checkdata.LoopID == loopID && DateTime.Compare(checkdata.DateTime, startDateTime) >= 0 && DateTime.Compare(checkdata.DateTime, endDateTime) <= 0)).ToList<StationLoopCheckData>();
+                                        reports = (_context.DanielVOSCheckDatas.Where(checkdata => checkdata.LoopID == loopID && DateTime.Compare(checkdata.DateTime, startDateTime) >= 0 && DateTime.Compare(checkdata.DateTime, endDateTime) <= 0)).ToList<HistoricalStationLoopCheckData>();
                                         break;
                                     }
                                 case "LoopReport":
                                     {
-                                        reports = (_context.DanielLoopCheckDatas.Where(checkdata => checkdata.LoopID == loopID && DateTime.Compare(checkdata.DateTime, startDateTime) >= 0 && DateTime.Compare(checkdata.DateTime, endDateTime) <= 0)).ToList<StationLoopCheckData>();
+                                        reports = (_context.DanielLoopCheckDatas.Where(checkdata => checkdata.LoopID == loopID && DateTime.Compare(checkdata.DateTime, startDateTime) >= 0 && DateTime.Compare(checkdata.DateTime, endDateTime) <= 0)).ToList<HistoricalStationLoopCheckData>();
                                         break;
                                     }
                             }
@@ -151,18 +151,18 @@ namespace Respository
                             {
                                 case "FRReport":
                                     {
-                                        reports = (_context.ElsterFRCheckDatas.Where(checkdata => checkdata.LoopID == loopID && DateTime.Compare(checkdata.DateTime, startDateTime) >= 0 && DateTime.Compare(checkdata.DateTime, endDateTime) <= 0)).ToList<StationLoopCheckData>();
+                                        reports = (_context.ElsterFRCheckDatas.Where(checkdata => checkdata.LoopID == loopID && DateTime.Compare(checkdata.DateTime, startDateTime) >= 0 && DateTime.Compare(checkdata.DateTime, endDateTime) <= 0)).ToList<HistoricalStationLoopCheckData>();
                                         break;
                                     }
                                 case "VOSReport":
                                     {
-                                        reports = (_context.ElsterVOSCheckDatas.Where(checkdata => checkdata.LoopID == loopID && DateTime.Compare(checkdata.DateTime, startDateTime) >= 0 && DateTime.Compare(checkdata.DateTime, endDateTime) <= 0)).ToList<StationLoopCheckData>();
+                                        reports = (_context.ElsterVOSCheckDatas.Where(checkdata => checkdata.LoopID == loopID && DateTime.Compare(checkdata.DateTime, startDateTime) >= 0 && DateTime.Compare(checkdata.DateTime, endDateTime) <= 0)).ToList<HistoricalStationLoopCheckData>();
                                         break;
                                      
                                     }
                                 case "LoopReport":
                                     {
-                                        reports = (_context.ElsterLoopCheckDatas.Where(checkdata => checkdata.LoopID == loopID && DateTime.Compare(checkdata.DateTime, startDateTime) >= 0 && DateTime.Compare(checkdata.DateTime, endDateTime) <= 0)).ToList<StationLoopCheckData>();
+                                        reports = (_context.ElsterLoopCheckDatas.Where(checkdata => checkdata.LoopID == loopID && DateTime.Compare(checkdata.DateTime, startDateTime) >= 0 && DateTime.Compare(checkdata.DateTime, endDateTime) <= 0)).ToList<HistoricalStationLoopCheckData>();
                                         break;
                                     }
                             }
@@ -174,17 +174,17 @@ namespace Respository
                             {
                                 case "FRReport":
                                     {
-                                        reports = (_context.SickFRCheckDatas.Where(checkdata => checkdata.LoopID == loopID && DateTime.Compare(checkdata.DateTime, startDateTime) >= 0 && DateTime.Compare(checkdata.DateTime, endDateTime) <= 0)).ToList<StationLoopCheckData>();
+                                        reports = (_context.SickFRCheckDatas.Where(checkdata => checkdata.LoopID == loopID && DateTime.Compare(checkdata.DateTime, startDateTime) >= 0 && DateTime.Compare(checkdata.DateTime, endDateTime) <= 0)).ToList<HistoricalStationLoopCheckData>();
                                         break;
                                     }
                                 case "VOSReport":
                                     {
-                                        reports = (_context.SickVOSCheckDatas.Where(checkdata => checkdata.LoopID == loopID && DateTime.Compare(checkdata.DateTime, startDateTime) >= 0 && DateTime.Compare(checkdata.DateTime, endDateTime) <= 0)).ToList<StationLoopCheckData>();
+                                        reports = (_context.SickVOSCheckDatas.Where(checkdata => checkdata.LoopID == loopID && DateTime.Compare(checkdata.DateTime, startDateTime) >= 0 && DateTime.Compare(checkdata.DateTime, endDateTime) <= 0)).ToList<HistoricalStationLoopCheckData>();
                                         break;
                                     }
                                 case "LoopReport":
                                     {
-                                        reports = (_context.SickLoopCheckDatas.Where(checkdata => checkdata.LoopID == loopID && DateTime.Compare(checkdata.DateTime, startDateTime) >= 0 && DateTime.Compare(checkdata.DateTime, endDateTime) <= 0)).ToList<StationLoopCheckData>();
+                                        reports = (_context.SickLoopCheckDatas.Where(checkdata => checkdata.LoopID == loopID && DateTime.Compare(checkdata.DateTime, startDateTime) >= 0 && DateTime.Compare(checkdata.DateTime, endDateTime) <= 0)).ToList<HistoricalStationLoopCheckData>();
                                         break;
                                     }
                             }
@@ -196,17 +196,17 @@ namespace Respository
                             {
                                 case "FRReport":
                                     {
-                                        reports = (_context.WeiseFRCheckDatas.Where(checkdata => checkdata.LoopID == loopID && DateTime.Compare(checkdata.DateTime, startDateTime) >= 0 && DateTime.Compare(checkdata.DateTime, endDateTime) <= 0)).ToList<StationLoopCheckData>();
+                                        reports = (_context.WeiseFRCheckDatas.Where(checkdata => checkdata.LoopID == loopID && DateTime.Compare(checkdata.DateTime, startDateTime) >= 0 && DateTime.Compare(checkdata.DateTime, endDateTime) <= 0)).ToList<HistoricalStationLoopCheckData>();
                                         break;
                                     }
                                 case "VOSReport":
                                     {
-                                        reports = (_context.WeiseVOSCheckDatas.Where(checkdata => checkdata.LoopID == loopID && DateTime.Compare(checkdata.DateTime, startDateTime) >= 0 && DateTime.Compare(checkdata.DateTime, endDateTime) <= 0)).ToList<StationLoopCheckData>();
+                                        reports = (_context.WeiseVOSCheckDatas.Where(checkdata => checkdata.LoopID == loopID && DateTime.Compare(checkdata.DateTime, startDateTime) >= 0 && DateTime.Compare(checkdata.DateTime, endDateTime) <= 0)).ToList<HistoricalStationLoopCheckData>();
                                         break;
                                     }
                                 case "LoopReport":
                                     {
-                                        reports = (_context.WeiseLoopCheckDatas.Where(checkdata => checkdata.LoopID == loopID && DateTime.Compare(checkdata.DateTime, startDateTime) >= 0 && DateTime.Compare(checkdata.DateTime, endDateTime) <= 0)).ToList<StationLoopCheckData>();
+                                        reports = (_context.WeiseLoopCheckDatas.Where(checkdata => checkdata.LoopID == loopID && DateTime.Compare(checkdata.DateTime, startDateTime) >= 0 && DateTime.Compare(checkdata.DateTime, endDateTime) <= 0)).ToList<HistoricalStationLoopCheckData>();
                                         break;
                                     }
                             }
@@ -218,17 +218,17 @@ namespace Respository
                             {
                                 case "FRReport":
                                     {
-                                        reports = (_context.RMGFRCheckDatas.Where(checkdata => checkdata.LoopID == loopID && DateTime.Compare(checkdata.DateTime, startDateTime) >= 0 && DateTime.Compare(checkdata.DateTime, endDateTime) <= 0)).ToList<StationLoopCheckData>();
+                                        reports = (_context.RMGFRCheckDatas.Where(checkdata => checkdata.LoopID == loopID && DateTime.Compare(checkdata.DateTime, startDateTime) >= 0 && DateTime.Compare(checkdata.DateTime, endDateTime) <= 0)).ToList<HistoricalStationLoopCheckData>();
                                         break;
                                     }
                                 case "VOSReport":
                                     {
-                                        reports = (_context.RMGVOSCheckDatas.Where(checkdata => checkdata.LoopID == loopID && DateTime.Compare(checkdata.DateTime, startDateTime) >= 0 && DateTime.Compare(checkdata.DateTime, endDateTime) <= 0)).ToList<StationLoopCheckData>();
+                                        reports = (_context.RMGVOSCheckDatas.Where(checkdata => checkdata.LoopID == loopID && DateTime.Compare(checkdata.DateTime, startDateTime) >= 0 && DateTime.Compare(checkdata.DateTime, endDateTime) <= 0)).ToList<HistoricalStationLoopCheckData>();
                                         break;
                                     }
                                 case "LoopReport":
                                     {
-                                        reports = (_context.RMGLoopCheckDatas.Where(checkdata => checkdata.LoopID == loopID && DateTime.Compare(checkdata.DateTime, startDateTime) >= 0 && DateTime.Compare(checkdata.DateTime, endDateTime) <= 0)).ToList<StationLoopCheckData>();
+                                        reports = (_context.RMGLoopCheckDatas.Where(checkdata => checkdata.LoopID == loopID && DateTime.Compare(checkdata.DateTime, startDateTime) >= 0 && DateTime.Compare(checkdata.DateTime, endDateTime) <= 0)).ToList<HistoricalStationLoopCheckData>();
                                         break;
                                     }
                             }
@@ -245,7 +245,7 @@ namespace Respository
                            on loop.LineID equals line.ID
                            join checkStatus in _context.CheckDescriptionStatuses
                            on report.CheckDataStatusID equals checkStatus.ID
-                           select new StationLoopCheckData
+                           select new HistoricalStationLoopCheckData
                            {
                                HisID = report.HisID,
                                DateTime = report.DateTime,

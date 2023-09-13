@@ -53,7 +53,7 @@ namespace CBMWebApi.Controllers
         public async Task<Dictionary<string, object>> EquipmentCheckReport([FromForm] string reportCategory, [FromForm] string brandName, [FromForm] int equipmentID, [FromForm] DateTime startDateTime, [FromForm] DateTime endDateTime)
         {
             Dictionary<string, object> rtn = new Dictionary<string, object>();
-            List<StationEquipmentCheckData> stationEquipmentCheckData = await _service.GetStationEquipmentCheckReport(reportCategory, brandName, equipmentID, startDateTime, endDateTime);
+            List<HistoricalStationEquipmentCheckData> stationEquipmentCheckData = await _service.GetStationEquipmentCheckReport(reportCategory, brandName, equipmentID, startDateTime, endDateTime);
             if (stationEquipmentCheckData == null)
             {
                 rtn["MSG"] = "OtherError";
@@ -71,7 +71,7 @@ namespace CBMWebApi.Controllers
         public async Task<Dictionary<string, object>> LoopCheckReport([FromForm] string reportCategory, [FromForm] string brandName, [FromForm] int loopID, [FromForm] DateTime startDateTime, [FromForm] DateTime endDateTime)
         {
             Dictionary<string, object> rtn = new Dictionary<string, object>();
-            List<StationLoopCheckData> stationLoopCheckData = await _service.GetStationLoopCheckReport(reportCategory, brandName, loopID, startDateTime, endDateTime);
+            List<HistoricalStationLoopCheckData> stationLoopCheckData = await _service.GetStationLoopCheckReport(reportCategory, brandName, loopID, startDateTime, endDateTime);
             if (stationLoopCheckData == null)
             {
                 rtn["MSG"] = "OtherError";
