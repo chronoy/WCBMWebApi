@@ -35,20 +35,20 @@ namespace Models
     }
 
     [Table("tHistoricalCheckDataABBGC")]
-    public class ABBGCCheckData : HistoricalStationEquipmentCheckData
+    public class HistoricalABBGCCheckData : HistoricalStationEquipmentCheckData
     {
         [Column("GCID")]
         public int EquipmentID { get; set; }
 
     }
     [Table("tHistoricalCheckDataDanielGC")]
-    public class DanielGCCheckData : HistoricalStationEquipmentCheckData
+    public class HistoricalDanielGCCheckData : HistoricalStationEquipmentCheckData
     {
         [Column("GCID")]
         public int EquipmentID { get; set; }
     }
     [Table("tHistoricalCheckDataElsterGC")]
-    public class ElsterGCCheckData : HistoricalStationEquipmentCheckData
+    public class HistoricalElsterGCCheckData : HistoricalStationEquipmentCheckData
     {
         [Column("GCID")]
         public int EquipmentID { get; set; }

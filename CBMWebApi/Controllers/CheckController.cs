@@ -18,37 +18,6 @@ namespace CBMWebApi.Controllers
             _service = checkService;
         }
 
-        // GET: api/<CheckController>
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
-
-        // GET api/<CheckController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
-        // POST api/<CheckController>
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
-        // PUT api/<CheckController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<CheckController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
         [HttpPost]
         public async Task<Dictionary<string, object>> EquipmentCheckReport([FromForm] string reportCategory, [FromForm] string brandName, [FromForm] int equipmentID, [FromForm] DateTime startDateTime, [FromForm] DateTime endDateTime)
         {
@@ -83,6 +52,14 @@ namespace CBMWebApi.Controllers
             }
             rtn["Data"] = stationLoopCheckData;
             return rtn;
+        }
+
+        [HttpPost]
+        public async Task<Dictionary<string, object>> GetManualCheckData([FromForm] int loopID , [FromForm] string brandName)
+        {
+            Dictionary<string, object> data = new Dictionary<string, object>();
+            await _service.GetManualCheckData(loopID, brandName);
+            return data;
         }
     }
 }
