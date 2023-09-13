@@ -72,9 +72,9 @@ namespace Services
             _server = null;
         }
 
-        public void SetOPCItems(List<Tag> tags)
+        public void SetOPCItems(List<PDBTag> tags)
         {
-            foreach (Tag tag in tags)
+            foreach (PDBTag tag in tags)
             {
                 OpcItem item = new OpcItem();
                 item.Name = tag.Name;

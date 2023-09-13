@@ -8,7 +8,7 @@ namespace Services
 {
     public interface IOPCClientService
     {
-        public void SetOPCItems(List<Tag> tags);
+        public void SetOPCItems(List<PDBTag> tags);
         public List<OpcItem> GetAllOPCItems();
 
         //public void ReadAllValues();
