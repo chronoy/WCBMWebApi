@@ -33,26 +33,49 @@ namespace Respository
 
         public List<PDBTag> GetPDBTag()
         {
-            List<Tag> tags1 = _context.Tags.ToList();   
-            List<PDBTag> tags=  (from tag in _context.Tags
-                                join
-                                loop in _context.StationLoops
-                                on tag.StationDeviceCollectID equals loop.CollectDataTypeID
-                                join
-                                station in _context.Stations
-                                on
-                                loop.StationID equals station.ID
-                                join
-                                collector in _context.Collectors.Where(obj=>obj.IsUse == true)
-                                on
-                                station.CollectorID equals collector.ID
-                                select new PDBTag
-                                {
-                                    Name=station.AbbrName + '_' +loop.AbbrName + '_' +tag.Name,
-                                    Address=collector.IFixNodeName + '.' +station.AbbrName + '_' +loop.AbbrName + '_' +tag.Address,
-                                    Value="????",
-                                    Quality= "Uncertain"
-                                }).ToList();
+
+            List<PDBTag> tags = (from tag in _context.Tags
+                                 join
+                                 loop in _context.StationLoops
+                                 on tag.StationDeviceCollectID equals loop.CollectDataTypeID
+                                 join
+                                 station in _context.Stations
+                                 on
+                                 loop.StationID equals station.ID
+                                 join
+                                 collector in _context.Collectors.Where(obj => obj.IsUse == true)
+                                 on
+                                 station.CollectorID equals collector.ID
+                                 select new PDBTag
+                                 {
+                                     Name = station.AbbrName + '_' + loop.AbbrName + '_' + tag.Name,
+                                     Address = collector.IFixNodeName + '.' + station.AbbrName + '_' + loop.AbbrName + '_' + tag.Address,
+                                     Value = "????",
+                                     Quality = "Uncertain"
+                                 }).Union(
+                                    from tag in _context.Tags
+                                    join
+                                    equipment in _context.StationEquipments
+                                    on tag.StationDeviceCollectID equals equipment.CollectDataTypeID
+                                    join
+                                    station in _context.Stations
+                                    on
+                                    equipment.StationID equals station.ID
+                                    join
+                                    collector in _context.Collectors.Where(obj => obj.IsUse == true)
+                                    on
+                                    station.CollectorID equals collector.ID
+                                    select new PDBTag
+                                    {
+                                        Name = station.AbbrName + '_' + equipment.AbbrName + '_' + tag.Name,
+                                        Address = collector.IFixNodeName + '.' + station.AbbrName + '_' + equipment.AbbrName + '_' + tag.Address,
+                                        Value = "????",
+                                        Quality = "Uncertain"
+                                    }
+                                ).ToList();
+
+
+
             return tags;                           
         }
     }
