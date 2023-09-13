@@ -1,0 +1,5 @@
+D:\wwwroot\WCBMWebApi\Services\Fakes\GeFanuc.iFixToolkit.Adapter.fakes : warning : 无法为 GeFanuc.iFixToolkit.Adapter.Eda 生成存根: 类型已密封。
+D:\wwwroot\WCBMWebApi\Services\Fakes\GeFanuc.iFixToolkit.Adapter.fakes : warning : 无法为 GeFanuc.iFixToolkit.Adapter.FixError 生成存根: 类型已密封。
+D:\wwwroot\WCBMWebApi\Services\Fakes\GeFanuc.iFixToolkit.Adapter.fakes : warning : 无法为 GeFanuc.iFixToolkit.Adapter.Globals 生成存根: 类型已密封。
+D:\wwwroot\WCBMWebApi\Services\Fakes\GeFanuc.iFixToolkit.Adapter.fakes : warning : 无法为 GeFanuc.iFixToolkit.Adapter.Hda 生成存根: 类型已密封。
+D:\wwwroot\WCBMWebApi\Services\Fakes\GeFanuc.iFixToolkit.Adapter.fakes : warning : 无法为 GeFanuc.iFixToolkit.Adapter.Helper 生成存根: 类型已密封。

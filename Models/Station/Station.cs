@@ -19,7 +19,10 @@ namespace Models
         public int AreaID { get; set; }
         public int CollectorID { get; set; }
         [NotMapped]
+        public string IPAddress { get; set; }
+        public string IPPort { get; set; }
         public List<StationLoop> Loops { get; set; } = new List<StationLoop>();
+        public List<StationEquipment> Equipments { get; set; } = new List<StationEquipment>();
     }
 }
 

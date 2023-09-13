@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Respository;
+using Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +11,9 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContextPool<SQLServerDBContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("SQLConnection")));
+
+builder.Services.AddScoped<IUserRespository, UserRespository>();
+builder.Services.AddScoped<IUserService, UserService>();
 
 var app = builder.Build();
 
