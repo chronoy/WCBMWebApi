@@ -10,7 +10,7 @@ namespace Models
     /// <summary>
     /// 用于区分诊断数据是Loop还是Equipment，不是诊断的具体内容
     /// </summary>
-    public class StationLoopCheckData
+    public class HistoricalStationLoopCheckData
     {
         [Key]
         [Column("ID")]
@@ -42,54 +42,67 @@ namespace Models
     }
     //Daniel
     [Table("tHistoricalCheckDataDanielVOS")]
-    public class DanielVOSCheckData : StationLoopCheckData
+    public class DanielVOSCheckData : HistoricalStationLoopCheckData
     {
     }
     [Table("tHistoricalCheckDataDanielFR")]
-    public class DanielFRCheckData : StationLoopCheckData
+    public class DanielFRCheckData : HistoricalStationLoopCheckData
     {
     }
     [Table("tHistoricalCheckDataDanielLoop")]
-    public class DanielLoopCheckData : StationLoopCheckData
+    public class DanielLoopCheckData : HistoricalStationLoopCheckData
     {
     }
     //Elster
     [Table("tHistoricalCheckDataElsterVOS")]
-    public class ElsterVOSCheckData : StationLoopCheckData
+    public class ElsterVOSCheckData : HistoricalStationLoopCheckData
     {
     }
     [Table("tHistoricalCheckDataElsterFR")]
-    public class ElsterFRCheckData : StationLoopCheckData
+    public class ElsterFRCheckData : HistoricalStationLoopCheckData
     {
     }
     [Table("tHistoricalCheckDataElsterLoop")]
-    public class ElsterLoopCheckData : StationLoopCheckData
+    public class ElsterLoopCheckData : HistoricalStationLoopCheckData
     {
     }
     //Sick
     [Table("tHistoricalCheckDataSickVOS")]
-    public class SickVOSCheckData : StationLoopCheckData
+    public class SickVOSCheckData : HistoricalStationLoopCheckData
     {
     }
     [Table("tHistoricalCheckDataSickFR")]
-    public class SickFRCheckData : StationLoopCheckData
+    public class SickFRCheckData : HistoricalStationLoopCheckData
     {
     }
     [Table("tHistoricalCheckDataSickLoop")]
-    public class SickLoopCheckData : StationLoopCheckData
+    public class SickLoopCheckData : HistoricalStationLoopCheckData
     {
     }
     //Weise
     [Table("tHistoricalCheckDataWeiseVOS")]
-    public class WeiseVOSCheckData : StationLoopCheckData
+    public class WeiseVOSCheckData : HistoricalStationLoopCheckData
     {
     }
     [Table("tHistoricalCheckDataWeiseFR")]
-    public class WeiseFRCheckData : StationLoopCheckData
+    public class WeiseFRCheckData : HistoricalStationLoopCheckData
     {
     }
     [Table("tHistoricalCheckDataWeiseLoop")]
-    public class WeiseLoopCheckData : StationLoopCheckData
+    public class WeiseLoopCheckData : HistoricalStationLoopCheckData
+    {
+    }
+    //RMG
+    [Table("tHistoricalCheckDataRMGVOS")]
+    public class RMGVOSCheckData : HistoricalStationLoopCheckData
+    {
+    }
+    [Table("tHistoricalCheckDataRMGFR")]
+    public class RMGFRCheckData : HistoricalStationLoopCheckData
+    {
+    }
+    [Table("tHistoricalCheckDataRMGLoop")]
+    public class RMGLoopCheckData : HistoricalStationLoopCheckData
     {
     }
 }

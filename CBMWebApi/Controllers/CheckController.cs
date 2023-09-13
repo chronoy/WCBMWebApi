@@ -50,16 +50,39 @@ namespace CBMWebApi.Controllers
         {
         }
         [HttpPost]
-        public async Task<List<StationEquipmentCheckData>> EquipmentCheckReport([FromForm] string reportCategory)
+        public async Task<Dictionary<string, object>> EquipmentCheckReport([FromForm] string reportCategory, [FromForm] string brandName, [FromForm] int equipmentID, [FromForm] DateTime startDateTime, [FromForm] DateTime endDateTime)
         {
-
-            return await _service.GetStationEquipmentCheckReport("",1,"",""); 
+            Dictionary<string, object> rtn = new Dictionary<string, object>();
+            List<HistoricalStationEquipmentCheckData> stationEquipmentCheckData = await _service.GetStationEquipmentCheckReport(reportCategory, brandName, equipmentID, startDateTime, endDateTime);
+            if (stationEquipmentCheckData == null)
+            {
+                rtn["MSG"] = "OtherError";
+                rtn["Code"] = "400";
+            }
+            else
+            {
+                rtn["MSG"] = "OK";
+                rtn["Code"] = "200";
+            }
+            rtn["Data"] = stationEquipmentCheckData;
+            return rtn;
         }
         [HttpPost]
-        public async Task<List<StationLoopCheckData>> LoopCheckReport([FromForm] string reportCategory)
+        public async Task<Dictionary<string, object>> LoopCheckReport([FromForm] string reportCategory, [FromForm] string brandName, [FromForm] int loopID, [FromForm] DateTime startDateTime, [FromForm] DateTime endDateTime)
         {
-
-            return await _service.GetStationLoopCheckReport("", 1, "", "");
+            Dictionary<string, object> rtn = new Dictionary<string, object>();
+            List<HistoricalStationLoopCheckData> stationLoopCheckData = await _service.GetStationLoopCheckReport(reportCategory, brandName, loopID, startDateTime, endDateTime);
+            if (stationLoopCheckData == null)
+            {
+                rtn["MSG"] = "OtherError";
+                rtn["Code"] = "400";
+            } else
+            {
+                rtn["MSG"] = "OK";
+                rtn["Code"] = "200";
+            }
+            rtn["Data"] = stationLoopCheckData;
+            return rtn;
         }
     }
 }
