@@ -18,48 +18,48 @@ namespace CBMWebApi.Controllers
             _service = checkService;
         }
 
-        // GET: api/<CheckController>
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
-
-        // GET api/<CheckController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
-        // POST api/<CheckController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<Dictionary<string, object>> EquipmentCheckReport([FromForm] string reportCategory, [FromForm] string brandName, [FromForm] int equipmentID, [FromForm] DateTime startDateTime, [FromForm] DateTime endDateTime)
         {
-        }
-
-        // PUT api/<CheckController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<CheckController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            Dictionary<string, object> rtn = new Dictionary<string, object>();
+            List<HistoricalStationEquipmentCheckData> stationEquipmentCheckData = await _service.GetStationEquipmentCheckReport(reportCategory, brandName, equipmentID, startDateTime, endDateTime);
+            if (stationEquipmentCheckData == null)
+            {
+                rtn["MSG"] = "OtherError";
+                rtn["Code"] = "400";
+            }
+            else
+            {
+                rtn["MSG"] = "OK";
+                rtn["Code"] = "200";
+            }
+            rtn["Data"] = stationEquipmentCheckData;
+            return rtn;
         }
         [HttpPost]
-        public async Task<List<StationEquipmentCheckData>> EquipmentCheckReport([FromForm] string reportCategory)
+        public async Task<Dictionary<string, object>> LoopCheckReport([FromForm] string reportCategory, [FromForm] string brandName, [FromForm] int loopID, [FromForm] DateTime startDateTime, [FromForm] DateTime endDateTime)
         {
-
-            return await _service.GetStationEquipmentCheckReport("",1,"",""); 
+            Dictionary<string, object> rtn = new Dictionary<string, object>();
+            List<HistoricalStationLoopCheckData> stationLoopCheckData = await _service.GetStationLoopCheckReport(reportCategory, brandName, loopID, startDateTime, endDateTime);
+            if (stationLoopCheckData == null)
+            {
+                rtn["MSG"] = "OtherError";
+                rtn["Code"] = "400";
+            } else
+            {
+                rtn["MSG"] = "OK";
+                rtn["Code"] = "200";
+            }
+            rtn["Data"] = stationLoopCheckData;
+            return rtn;
         }
-        [HttpPost]
-        public async Task<List<StationLoopCheckData>> LoopCheckReport([FromForm] string reportCategory)
-        {
 
-            return await _service.GetStationLoopCheckReport("", 1, "", "");
+        [HttpPost]
+        public async Task<Dictionary<string, object>> GetManualCheckData([FromForm] int loopID , [FromForm] string brandName)
+        {
+            Dictionary<string, object> data = new Dictionary<string, object>();
+            await _service.GetManualCheckData(loopID, brandName);
+            return data;
         }
     }
 }

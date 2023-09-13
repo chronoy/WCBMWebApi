@@ -16,7 +16,9 @@ builder.Services.AddDbContextPool<SQLServerDBContext>(options => options.UseSqlS
 builder.Services.AddScoped<ICheckRespository, CheckRespository>();
 builder.Services.AddScoped<ICheckService, CheckService>();
 //builder.Services.AddSingleton<IPDBRespository, PDBRespository>();
+//Yantao
 builder.Services.AddSingleton<IPDBService, PDBService>();
+builder.Services.AddSingleton<IOPCClientService, OPCClientService>(); 
 builder.Services.AddHostedService<LifetimeEventsHostService>();
 
 //by luoyuankan

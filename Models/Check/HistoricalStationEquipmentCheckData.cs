@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Models
 {
-    public class StationEquipmentCheckData
+    public class HistoricalStationEquipmentCheckData
     {
         [Key]
         [Column("ID")]
@@ -25,10 +25,6 @@ namespace Models
         [NotMapped]
         public string StationName { get; set; }
         [NotMapped]
-        public string LineName { get; set; }
-        [NotMapped]
-        public string Customer { get; set; }
-        [NotMapped]
         public string Manufacturer { get; set; }
         [NotMapped]
         public string Model { get; set; }
@@ -39,20 +35,20 @@ namespace Models
     }
 
     [Table("tHistoricalCheckDataABBGC")]
-    public class ABBGCCheckData : StationEquipmentCheckData
+    public class HistoricalABBGCCheckData : HistoricalStationEquipmentCheckData
     {
         [Column("GCID")]
         public int EquipmentID { get; set; }
 
     }
     [Table("tHistoricalCheckDataDanielGC")]
-    public class DanielGCCheckData : StationEquipmentCheckData
+    public class HistoricalDanielGCCheckData : HistoricalStationEquipmentCheckData
     {
         [Column("GCID")]
         public int EquipmentID { get; set; }
     }
     [Table("tHistoricalCheckDataElsterGC")]
-    public class ElsterGCCheckData : StationEquipmentCheckData
+    public class HistoricalElsterGCCheckData : HistoricalStationEquipmentCheckData
     {
         [Column("GCID")]
         public int EquipmentID { get; set; }

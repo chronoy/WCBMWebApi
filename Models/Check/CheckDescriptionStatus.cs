@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace Models
 {
-    [Table("tLine")]
-    public class Line
+    [Table("tCheckDescriptionStatus")]
+    public class CheckDescriptionStatus
     {
         [Key]
         public int ID { get; set; }
         public string Name { get; set; }
-        public string? Description { get; set; }
+        public string Description { get; set; }
     }
 }
