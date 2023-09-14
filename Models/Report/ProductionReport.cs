@@ -11,7 +11,7 @@ namespace Models
     {
         public string StationName { get; set; }
         public string LoopName { get; set; }
-        public string Brand { get; set; }
+        public string Manufacturer { get; set; }
         public string LineName { get; set; }
         public string FlowmeterModel { get; set; }
         public string Customer { get; set; }

@@ -14,7 +14,7 @@ namespace Models
     {
         [Key]
         public int ID { get; set; }
-        public string BrandName { get; set; }
+        public string Manufacturer { get; set; }
         public string DeviceType { get; set; }
         public int CollectType { get; set; }
         public string Description { get; set; }

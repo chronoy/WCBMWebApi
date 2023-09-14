@@ -12,7 +12,5 @@ namespace Services
         public Task<List<HistoricalStationEquipmentCheckData>> GetStationEquipmentCheckReport(string reportCategory, string brandName, int equipmentID, DateTime startDateTime, DateTime endDateTime);
         public Task<List<HistoricalStationLoopCheckData>> GetStationLoopCheckReport(string reportCategory, string brandName, int equipmentID, DateTime startDateTime, DateTime endDateTime);
         public Task<Dictionary<string, object>> GetManualCheckData(int loopID, string brandName);
-
-
     }
 }
