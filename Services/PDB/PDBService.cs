@@ -32,7 +32,6 @@ namespace Services
             _PDBRespository = new PDBRespository();
             _tags=_PDBRespository.GetPDBTag();
             _OPCClientService = OPCClientService;
-
         }
         public List<PDBTag> GetAllPDBTags()
         {
@@ -60,14 +59,16 @@ namespace Services
         //}
 
 
-        //public Task<List<Tag>> GetPDBTagsByStation(Station station)
-        //{
-        //    return Task.Run(() =>
-        //    {
-        //        List<Tag> stationTags = _tags.FindAll(tag => tag.Name.Split('_')[0] == station.AbbrName);
-        //        return stationTags;
-        //    });
-        //}
+        public Task<List<PDBTag>> GetLoopTagsByStation(Station station)
+        {
+            return Task.Run(() =>
+            {
+                List<PDBTag> stationTags = _tags.FindAll(tag => tag.Name.Split('_')[0] == station.AbbrName);
+                return stationTags;
+            });
+        }
+
+
 
         //public Task<Dictionary<string, Tag>> GetPDBTags(List<string> TagNames)
         //{

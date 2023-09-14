@@ -19,5 +19,10 @@ namespace Respository
         {
             return _context.StationLoops.ToList();  
         }
+
+        public List<StationLoop> GetStationLoopsByStation(int stationID)
+        {
+            return _context.StationLoops.Where(obj => obj.StationID == stationID).OrderBy(obj => obj.OrderNumber).ToList();
+        }
     }
 }

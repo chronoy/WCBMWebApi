@@ -20,6 +20,12 @@ builder.Services.AddScoped<ICheckService, CheckService>();
 builder.Services.AddSingleton<IPDBService, PDBService>();
 builder.Services.AddSingleton<IOPCClientService, OPCClientService>(); 
 builder.Services.AddHostedService<LifetimeEventsHostService>();
+builder.Services.AddScoped<IStationRespository, StationRespository>();
+builder.Services.AddScoped<IStationService, StationService>();
+builder.Services.AddScoped<IStationLoopRespository, StationLoopRespository>();
+builder.Services.AddScoped<IStationLoopService, StationLoopService>();
+builder.Services.AddScoped<IStationEquipmentRespository, StationEquipmentRespository>();
+builder.Services.AddScoped<IStationEquipmentService, StationEquipmentService>();
 
 
 var app = builder.Build();
