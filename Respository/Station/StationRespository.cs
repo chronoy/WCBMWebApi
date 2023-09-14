@@ -15,6 +15,11 @@ namespace Respository
             _context = context;
         }
 
+        public Station GetStationByID(int ID)
+        {
+            return _context.Stations.FirstOrDefault(obj=>obj.ID==ID);
+        }
+
         public List<Station> GetStations()
         {
             return _context.Stations.ToList();
