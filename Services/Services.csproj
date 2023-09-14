@@ -45,4 +45,8 @@
     <AdditionalDesignTimeBuildInput Remove="FakesAssemblies\**" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Diagnosis\" />
+  </ItemGroup>
+
 </Project>
