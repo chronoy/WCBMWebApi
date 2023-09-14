@@ -24,5 +24,7 @@ namespace Models
         public Dictionary<string, Tag> Tags { get; set; }
         [NotMapped]
         public StationEquipmentDiagnosticData DiagnosticData { get; set; }
+        [NotMapped]
+        public string EquipmentCategoryName { get; set; }
     }
 }

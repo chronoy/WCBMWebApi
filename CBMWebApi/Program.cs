@@ -21,6 +21,14 @@ builder.Services.AddSingleton<IPDBService, PDBService>();
 builder.Services.AddSingleton<IOPCClientService, OPCClientService>(); 
 builder.Services.AddHostedService<LifetimeEventsHostService>();
 
+//by luoyuankan
+builder.Services.AddScoped<IAlarmRespository, AlarmRespository>();
+builder.Services.AddScoped<IAlarmService, AlarmService>();
+builder.Services.AddScoped<IHistoricalTrendRespository, HistoricalTrendRespository>();
+builder.Services.AddScoped<IHistoricalTrendService, HistoricalTrendService>();
+builder.Services.AddScoped<IProductionReportRespository, ProductionReportRespository>();
+builder.Services.AddScoped<IProductionReportService, ProductionReportService>();
+builder.Services.AddScoped<IExcelExportHelper, ExcelExportHelper>();
 
 var app = builder.Build();
 

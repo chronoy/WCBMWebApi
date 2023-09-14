@@ -10,9 +10,9 @@ namespace Models
     public class Alarm
     {
         [Column("ALM_NATIVETIMEIN")]
-        public string StartTime { get; set; }
+        public DateTime StartTime { get; set; }
         [Column("ALM_NATIVETIMELAST")]
-        public string EndTime { get; set; }
+        public DateTime EndTime { get; set; }
         [Column("ALM_PHYSLNODE")]
         public string NodeName { get; set; }
         [Column("ALM_TAGNAME")]
@@ -33,6 +33,18 @@ namespace Models
         public string OperatorName { get; set; }
         [Column("ALM_OPFULLNAME")]
         public string FullOperatorName { get; set; }
+    }
 
+    [Table("tRealtimeAlarm")]
+    public class RealtimeAlarm : Alarm
+    {
+
+    }
+
+    [Table("tHistoricalAlarm")]
+    public class HistoricalAlarm : Alarm
+    {
+        [Column("id")]
+        public int HisID { get; set; }
     }
 }

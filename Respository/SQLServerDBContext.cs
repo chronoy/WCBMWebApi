@@ -33,12 +33,15 @@ namespace Respository
 
         public DbSet<StationLoop> StationLoops { get; set; }
         public DbSet<StationLoopDiagnosticData> StationLoopDiagnosticDatas { get; set; }
-
+        public DbSet<StationDeviceCollectDataType> StationDeviceCollectDataTypes { get; set; }
 
         public DbSet<Trend> Trends { get; set; }
         public DbSet<Alarm> Alarms { get; set; }
+        public DbSet<RealtimeAlarm> RealtimeAlarms { get; set; }
+        public DbSet<HistoricalAlarm> HistoricalAlarms { get; set; }
         public DbSet<DiagnosticDataDetail> DiagnosticDataDetails { get; set; }
         public DbSet<DiagnosticAlarm> DiagnosticAlarms { get; set; }
+        public DbSet<RealtimeDiagnosticAlarm> RealtimeDiagnosticAlarms { get; set; }
         public DbSet<AlarmKPI> AlarmKPIs { get; set; }
         //Loop Check Data
         public DbSet<HistoricalDanielVOSCheckData> HistoricalDanielVOSCheckDatas { get; set; }
@@ -98,14 +101,18 @@ namespace Respository
         // public DbSet<DataItem> FlowrateData { get; set; }
 
         public DbSet<User> Users { get; set; }
+        public DbSet<UserStation> UserStations { get; set; }
+        public DbSet<Role> Roles { get; set; }
         public DbSet<TrendGroup> TrendGroups { get; set; }
+        public DbSet<TrendTag> TrendTags { get; set; }
         //public DbSet<DataItem> DataItems { get; set; }
-        //public DbSet<ProductionReport> ProductionReports { get; set; }
+        public DbSet<HistoricalProductionDailyReport> HistoricalProductionDailyReports { get; set; }
         //public DbSet<ExpertKnowledge> ExpertKnowledges { get; set; }
 
-        //public DbSet<UserLogRecord> UserLogRecords { get; set; }
+        public DbSet<UserLogRecord> UserLogRecords { get; set; }
 
         public DbSet<Equipment> Equipments { get; set; }
+        public DbSet<EquipmentCategory> EquipmentCategories { get; set; }
     }
 }
 

@@ -16,8 +16,9 @@ namespace Models
         public string Password { get; set; }
         public string PersonName { get; set; }
         public string ContactNumber { get; set; }
-        public string RoleName { get; set; }
+        public int RoleID { get; set; }
         [NotMapped]
+        public string RoleName { get; set; }
         public List<Company> companies { get; set; }
         //public List<EquipmentManufacturer> EquipmentManufacturers { get; set; }
         //public List<EquipmentCategory> EquipmentCategorys { get; set; }

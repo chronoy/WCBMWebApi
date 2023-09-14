@@ -57,9 +57,20 @@ namespace CBMWebApi.Controllers
         [HttpPost]
         public async Task<Dictionary<string, object>> GetManualCheckData([FromForm] int loopID , [FromForm] string brandName)
         {
-            Dictionary<string, object> data = new Dictionary<string, object>();
-            await _service.GetManualCheckData(loopID, brandName);
-            return data;
+            Dictionary<string, object> rtn = new Dictionary<string, object>();
+            var data = await _service.GetManualCheckData(loopID, brandName);
+            if (data == null)
+            {
+                rtn["MSG"] = "OtherError";
+                rtn["Code"] = "400";
+            }
+            else
+            {
+                rtn["MSG"] = "OK";
+                rtn["Code"] = "200";
+            }
+            rtn["Data"] = data;
+            return rtn;
         }
     }
 }
