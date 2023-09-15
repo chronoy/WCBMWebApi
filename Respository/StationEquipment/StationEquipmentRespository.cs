@@ -22,7 +22,7 @@ namespace Respository
 
         public List<StationEquipment> GetStationEquipmentsBySttaion(int stationID)
         {
-            return _context.StationEquipments.Where(obj=>obj.StationID==stationID).OrderBy(obj=>obj.OrderNumber).ToList();
+            return _context.StationEquipments.Where(obj=>obj.StationID==stationID).ToList();
         }
     }
 }
