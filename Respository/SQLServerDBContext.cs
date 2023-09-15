@@ -41,6 +41,8 @@ namespace Respository
         public DbSet<HistoricalAlarm> HistoricalAlarms { get; set; }
         public DbSet<DiagnosticDataDetail> DiagnosticDataDetails { get; set; }
         public DbSet<DiagnosticAlarm> DiagnosticAlarms { get; set; }
+        public DbSet<DiagnosticResultDescription> DiagnosticResultDescriptions { get; set; }
+        public DbSet<DiagnosticStatusDescription> DiagnosticStatusDescriptions { get; set; }
         public DbSet<RealtimeDiagnosticAlarm> RealtimeDiagnosticAlarms { get; set; }
         public DbSet<AlarmKPI> AlarmKPIs { get; set; }
         //Loop Check Data
@@ -113,6 +115,7 @@ namespace Respository
 
         public DbSet<Equipment> Equipments { get; set; }
         public DbSet<EquipmentCategory> EquipmentCategories { get; set; }
+        public DbSet<FlowmeterType> FlowmeterTypes { get; set; }
     }
 }
 

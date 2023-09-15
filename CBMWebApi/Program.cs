@@ -34,6 +34,8 @@ builder.Services.AddScoped<IHistoricalTrendRespository, HistoricalTrendResposito
 builder.Services.AddScoped<IHistoricalTrendService, HistoricalTrendService>();
 builder.Services.AddScoped<IProductionReportRespository, ProductionReportRespository>();
 builder.Services.AddScoped<IProductionReportService, ProductionReportService>();
+builder.Services.AddScoped<IDiagnosisRespository, DiagnosisRespository>();
+builder.Services.AddScoped<IDiagnosisService, DiagnosisService>();
 builder.Services.AddScoped<IExcelExportHelper, ExcelExportHelper>();
 
 var app = builder.Build();

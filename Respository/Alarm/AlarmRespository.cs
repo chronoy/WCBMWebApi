@@ -150,5 +150,14 @@ namespace Respository
             System.Reflection.PropertyInfo propertyInfo = obj.GetType().GetProperty(property);
             return propertyInfo.GetValue(obj, null);
         }
+
+        public AlarmCount GetAlarmCountByStation(string name, string alarmName, string alarmArea)
+        {
+            var alarms = (from alarm in _context.RealtimeAlarms
+                          where alarm.MessageType == "ALARM" && alarm.Status != "OK" &&
+                          alarm.Area.Contains(alarmArea)
+                          select alarm).ToList();
+            return new AlarmCount { Name = name, AlarmName = alarmName, AlarmArea = alarmArea, Count = alarms.Count };
+        }
     }
 }

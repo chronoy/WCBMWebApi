@@ -13,5 +13,6 @@ namespace Services
         public Task<List<DiagnosticAlarm>> GetRealtimeDiagnosticAlarm(int stationID, int loopID);
         public Task<List<HistoricalAlarm>> GetHistoricalAlarm(DateTime startDateTime, DateTime endDateTime, string alarmArea);
         public Task<List<AlarmKPI>> GetHistoricalAlarmKPI(int topNumber, string sortType, DateTime startDateTime, DateTime endDateTime, string alarmArea);
+        public Task<List<AlarmCount>> GetAlarmCountByStation(Station station);
     }
 }
