@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Models.Equipment
+namespace Models
 {
     [Table("tEquipmentTradeProperty")]
     public class tEquipmentTradeProperty

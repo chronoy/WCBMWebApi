@@ -6,10 +6,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Models.Equipment
+namespace Models
 {
     [Table("tEquipmentAccuracy")]
-    internal class EquipmentAccuray
+    internal class EquipmentAccuracy
     {
         [Key]
         public int ID { get; set; }
