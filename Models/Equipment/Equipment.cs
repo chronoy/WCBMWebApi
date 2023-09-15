@@ -6,7 +6,6 @@ using System.Text;
 
 namespace Models
 {
-    [JsonObject(MemberSerialization.OptOut)]
     [Table("tEquipment")]
     public class Equipment
     {
