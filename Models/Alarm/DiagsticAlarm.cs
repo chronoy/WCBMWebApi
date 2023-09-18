@@ -9,7 +9,7 @@ namespace Models
 
     [Keyless]
     [Table("tRealtimeDiagnosticAlarm")]
-    public class RealtimeDiagnosticAlarm
+    public class DiagnosticAlarm
     {
         [Column("ALM_NATIVETIMEIN")]
         public DateTime StartTime { get; set; }

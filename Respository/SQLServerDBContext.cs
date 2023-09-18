@@ -43,9 +43,6 @@ namespace Respository
         //Diagnostic
         public DbSet<DiagnosticDataDetail> DiagnosticDataDetails { get; set; }
 
-       
-
-
         public DbSet<DiagnosticResultDescription> DiagnosticResultDescriptions { get; set; }
         public DbSet<DiagnosticTTResultDescription> DiagnosticTTResultDescriptions { get; set; }
         public DbSet<DiagnosticPTResultDescription> DiagnosticPTResultDescriptions { get; set; }
@@ -54,9 +51,6 @@ namespace Respository
         public DbSet<DiagnosticVOSResultDescription> DiagnosticVOSResultDescriptions { get; set; }
         public DbSet<DiagnosticGCResultDescription> DiagnosticGCResultDescriptions { get; set; }
         public DbSet<DiagnosticStatusDescription> DiagnosticStatusDescriptions { get; set; }
-        public DbSet<RealtimeDiagnosticAlarm> RealtimeDiagnosticAlarms { get; set; }
-
-
 
         //Alarm
         public DbSet<Alarm> Alarms { get; set; }

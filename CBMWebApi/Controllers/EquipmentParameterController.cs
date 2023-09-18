@@ -95,6 +95,7 @@ namespace CBMWebApi.Controllers
             return rtn;
         }
 
+        [HttpPost]
         public async Task<Dictionary<string, object>> GetEquipmentLine()
         {
             Dictionary<string, object> rtn = new Dictionary<string, object>();
@@ -175,6 +176,7 @@ namespace CBMWebApi.Controllers
             return rtn;
         }
 
+        [HttpPost]
         public async Task<Dictionary<string, object>> GetEquipmentStation([FromForm] int companyID)
         {
             Dictionary<string, object> rtn = new Dictionary<string, object>();
@@ -255,6 +257,7 @@ namespace CBMWebApi.Controllers
             return rtn;
         }
 
+        [HttpPost]
         public async Task<Dictionary<string, object>> GetEquipmentCategory()
         {
             Dictionary<string, object> rtn = new Dictionary<string, object>();
@@ -335,6 +338,7 @@ namespace CBMWebApi.Controllers
             return rtn;
         }
 
+        [HttpPost]
         public async Task<Dictionary<string, object>> GetEquipmentModel([FromForm] int categoryID, [FromForm] int manufacturerID)
         {
             Dictionary<string, object> rtn = new Dictionary<string, object>();
@@ -415,6 +419,7 @@ namespace CBMWebApi.Controllers
             return rtn;
         }
 
+        [HttpPost]
         public async Task<Dictionary<string, object>> GetEquipmentAccuracy()
         {
             Dictionary<string, object> rtn = new Dictionary<string, object>();
@@ -495,6 +500,7 @@ namespace CBMWebApi.Controllers
             return rtn;
         }
 
+        [HttpPost]
         public async Task<Dictionary<string, object>> GetEquipmentPressure()
         {
             Dictionary<string, object> rtn = new Dictionary<string, object>();
@@ -575,6 +581,7 @@ namespace CBMWebApi.Controllers
             return rtn;
         }
 
+        [HttpPost]
         public async Task<Dictionary<string, object>> GetEquipmentManufacturer()
         {
             Dictionary<string, object> rtn = new Dictionary<string, object>();
