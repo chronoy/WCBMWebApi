@@ -43,7 +43,16 @@ namespace Respository
         //Diagnostic
         public DbSet<DiagnosticDataDetail> DiagnosticDataDetails { get; set; }
 
+       
+
+
         public DbSet<DiagnosticResultDescription> DiagnosticResultDescriptions { get; set; }
+        public DbSet<DiagnosticTTResultDescription> DiagnosticTTResultDescriptions { get; set; }
+        public DbSet<DiagnosticPTResultDescription> DiagnosticPTResultDescriptions { get; set; }
+        public DbSet<DiagnosticFMResultDescription> DiagnosticFMResultDescriptions { get; set; }
+        public DbSet<DiagnosticFCResultDescription> DiagnosticFCResultDescriptions { get; set; }
+        public DbSet<DiagnosticVOSResultDescription> DiagnosticVOSResultDescriptions { get; set; }
+        public DbSet<DiagnosticGCResultDescription> DiagnosticGCResultDescriptions { get; set; }
         public DbSet<DiagnosticStatusDescription> DiagnosticStatusDescriptions { get; set; }
         public DbSet<RealtimeDiagnosticAlarm> RealtimeDiagnosticAlarms { get; set; }
 
