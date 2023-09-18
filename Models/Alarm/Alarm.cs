@@ -44,7 +44,7 @@ namespace Models
     [Table("tHistoricalAlarm")]
     public class HistoricalAlarm : Alarm
     {
-        [Column("id")]
+        [Column("ID")]
         public int HisID { get; set; }
     }
 }

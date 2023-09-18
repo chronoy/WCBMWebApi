@@ -6,25 +6,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Models
 {
-    [Keyless]
-    public class DiagnosticAlarm
-    {
-        [Column("ALM_NATIVETIMEIN")]
-        public DateTime StartTime { get; set; }
-        [Column("ALM_NATIVETIMELAST")]
-        public DateTime EndTime { get; set; }
-        [Column("ALM_DESCR")]
-        public string Description { get; set; }
-        [Column("ALM_VALUE")]
-        public string DiagnosticResult { get; set; }
-        [Column("ALM_CURRENTVALUE")]
-        public double Value { get; set; }
-        [Column("ALM_ALMSTATUS")]
-        public string Status { get; set; }
-    }
 
+    [Keyless]
     [Table("tRealtimeDiagnosticAlarm")]
-    public class RealtimeDiagnosticAlarm : DiagnosticAlarm
+    public class RealtimeDiagnosticAlarm 
     {
         [Column("ALM_PHYSLNODE")]
         public string NodeName { get; set; }
