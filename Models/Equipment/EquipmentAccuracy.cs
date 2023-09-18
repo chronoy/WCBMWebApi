@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Models
 {
     [Table("tEquipmentAccuracy")]
-    internal class EquipmentAccuracy
+    public class EquipmentAccuracy
     {
         [Key]
         public int ID { get; set; }

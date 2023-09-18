@@ -38,6 +38,8 @@ builder.Services.AddScoped<IDiagnosisRespository, DiagnosisRespository>();
 builder.Services.AddScoped<IDiagnosisService, DiagnosisService>();
 builder.Services.AddScoped<IEquipmentRespository, EquipmentRespository>();
 builder.Services.AddScoped<IEquipmentService, EquipmentService>();
+builder.Services.AddScoped<IEquipmentParameterRespository, EquipmentParameterRespository>();
+builder.Services.AddScoped<IEquipmentParameterService, EquipmentParameterService>();
 builder.Services.AddScoped<IExcelExportHelper, ExcelExportHelper>();
 
 var app = builder.Build();
