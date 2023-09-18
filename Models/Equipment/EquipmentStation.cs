@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 
 namespace Models
 {
-    [Table("tEquipmentCompany")]
-    internal class EquipmentStation
+    [Table("tEquipmentStation")]
+    public class EquipmentStation
     {
         [Key]
         public int ID { get; set; }
@@ -19,6 +19,6 @@ namespace Models
         public string PostalCode { get; set; }
 
         public string Description { get; set; }
-        public int CompanyID { get; set; }    
+        public int EquipmentCompanyID { get; set; }    
     }
 }

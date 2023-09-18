@@ -65,7 +65,6 @@ namespace Respository
         public DbSet<DiagnosticAlarm> DiagnosticAlarms { get; set; }
         public DbSet<AlarmKPI> AlarmKPIs { get; set; }
 
-
         //Loop Check Data
         public DbSet<HistoricalDanielVOSCheckData> HistoricalDanielVOSCheckDatas { get; set; }
         public DbSet<HistoricalCheckDataDanielVOSChartData> HistoricalCheckDataDanielVOSChartDatas { get; set; }
@@ -136,11 +135,16 @@ namespace Respository
         public DbSet<HistoricalProductionDailyReport> HistoricalProductionDailyReports { get; set; }
         //public DbSet<ExpertKnowledge> ExpertKnowledges { get; set; }
 
-        
         //Equipment
         public DbSet<Equipment> Equipments { get; set; }
         public DbSet<EquipmentCategory> EquipmentCategories { get; set; }
-
+        public DbSet<EquipmentCompany> EquipmentCompanies { get; set; }
+        public DbSet<EquipmentLine> EquipmentLines { get; set; }
+        public DbSet<EquipmentStation> EquipmentStations { get; set; }
+        public DbSet<EquipmentModel> EquipmentModels { get; set; }
+        public DbSet<EquipmentAccuracy> EquipmentAccuracies { get; set; }
+        public DbSet<EquipmentPressureLevel> EquipmentPressureLevels { get; set; }
+        public DbSet<EquipmentManufacturer> EquipmentManufacturers { get; set; }
     }
 }
 
