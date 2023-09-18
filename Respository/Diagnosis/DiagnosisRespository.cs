@@ -21,7 +21,7 @@ namespace Respository
 
             loopDiagnosticDatas = (from diagnosis in _context.StationLoopDiagnosticDatas
                                    join loop in _context.StationLoops on diagnosis.ID equals loop.ID
-                                   join type in _context.FlowmeterTypes on loop.EquipmentCategoryID equals type.ID
+                                   join category in _context.EquipmentCategories on loop.EquipmentCategoryID equals category.ID
                                    join status in _context.DiagnosticStatusDescriptions on diagnosis.LoopStatusID equals status.ID
                                    where loop.StationID == stationID
                                    select new StationLoopDiagnosticData
@@ -29,8 +29,8 @@ namespace Respository
                                        ID = diagnosis.ID,
                                        DateTime = diagnosis.DateTime,
                                        LoopName = loop.AbbrName,
-                                       Flowmeter = type.Name,
-                                       FlowmeterTypeDescription = type.Description,
+                                       LoopCategory = category.Name,
+                                       LoopDescription = category.Description,
                                        FMDiagnositcResultID = diagnosis.FMDiagnositcResultID,
                                        TTDiagnositcResultID = diagnosis.TTDiagnositcResultID,
                                        PTDiagnositcResultID = diagnosis.PTDiagnositcResultID,
@@ -70,6 +70,37 @@ namespace Respository
                                         }).ToList();
 
             return equipmentDiagnosticDatas;
+        }
+
+        public List<DiagnosticDataDetail> GetLoopDiagnosticDataDetailByLoop(int loopID, string manufacturer, string diagnosticType)
+        {
+            switch(manufacturer)
+            {
+                case "Daniel":
+                    switch(diagnosticType)
+                    {
+                        case "TT":
+                            DanielFCDiagnosticDataDetail detail = _context.DanielTTDiagnosticDataDetails.FirstOrDefault(obj => obj.ID == LoopID);
+                            if(detail!=null)
+                            {
+                                foreach(System.Reflection.PropertyInfo info in detail.GetType().GetProperties())
+                                {
+                                    Console.WriteLine(info);
+                                }
+                            }
+                            break;
+                        case "PT":
+                            break;
+                        case "FM":
+                            break;
+                        case "FC":
+                            break;
+                        case "VOS":
+                            break;
+                    }
+                    break;
+            }
+            return null;
         }
     }
 }

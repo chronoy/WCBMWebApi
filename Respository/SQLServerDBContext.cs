@@ -29,10 +29,8 @@ namespace Respository
         public DbSet<Station> Stations { get; set; }
         public DbSet<Line> Lines { get; set; }
         public DbSet<StationEquipment> StationEquipments { get; set; }
-        public DbSet<StationEquipmentDiagnosticData> StationEquipmentDiagnosticDatas { get; set; }
-
         public DbSet<StationLoop> StationLoops { get; set; }
-        public DbSet<StationLoopDiagnosticData> StationLoopDiagnosticDatas { get; set; }
+        
         public DbSet<StationDeviceCollectDataType> StationDeviceCollectDataTypes { get; set; }
 
         //Trend
@@ -59,6 +57,7 @@ namespace Respository
 
 
         //Alarm
+<<<<<<< Updated upstream
         public DbSet<Alarm> Alarms { get; set; }
         public DbSet<RealtimeAlarm> RealtimeAlarms { get; set; }
         public DbSet<HistoricalAlarm> HistoricalAlarms { get; set; }
