@@ -17,4 +17,29 @@ namespace Models
         public string? DescriptionRU { get; set; }
         public string? DescriptionEN { get; set; }
     }
+
+    [Table("tDiagnosticDescriptionTT")]
+    public class DiagnosticTTResultDescription: DiagnosticResultDescription
+    {
+    }
+    [Table("tDiagnosticDescriptionPT")]
+    public class DiagnosticPTResultDescription : DiagnosticResultDescription
+    {
+    }
+    [Table("tDiagnosticDescriptionFM")]
+    public class DiagnosticFMResultDescription : DiagnosticResultDescription
+    {
+    }
+    [Table("tDiagnosticDescriptionFC")]
+    public class DiagnosticFCResultDescription : DiagnosticResultDescription
+    {
+    }
+    [Table("tDiagnosticDescriptionVOS")]
+    public class DiagnosticVOSResultDescription : DiagnosticResultDescription
+    {
+    }
+    [Table("tDiagnosticDescriptionGC")]
+    public class DiagnosticGCResultDescription : DiagnosticResultDescription
+    {
+    }
 }

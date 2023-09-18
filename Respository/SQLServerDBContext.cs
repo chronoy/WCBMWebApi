@@ -42,9 +42,21 @@ namespace Respository
 
         //Diagnostic
         public DbSet<DiagnosticDataDetail> DiagnosticDataDetails { get; set; }
+
+       
+
+
         public DbSet<DiagnosticResultDescription> DiagnosticResultDescriptions { get; set; }
+        public DbSet<DiagnosticTTResultDescription> DiagnosticTTResultDescriptions { get; set; }
+        public DbSet<DiagnosticPTResultDescription> DiagnosticPTResultDescriptions { get; set; }
+        public DbSet<DiagnosticFMResultDescription> DiagnosticFMResultDescriptions { get; set; }
+        public DbSet<DiagnosticFCResultDescription> DiagnosticFCResultDescriptions { get; set; }
+        public DbSet<DiagnosticVOSResultDescription> DiagnosticVOSResultDescriptions { get; set; }
+        public DbSet<DiagnosticGCResultDescription> DiagnosticGCResultDescriptions { get; set; }
         public DbSet<DiagnosticStatusDescription> DiagnosticStatusDescriptions { get; set; }
         public DbSet<RealtimeDiagnosticAlarm> RealtimeDiagnosticAlarms { get; set; }
+
+
 
         //Alarm
         public DbSet<Alarm> Alarms { get; set; }
@@ -100,6 +112,7 @@ namespace Respository
         public DbSet<RealtimeRMGLoopCheckData> RealtimeRMGLoopCheckDatas { get; set; }
         public DbSet<RealtimeCheckDataRMGVOSChartData> RealtimeCheckDataRMGVOSChartDatas { get; set; }
 
+        
         //Equipment Check Data
         public DbSet<HistoricalABBGCCheckData> HistoricalABBGCCheckDatas { get; set; }
         public DbSet<HistoricalDanielGCCheckData> HistoricalDanielGCCheckDatas { get; set; }

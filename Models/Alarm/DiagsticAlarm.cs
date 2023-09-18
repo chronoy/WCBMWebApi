@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Models
 {
+
     [Keyless]
     [Table("tRealtimeDiagnosticAlarm")]
     public class RealtimeDiagnosticAlarm
