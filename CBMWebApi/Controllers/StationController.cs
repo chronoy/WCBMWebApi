@@ -74,5 +74,24 @@ namespace CBMWebApi.Controllers
             rtn["EquipmentAlarmCount"] = equipmentAlarmCount;
             return rtn;
         }
+
+        [HttpPost]
+        public async Task<Dictionary<string, object>> GetLoopDiagnosticDataDetailByLoop([FromForm] int loopID,[FromForm] string manufacturer, [FromForm] string diagnosisType)
+        {
+            Dictionary<string, object> rtn = new();
+            List<DiagnosticDataDetail> details = await _diagnosisService.GetLoopDiagnosticDataDetailByLoop(loopID, manufacturer, diagnosisType);
+            if (details == null)
+            {
+                rtn["MSG"] = "OtherError";
+                rtn["Code"] = "400";
+            }
+            else
+            {
+                rtn["MSG"] = "OK";
+                rtn["Code"] = "200";
+            }
+            rtn["Data"] = details;
+            return rtn;
+        }
     }
 }
