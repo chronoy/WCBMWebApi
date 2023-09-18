@@ -21,7 +21,7 @@ namespace Respository
 
             loopDiagnosticDatas = (from diagnosis in _context.StationLoopDiagnosticDatas
                                    join loop in _context.StationLoops on diagnosis.ID equals loop.ID
-                                   join type in _context.FlowmeterTypes on loop.EquipmentCategoryID equals type.ID
+                                   join category in _context.EquipmentCategories on loop.EquipmentCategoryID equals category.ID
                                    join status in _context.DiagnosticStatusDescriptions on diagnosis.LoopStatusID equals status.ID
                                    where loop.StationID == stationID
                                    select new StationLoopDiagnosticData
@@ -29,8 +29,7 @@ namespace Respository
                                        ID = diagnosis.ID,
                                        DateTime = diagnosis.DateTime,
                                        LoopName = loop.AbbrName,
-                                       Flowmeter = type.Name,
-                                       FlowmeterTypeDescription = type.Description,
+                                       Flowmeter = category.Name,
                                        FMDiagnositcResultID = diagnosis.FMDiagnositcResultID,
                                        TTDiagnositcResultID = diagnosis.TTDiagnositcResultID,
                                        PTDiagnositcResultID = diagnosis.PTDiagnositcResultID,

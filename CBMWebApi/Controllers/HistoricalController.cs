@@ -7,7 +7,7 @@ namespace CBMCenterApi.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    public class HistoricalController : Controller
+    public class HistoricalController : ControllerBase
     {
         private readonly IConfiguration _Configuration;
         private readonly IHistoricalTrendService _historicalTrendService;

@@ -9,7 +9,7 @@ namespace CBMWebApi.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    public class ReportController : Controller
+    public class ReportController : ControllerBase
     {
         private readonly IProductionReportService _productionReportService;
         private readonly IConfiguration _configuration;

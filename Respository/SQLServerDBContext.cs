@@ -115,7 +115,6 @@ namespace Respository
 
         public DbSet<Equipment> Equipments { get; set; }
         public DbSet<EquipmentCategory> EquipmentCategories { get; set; }
-        public DbSet<FlowmeterType> FlowmeterTypes { get; set; }
     }
 }
 
