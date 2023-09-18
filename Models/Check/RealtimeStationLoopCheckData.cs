@@ -200,7 +200,7 @@ namespace Models
    
     [Keyless]
     [Table("tRealtimeCheckDataDanielVOSChartData")]
-    public class RealtimeCheckDataDanielVOSChartData 
+    public class RealtimeDanielCheckDataVOSChartData
     {
    
         public int ID { get; set; }
@@ -624,7 +624,7 @@ namespace Models
 
     [Keyless]
     [Table("tRealtimeCheckDataElsterVOSChartData")]
-    public class RealtimeCheckDataElsterVOSChartData
+    public class RealtimeElsterCheckDataVOSChartData
     {
         public int ID { get; set; }
         public DateTime? Datetime { get; set; }
@@ -949,7 +949,7 @@ namespace Models
 
     [Keyless]
     [Table("tRealtimeCheckDataSickVOSChartData")]
-    public class RealtimeCheckDataSickVOSChartData
+    public class RealtimeSickCheckDataVOSChartData
     {
         public int ID { get; set; }
         public DateTime? DateTime { get; set; }
@@ -1309,7 +1309,7 @@ namespace Models
 
     [Keyless]
     [Table("tRealtimeCheckDataWeiseVOSChartData")]
-    public class RealtimeCheckDataWeiseVOSChartData
+    public class RealtimeWeiseCheckDataVOSChartData
     {
         public int ID { get; set; }
         public DateTime? DateTime { get; set; }
@@ -1721,7 +1721,7 @@ namespace Models
 
     [Keyless]
     [Table("tRealtimeCheckDataRMGVOSChartData")]
-    public class RealtimeCheckDataRMGVOSChartData
+    public class RealtimeRMGCheckDataVOSChartData
     {
         public int ID { get; set; }
         public DateTime? Datetime { get; set; }

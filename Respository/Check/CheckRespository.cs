@@ -566,12 +566,12 @@ namespace Respository
             }
         }
 
-        public List<RealtimeCheckDataDanielVOSChartData> GetRealtimeCheckDataDanielVOSChartDatas(int loopID)
+        public List<RealtimeDanielCheckDataVOSChartData> GetRealtimeCheckDataDanielVOSChartDatas(int loopID)
         {
             return _context.RealtimeCheckDataDanielVOSChartDatas.Where(realtimeCheckChartData => realtimeCheckChartData.ID == loopID).ToList();
         }
 
-        public string AddHistoricalCheckDataDanielVOSChartDatas(List<HistoricalCheckDataDanielVOSChartData> historicalCheckDataDanielVOSChartDatas)
+        public string AddHistoricalCheckDataDanielVOSChartDatas(List<HistoricalDanielCheckDataVOSChartData> historicalCheckDataDanielVOSChartDatas)
         {
             using (var tran = _context.Database.BeginTransaction(IsolationLevel.ReadCommitted))
             {
