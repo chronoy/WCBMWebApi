@@ -59,11 +59,11 @@ namespace Services
 
                                 if (historicalDanielVOSCheckData.CheckDataStatusID == 0 && VOSHisID != 0)
                                 {
-                                    List<HistoricalCheckDataDanielVOSChartData> histchartdata = new List<HistoricalCheckDataDanielVOSChartData>();
+                                    List<HistoricalDanielCheckDataVOSChartData> histchartdata = new List<HistoricalDanielCheckDataVOSChartData>();
                                     DateTime chartDate = CurrentDate.AddMinutes(-5); int number = 0;
-                                    foreach (RealtimeCheckDataDanielVOSChartData realtimeCheckDataDanielVOSChartData in realtimeVOSCheckChartDatas)
+                                    foreach (RealtimeDanielCheckDataVOSChartData realtimeCheckDataDanielVOSChartData in realtimeVOSCheckChartDatas)
                                     {
-                                        HistoricalCheckDataDanielVOSChartData historicalCheckDataDanielVOSChartData = new HistoricalCheckDataDanielVOSChartData();
+                                        HistoricalDanielCheckDataVOSChartData historicalCheckDataDanielVOSChartData = new HistoricalDanielCheckDataVOSChartData();
                                         EntityToEntity(realtimeCheckDataDanielVOSChartData, historicalCheckDataDanielVOSChartData);
                                         historicalCheckDataDanielVOSChartData.ReportID = VOSHisID;
                                         historicalCheckDataDanielVOSChartData.LoopID = realtimeCheckDataDanielVOSChartData.ID;
@@ -81,7 +81,7 @@ namespace Services
                         {
                             var realtimeFRCheckData = _respository.GetRealtimeCheckDatas<RealtimeElsterFRCheckData>(x => x.ID == loopID).FirstOrDefault();
                             var realtimeVOSCheckData = _respository.GetRealtimeCheckDatas<RealtimeElsterVOSCheckData>(x => x.ID == loopID).FirstOrDefault();
-                            var realtimeVOSCheckChartDatas = _respository.GetRealtimeCheckDatas<RealtimeCheckDataElsterVOSChartData>(x => x.ID == loopID);
+                            var realtimeVOSCheckChartDatas = _respository.GetRealtimeCheckDatas<RealtimeElsterCheckDataVOSChartData>(x => x.ID == loopID);
                             HistoricalElsterFRCheckData historicalFRCheckData = new HistoricalElsterFRCheckData();
                             HistoricalElsterVOSCheckData historicalVOSCheckData = new HistoricalElsterVOSCheckData();
 
@@ -103,11 +103,11 @@ namespace Services
 
                                 if (historicalVOSCheckData.CheckDataStatusID == 0 && VOSHisID != 0)
                                 {
-                                    List<HistoricalCheckDataElsterVOSChartData> histchartdata = new List<HistoricalCheckDataElsterVOSChartData>();
+                                    List<HistoricalElsterCheckDataVOSChartData> histchartdata = new List<HistoricalElsterCheckDataVOSChartData>();
                                     DateTime chartDate = CurrentDate.AddMinutes(-5); int number = 0;
-                                    foreach (RealtimeCheckDataElsterVOSChartData realtimeCheckDataVOSChartData in realtimeVOSCheckChartDatas)
+                                    foreach (RealtimeElsterCheckDataVOSChartData realtimeCheckDataVOSChartData in realtimeVOSCheckChartDatas)
                                     {
-                                        HistoricalCheckDataElsterVOSChartData historicalCheckDataVOSChartData = new HistoricalCheckDataElsterVOSChartData();
+                                        HistoricalElsterCheckDataVOSChartData historicalCheckDataVOSChartData = new HistoricalElsterCheckDataVOSChartData();
                                         EntityToEntity(realtimeCheckDataVOSChartData, historicalCheckDataVOSChartData);
                                         historicalCheckDataVOSChartData.ReportID = VOSHisID;
                                         historicalCheckDataVOSChartData.LoopID = realtimeCheckDataVOSChartData.ID;
@@ -124,7 +124,7 @@ namespace Services
                         {
                             var realtimeFRCheckData = _respository.GetRealtimeCheckDatas<RealtimeSickFRCheckData>(x => x.ID == loopID).FirstOrDefault();
                             var realtimeVOSCheckData = _respository.GetRealtimeCheckDatas<RealtimeSickVOSCheckData>(x => x.ID == loopID).FirstOrDefault();
-                            var realtimeVOSCheckChartDatas = _respository.GetRealtimeCheckDatas<RealtimeCheckDataSickVOSChartData>(x => x.ID == loopID);
+                            var realtimeVOSCheckChartDatas = _respository.GetRealtimeCheckDatas<RealtimeSickCheckDataVOSChartData>(x => x.ID == loopID);
                             HistoricalSickFRCheckData historicalFRCheckData = new HistoricalSickFRCheckData();
                             HistoricalSickVOSCheckData historicalVOSCheckData = new HistoricalSickVOSCheckData();
 
@@ -146,11 +146,11 @@ namespace Services
 
                                 if (historicalVOSCheckData.CheckDataStatusID == 0 && VOSHisID != 0)
                                 {
-                                    List<HistoricalCheckDataSickVOSChartData> histchartdata = new List<HistoricalCheckDataSickVOSChartData>();
+                                    List<HistoricalSickCheckDataVOSChartData> histchartdata = new List<HistoricalSickCheckDataVOSChartData>();
                                     DateTime chartDate = CurrentDate.AddMinutes(-5); int number = 0;
-                                    foreach (RealtimeCheckDataSickVOSChartData realtimeCheckDataVOSChartData in realtimeVOSCheckChartDatas)
+                                    foreach (RealtimeSickCheckDataVOSChartData realtimeCheckDataVOSChartData in realtimeVOSCheckChartDatas)
                                     {
-                                        HistoricalCheckDataSickVOSChartData historicalCheckDataVOSChartData = new HistoricalCheckDataSickVOSChartData();
+                                        HistoricalSickCheckDataVOSChartData historicalCheckDataVOSChartData = new HistoricalSickCheckDataVOSChartData();
                                         EntityToEntity(realtimeCheckDataVOSChartData, historicalCheckDataVOSChartData);
                                         historicalCheckDataVOSChartData.ReportID = VOSHisID;
                                         historicalCheckDataVOSChartData.LoopID = realtimeCheckDataVOSChartData.ID;
@@ -167,7 +167,7 @@ namespace Services
                         {
                             var realtimeFRCheckData = _respository.GetRealtimeCheckDatas<RealtimeWeiseFRCheckData>(x => x.ID == loopID).FirstOrDefault();
                             var realtimeVOSCheckData = _respository.GetRealtimeCheckDatas<RealtimeWeiseVOSCheckData>(x => x.ID == loopID).FirstOrDefault();
-                            var realtimeVOSCheckChartDatas = _respository.GetRealtimeCheckDatas<RealtimeCheckDataWeiseVOSChartData>(x => x.ID == loopID);
+                            var realtimeVOSCheckChartDatas = _respository.GetRealtimeCheckDatas<RealtimeWeiseCheckDataVOSChartData>(x => x.ID == loopID);
                             HistoricalWeiseFRCheckData historicalFRCheckData = new HistoricalWeiseFRCheckData();
                             HistoricalWeiseVOSCheckData historicalVOSCheckData = new HistoricalWeiseVOSCheckData();
 
@@ -189,11 +189,11 @@ namespace Services
 
                                 if (historicalVOSCheckData.CheckDataStatusID == 0 && VOSHisID != 0)
                                 {
-                                    List<HistoricalCheckDataWeiseVOSChartData> histchartdata = new List<HistoricalCheckDataWeiseVOSChartData>();
+                                    List<HistoricalWeiseCheckDataVOSChartData> histchartdata = new List<HistoricalWeiseCheckDataVOSChartData>();
                                     DateTime chartDate = CurrentDate.AddMinutes(-5); int number = 0;
-                                    foreach (RealtimeCheckDataWeiseVOSChartData realtimeCheckDataVOSChartData in realtimeVOSCheckChartDatas)
+                                    foreach (RealtimeWeiseCheckDataVOSChartData realtimeCheckDataVOSChartData in realtimeVOSCheckChartDatas)
                                     {
-                                        HistoricalCheckDataWeiseVOSChartData historicalCheckDataVOSChartData = new HistoricalCheckDataWeiseVOSChartData();
+                                        HistoricalWeiseCheckDataVOSChartData historicalCheckDataVOSChartData = new HistoricalWeiseCheckDataVOSChartData();
                                         EntityToEntity(realtimeCheckDataVOSChartData, historicalCheckDataVOSChartData);
                                         historicalCheckDataVOSChartData.ReportID = VOSHisID;
                                         historicalCheckDataVOSChartData.LoopID = realtimeCheckDataVOSChartData.ID;
@@ -210,7 +210,7 @@ namespace Services
                         {
                             var realtimeFRCheckData = _respository.GetRealtimeCheckDatas<RealtimeRMGFRCheckData>(x => x.ID == loopID).FirstOrDefault();
                             var realtimeVOSCheckData = _respository.GetRealtimeCheckDatas<RealtimeRMGVOSCheckData>(x => x.ID == loopID).FirstOrDefault();
-                            var realtimeVOSCheckChartDatas = _respository.GetRealtimeCheckDatas<RealtimeCheckDataRMGVOSChartData>(x => x.ID == loopID);
+                            var realtimeVOSCheckChartDatas = _respository.GetRealtimeCheckDatas<RealtimeRMGCheckDataVOSChartData>(x => x.ID == loopID);
                             HistoricalRMGFRCheckData historicalFRCheckData = new HistoricalRMGFRCheckData();
                             HistoricalRMGVOSCheckData historicalVOSCheckData = new HistoricalRMGVOSCheckData();
 
@@ -232,11 +232,11 @@ namespace Services
 
                                 if (historicalVOSCheckData.CheckDataStatusID == 0 && VOSHisID != 0)
                                 {
-                                    List<HistoricalCheckDataRMGVOSChartData> histchartdata = new List<HistoricalCheckDataRMGVOSChartData>();
+                                    List<HistoricalRMGCheckDataVOSChartData> histchartdata = new List<HistoricalRMGCheckDataVOSChartData>();
                                     DateTime chartDate = CurrentDate.AddMinutes(-5); int number = 0;
-                                    foreach (RealtimeCheckDataRMGVOSChartData realtimeCheckDataVOSChartData in realtimeVOSCheckChartDatas)
+                                    foreach (RealtimeRMGCheckDataVOSChartData realtimeCheckDataVOSChartData in realtimeVOSCheckChartDatas)
                                     {
-                                        HistoricalCheckDataRMGVOSChartData historicalCheckDataVOSChartData = new HistoricalCheckDataRMGVOSChartData();
+                                        HistoricalRMGCheckDataVOSChartData historicalCheckDataVOSChartData = new HistoricalRMGCheckDataVOSChartData();
                                         EntityToEntity(realtimeCheckDataVOSChartData, historicalCheckDataVOSChartData);
                                         historicalCheckDataVOSChartData.ReportID = VOSHisID;
                                         historicalCheckDataVOSChartData.LoopID = realtimeCheckDataVOSChartData.ID;

@@ -7,7 +7,7 @@ namespace CBMWebApi.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    public class AlarmController : Controller
+    public class AlarmController : ControllerBase
     {
         private readonly IConfiguration _Configuration;
         private readonly IAlarmService _alarmService;

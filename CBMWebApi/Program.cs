@@ -18,7 +18,7 @@ builder.Services.AddScoped<ICheckService, CheckService>();
 //builder.Services.AddSingleton<IPDBRespository, PDBRespository>();
 //Yantao
 builder.Services.AddSingleton<IPDBService, PDBService>();
-builder.Services.AddSingleton<IOPCClientService, OPCClientService>(); 
+builder.Services.AddSingleton<IOPCClientService, OPCClientService>();
 builder.Services.AddHostedService<LifetimeEventsHostService>();
 builder.Services.AddScoped<IStationRespository, StationRespository>();
 builder.Services.AddScoped<IStationService, StationService>();
@@ -36,6 +36,10 @@ builder.Services.AddScoped<IProductionReportRespository, ProductionReportResposi
 builder.Services.AddScoped<IProductionReportService, ProductionReportService>();
 builder.Services.AddScoped<IDiagnosisRespository, DiagnosisRespository>();
 builder.Services.AddScoped<IDiagnosisService, DiagnosisService>();
+builder.Services.AddScoped<IEquipmentRespository, EquipmentRespository>();
+builder.Services.AddScoped<IEquipmentService, EquipmentService>();
+builder.Services.AddScoped<IEquipmentParameterRespository, EquipmentParameterRespository>();
+builder.Services.AddScoped<IEquipmentParameterService, EquipmentParameterService>();
 builder.Services.AddScoped<IExcelExportHelper, ExcelExportHelper>();
 
 var app = builder.Build();

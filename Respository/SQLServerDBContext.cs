@@ -16,11 +16,11 @@ namespace Respository
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<HistoricalCheckDataDanielVOSChartData>().HasKey(c => new { c.ReportID, c.Datetime });
-            modelBuilder.Entity<HistoricalCheckDataSickVOSChartData>().HasKey(c => new { c.ReportID, c.Datetime });
-            modelBuilder.Entity<HistoricalCheckDataElsterVOSChartData>().HasKey(c => new { c.ReportID, c.Datetime });
-            modelBuilder.Entity<HistoricalCheckDataWeiseVOSChartData>().HasKey(c => new { c.ReportID, c.Datetime });
-            modelBuilder.Entity<HistoricalCheckDataRMGVOSChartData>().HasKey(c => new { c.ReportID, c.Datetime });
+            modelBuilder.Entity<HistoricalDanielCheckDataVOSChartData>().HasKey(c => new { c.ReportID, c.Datetime });
+            modelBuilder.Entity<HistoricalSickCheckDataVOSChartData>().HasKey(c => new { c.ReportID, c.Datetime });
+            modelBuilder.Entity<HistoricalElsterCheckDataVOSChartData>().HasKey(c => new { c.ReportID, c.Datetime });
+            modelBuilder.Entity<HistoricalWeiseCheckDataVOSChartData>().HasKey(c => new { c.ReportID, c.Datetime });
+            modelBuilder.Entity<HistoricalRMGCheckDataVOSChartData>().HasKey(c => new { c.ReportID, c.Datetime });
         }
         public DbSet<Collector> Collectors { get; set; }
         public DbSet<Tag> Tags { get; set; }
@@ -38,16 +38,7 @@ namespace Respository
         public DbSet<TrendGroup> TrendGroups { get; set; }
         public DbSet<TrendTag> TrendTags { get; set; }
 
-
-        //Alarm
-        public DbSet<Alarm> Alarms { get; set; }
-        public DbSet<RealtimeAlarm> RealtimeAlarms { get; set; }
-        public DbSet<HistoricalAlarm> HistoricalAlarms { get; set; }
-        public DbSet<RealtimeDiagnosticAlarm> RealtimeDiagnosticAlarms { get; set; }
-
-
-        //Diagnostic
-
+       //Diagnostic
         public DbSet<DiagnosticResultDescription> DiagnosticResultDescriptions { get; set; }
         public DbSet<DiagnosticTTResultDescription> DiagnosticTTResultDescriptions { get; set; }
         public DbSet<DiagnosticPTResultDescription> DiagnosticPTResultDescriptions { get; set; }
@@ -86,52 +77,60 @@ namespace Respository
         public DbSet<ABBGCDiagnosticDataDetail> ABBGCDiagnosticDataDetails { get; set; }
         public DbSet<DanielGCDiagnosticDataDetail> DanielGCDiagnosticDataDetails { get; set; }
         public DbSet<ElsterGCDiagnosticDataDetail> ElsterGCDiagnosticDataDetails { get; set; }
+
+        //Alarm
+        public DbSet<Alarm> Alarms { get; set; }
+        public DbSet<RealtimeAlarm> RealtimeAlarms { get; set; }
+        public DbSet<HistoricalAlarm> HistoricalAlarms { get; set; }
+        public DbSet<DiagnosticAlarm> DiagnosticAlarms { get; set; }
+        public DbSet<AlarmKPI> AlarmKPIs { get; set; }
+        
         //Loop Check Data
         public DbSet<HistoricalDanielVOSCheckData> HistoricalDanielVOSCheckDatas { get; set; }
-        public DbSet<HistoricalCheckDataDanielVOSChartData> HistoricalCheckDataDanielVOSChartDatas { get; set; }
+        public DbSet<HistoricalDanielCheckDataVOSChartData> HistoricalCheckDataDanielVOSChartDatas { get; set; }
         public DbSet<HistoricalDanielFRCheckData> HistoricalDanielFRCheckDatas { get; set; }
         public DbSet<HistoricalDanielLoopCheckData> HistoricalDanielLoopCheckDatas { get; set; }
         public DbSet<HistoricalElsterVOSCheckData> HistoricalElsterVOSCheckDatas { get; set; }
-        public DbSet<HistoricalCheckDataElsterVOSChartData> HistoricalCheckDataElsterVOSChartDatas { get; set; }
+        public DbSet<HistoricalElsterCheckDataVOSChartData> HistoricalCheckDataElsterVOSChartDatas { get; set; }
         public DbSet<HistoricalElsterFRCheckData> HistoricalElsterFRCheckDatas { get; set; }
         public DbSet<HistoricalElsterLoopCheckData> HistoricalElsterLoopCheckDatas { get; set; }
         public DbSet<HistoricalSickVOSCheckData> HistoricalSickVOSCheckDatas { get; set; }
-        public DbSet<HistoricalCheckDataSickVOSChartData> HistoricalCheckDataSickVOSChartDatas { get; set; }
+        public DbSet<HistoricalSickCheckDataVOSChartData> HistoricalCheckDataSickVOSChartDatas { get; set; }
         public DbSet<HistoricalSickFRCheckData> HistoricalSickFRCheckDatas { get; set; }
         public DbSet<HistoricalSickLoopCheckData> HistoricalSickLoopCheckDatas { get; set; }
         public DbSet<HistoricalWeiseVOSCheckData> HistoricalWeiseVOSCheckDatas { get; set; }
-        public DbSet<HistoricalCheckDataWeiseVOSChartData> HistoricalCheckDataWeiseVOSChartDatas { get; set; }
+        public DbSet<HistoricalWeiseCheckDataVOSChartData> HistoricalCheckDataWeiseVOSChartDatas { get; set; }
         public DbSet<HistoricalWeiseFRCheckData> HistoricalWeiseFRCheckDatas { get; set; }
         public DbSet<HistoricalWeiseLoopCheckData> HistoricalWeiseLoopCheckDatas { get; set; }
         public DbSet<HistoricalRMGVOSCheckData> HistoricalRMGVOSCheckDatas { get; set; }
-        public DbSet<HistoricalCheckDataRMGVOSChartData> HistoricalCheckDataRMGVOSChartDatas { get; set; }
+        public DbSet<HistoricalRMGCheckDataVOSChartData> HistoricalCheckDataRMGVOSChartDatas { get; set; }
         public DbSet<HistoricalRMGFRCheckData> HistoricalRMGFRCheckDatas { get; set; }
         public DbSet<HistoricalRMGLoopCheckData> HistoricalRMGLoopCheckDatas { get; set; }
 
         public DbSet<RealtimeDanielVOSCheckData> RealtimeDanielVOSCheckDatas { get; set; }
         public DbSet<RealtimeDanielFRCheckData> RealtimeDanielFRCheckDatas { get; set; }
         public DbSet<RealtimeDanielLoopCheckData> RealtimeDanielLoopCheckDatas { get; set; }
-        public DbSet<RealtimeCheckDataDanielVOSChartData> RealtimeCheckDataDanielVOSChartDatas { get; set; }
+        public DbSet<RealtimeDanielCheckDataVOSChartData> RealtimeCheckDataDanielVOSChartDatas { get; set; }
 
         public DbSet<RealtimeElsterVOSCheckData> RealtimeElsterVOSCheckDatas { get; set; }
         public DbSet<RealtimeElsterFRCheckData> RealtimeElsterFRCheckDatas { get; set; }
         public DbSet<RealtimeElsterLoopCheckData> RealtimeElsterLoopCheckDatas { get; set; }
-        public DbSet<RealtimeCheckDataElsterVOSChartData> RealtimeCheckDataElsterVOSChartDatas { get; set; }
+        public DbSet<RealtimeElsterCheckDataVOSChartData> RealtimeCheckDataElsterVOSChartDatas { get; set; }
 
         public DbSet<RealtimeSickVOSCheckData> RealtimeSickVOSCheckDatas { get; set; }
         public DbSet<RealtimeSickFRCheckData> RealtimeSickFRCheckDatas { get; set; }
         public DbSet<RealtimeSickLoopCheckData> RealtimeSickLoopCheckDatas { get; set; }
-        public DbSet<RealtimeCheckDataSickVOSChartData> RealtimeCheckDataSickVOSChartDatas { get; set; }
+        public DbSet<RealtimeSickCheckDataVOSChartData> RealtimeCheckDataSickVOSChartDatas { get; set; }
 
         public DbSet<RealtimeWeiseVOSCheckData> RealtimeWeiseVOSCheckDatas { get; set; }
         public DbSet<RealtimeWeiseFRCheckData> RealtimeWeiseFRCheckDatas { get; set; }
         public DbSet<RealtimeWeiseLoopCheckData> RealtimeWeiseLoopCheckDatas { get; set; }
-        public DbSet<RealtimeCheckDataWeiseVOSChartData> RealtimeCheckDataWeiseVOSChartDatas { get; set; }
+        public DbSet<RealtimeWeiseCheckDataVOSChartData> RealtimeCheckDataWeiseVOSChartDatas { get; set; }
 
         public DbSet<RealtimeRMGVOSCheckData> RealtimeRMGVOSCheckDatas { get; set; }
         public DbSet<RealtimeRMGFRCheckData> RealtimeRMGFRCheckDatas { get; set; }
         public DbSet<RealtimeRMGLoopCheckData> RealtimeRMGLoopCheckDatas { get; set; }
-        public DbSet<RealtimeCheckDataRMGVOSChartData> RealtimeCheckDataRMGVOSChartDatas { get; set; }
+        public DbSet<RealtimeRMGCheckDataVOSChartData> RealtimeCheckDataRMGVOSChartDatas { get; set; }
 
 
         //Equipment Check Data
@@ -156,11 +155,16 @@ namespace Respository
         public DbSet<HistoricalProductionDailyReport> HistoricalProductionDailyReports { get; set; }
         //public DbSet<ExpertKnowledge> ExpertKnowledges { get; set; }
 
-
         //Equipment
         public DbSet<Equipment> Equipments { get; set; }
         public DbSet<EquipmentCategory> EquipmentCategories { get; set; }
-
+        public DbSet<EquipmentCompany> EquipmentCompanies { get; set; }
+        public DbSet<EquipmentLine> EquipmentLines { get; set; }
+        public DbSet<EquipmentStation> EquipmentStations { get; set; }
+        public DbSet<EquipmentModel> EquipmentModels { get; set; }
+        public DbSet<EquipmentAccuracy> EquipmentAccuracies { get; set; }
+        public DbSet<EquipmentPressureLevel> EquipmentPressureLevels { get; set; }
+        public DbSet<EquipmentManufacturer> EquipmentManufacturers { get; set; }
     }
 }
 

@@ -47,7 +47,6 @@ namespace Respository
 
         public List<RealtimeDiagnosticAlarm> GetRealtimeDiagnosticAlarm(int stationID, int loopID)
         {
-
             List<RealtimeDiagnosticAlarm> diagnostics = new();
             var data = (from d in _context.RealtimeDiagnosticAlarms
                         join loop in _context.StationLoops on d.LoopID equals loop.ID
