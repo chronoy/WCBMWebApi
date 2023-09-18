@@ -12,6 +12,4 @@ namespace Models
         public string Result { get; set; }
         public string Value {get;set;}
     }
-
-    public class DanileFMDiagnosticDataDetail
 }

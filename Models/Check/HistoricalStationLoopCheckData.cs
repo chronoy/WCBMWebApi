@@ -218,7 +218,7 @@ namespace Models
     }
 
     [Table("tHistoricalCheckDataDanielVOSChartData")]
-    public class HistoricalCheckDataDanielVOSChartData
+    public class HistoricalDanielCheckDataVOSChartData
     {
         public int ReportID { get; set; }
         public DateTime Datetime { get; set; }
@@ -643,7 +643,7 @@ namespace Models
     }
 
     [Table("tHistoricalCheckDataElsterVOSChartData")]
-    public class HistoricalCheckDataElsterVOSChartData
+    public class HistoricalElsterCheckDataVOSChartData
     {
         public int ReportID { get; set; }
         public int? LoopID { get; set; }
@@ -969,7 +969,7 @@ namespace Models
     }
 
     [Table("tHistoricalCheckDataSickVOSChartData")]
-    public class HistoricalCheckDataSickVOSChartData
+    public class HistoricalSickCheckDataVOSChartData
     {
         public int ReportID { get; set; }
         public int? LoopID { get; set; }
@@ -1330,7 +1330,7 @@ namespace Models
     }
 
     [Table("tHistoricalCheckDataWeiseVOSChartData")]
-    public class HistoricalCheckDataWeiseVOSChartData
+    public class HistoricalWeiseCheckDataVOSChartData
     {
         public int ReportID { get; set; }
         public int? LoopID { get; set; }
@@ -1744,7 +1744,7 @@ namespace Models
     }
 
     [Table("tHistoricalCheckDataRMGVOSChartData")]
-    public class HistoricalCheckDataRMGVOSChartData
+    public class HistoricalRMGCheckDataVOSChartData
     {
         public int ReportID { get; set; }
         public int? LoopID { get; set; }

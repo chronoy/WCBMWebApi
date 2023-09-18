@@ -49,7 +49,7 @@ namespace Respository
         {
 
             List<DiagnosticAlarm> diagnostics = new();
-            var data = (from d in _context.RealtimeDiagnosticAlarms
+            var data = (from d in _context.DiagnosticAlarms
                         join loop in _context.StationLoops on d.LoopID equals loop.ID
                         where d.Status != "OK"
                         select new
