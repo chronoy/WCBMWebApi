@@ -7,6 +7,6 @@ namespace Services
         public Task<List<StationLoopDiagnosticData>> GetLoopDiagnosticDataByStation(int stationID);
         public Task<List<StationEquipmentDiagnosticData>> GetEquipmentDiagnosticDataByStation(int stationID);
 
-        public Task<List<DiagnosticDataDetail>> GetLoopDiagnosticDataDetailByLoop(int loopID, string manufacturer, string diagnosticType);
+        public Task<List<DiagnosticDataDetail>> GetLoopDiagnosticDataDetailByLoop(int loopID, string manufacturer, string diagnosisType);
     }
 }

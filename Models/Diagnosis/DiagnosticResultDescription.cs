@@ -8,38 +8,42 @@ using System.Threading.Tasks;
 
 namespace Models
 {
-    [Table("tDiagnosticDescriptionResult")]
-    public class DiagnosticResultDescription
+    public class BaseDiagnosticResultDescription
     {
         [Key]
-        public byte ID {  get; set; }
+        public byte ID { get; set; }
         public string DescriptionCN { get; set; }
         public string? DescriptionRU { get; set; }
         public string? DescriptionEN { get; set; }
     }
 
+    [Table("tDiagnosticDescriptionResult")]
+    public class DiagnosticResultDescription: BaseDiagnosticResultDescription
+    {
+    }
+
     [Table("tDiagnosticDescriptionTT")]
-    public class DiagnosticTTResultDescription: DiagnosticResultDescription
+    public class DiagnosticTTResultDescription: BaseDiagnosticResultDescription
     {
     }
     [Table("tDiagnosticDescriptionPT")]
-    public class DiagnosticPTResultDescription : DiagnosticResultDescription
+    public class DiagnosticPTResultDescription : BaseDiagnosticResultDescription
     {
     }
     [Table("tDiagnosticDescriptionFM")]
-    public class DiagnosticFMResultDescription : DiagnosticResultDescription
+    public class DiagnosticFMResultDescription : BaseDiagnosticResultDescription
     {
     }
     [Table("tDiagnosticDescriptionFC")]
-    public class DiagnosticFCResultDescription : DiagnosticResultDescription
+    public class DiagnosticFCResultDescription : BaseDiagnosticResultDescription
     {
     }
     [Table("tDiagnosticDescriptionVOS")]
-    public class DiagnosticVOSResultDescription : DiagnosticResultDescription
+    public class DiagnosticVOSResultDescription : BaseDiagnosticResultDescription
     {
     }
     [Table("tDiagnosticDescriptionGC")]
-    public class DiagnosticGCResultDescription : DiagnosticResultDescription
+    public class DiagnosticGCResultDescription : BaseDiagnosticResultDescription
     {
     }
 }

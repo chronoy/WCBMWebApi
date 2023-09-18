@@ -7,14 +7,28 @@ using Microsoft.EntityFrameworkCore;
 namespace Models
 {
 
+
+
     [Keyless]
     [Table("tRealtimeDiagnosticAlarm")]
     public class RealtimeDiagnosticAlarm 
     {
+        [Column("ALM_NATIVETIMEIN")]
+        public string StartTime { get; set; }
+        [Column("ALM_NATIVETIMELAST")]
+        public string EndTime { get; set; }
         [Column("ALM_PHYSLNODE")]
         public string NodeName { get; set; }
         [Column("ALM_TAGNAME")]
         public string TagName { get; set; }
+        [Column("ALM_DESCR")]
+        public string Description { get; set; }
+        [Column("ALM_VALUE")]
+        public string DiagnosticResult { get; set; }
+        [Column("ALM_CURRENTVALUE")]
+        public double Value { get; set; }
+        [Column("ALM_ALMSTATUS")]
+        public string Status { get; set; }
         [Column("ALM_MSGTYPE")]
         public string MessageType { get; set; }
         [Column("ALM_ALMPRIORITY")]
