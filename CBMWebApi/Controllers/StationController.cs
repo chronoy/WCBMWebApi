@@ -93,5 +93,26 @@ namespace CBMWebApi.Controllers
             rtn["Data"] = details;
             return rtn;
         }
+
+        [HttpPost]
+        public async Task<Dictionary<string, object>> GetEquipmentDiagnosticDataDetailByEquipment([FromForm] int equipmentID, [FromForm] string manufacturer)
+        {
+            Dictionary<string, object> rtn = new();
+            List<DiagnosticDataDetail> details = await _diagnosisService.GetEquipmentDiagnosticDataDetailByEquipment(equipmentID, manufacturer);
+            if (details == null)
+            {
+                rtn["MSG"] = "OtherError";
+                rtn["Code"] = "400";
+            }
+            else
+            {
+                rtn["MSG"] = "OK";
+                rtn["Code"] = "200";
+            }
+            rtn["Data"] = details;
+            return rtn;
+        }
+
+
     }
 }

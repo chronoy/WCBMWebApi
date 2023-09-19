@@ -267,10 +267,12 @@ namespace Services
             return Task.Run(() =>
             {
                 Dictionary<string, object> data = new Dictionary<string, object>();
-                GasStandardFormula.Formula Formular = new GasStandardFormula.Formula();
-                AGA10STRUCT aga10 = new AGA10STRUCT();
-                Formular.Aga10(ref aga10,
-                         new double[21]{Convert.ToDouble(offlineCheck.C1),
+                try
+                {
+                    GasStandardFormula.Formula Formular = new GasStandardFormula.Formula();
+                    AGA10STRUCT aga10 = new AGA10STRUCT();
+                    Formular.Aga10(ref aga10,
+                             new double[21]{Convert.ToDouble(offlineCheck.C1),
                                     Convert.ToDouble(offlineCheck.N2),
                                     Convert.ToDouble(offlineCheck.CO2),
                                     Convert.ToDouble(offlineCheck.C2),
@@ -291,16 +293,17 @@ namespace Services
                                     0 , //Convert.ToDouble(condition["C10"]), 
                                     0.0,//He
                                     0.0//Ar
-                                    },
-                                 new double[2] { Convert.ToDouble(offlineCheck.Temperature),
+                                        },
+                                     new double[2] { Convert.ToDouble(offlineCheck.Temperature),
                                              Convert.ToDouble(offlineCheck.Pressure) * 0.001}
-                                );
-                data["GrossDensity"] = aga10.dRhof;
-                data["StandardDensity"] = aga10.dRhob;
-
-                Formular = new GasStandardFormula.Formula();
-                ISO6976Struct ISO6976 = new ISO6976Struct();
-                Formular.ISO6976(ref ISO6976, new double[21]{
+                                    );
+                    data["StandardDensity"] = aga10.dRhob;
+                    data["StandardCompressFactor"] = aga10.dZb;
+                    data["GrossDensity"] = aga10.dRhof; 
+                    data["GrossCompressFactor"] = aga10.dZf;
+                    Formular = new GasStandardFormula.Formula();
+                    ISO6976Struct ISO6976 = new ISO6976Struct();
+                    Formular.ISO6976(ref ISO6976, new double[21]{
                                     Convert.ToDouble(offlineCheck.C1),
                                     Convert.ToDouble(offlineCheck.N2),
                                     Convert.ToDouble(offlineCheck.CO2),
@@ -323,8 +326,15 @@ namespace Services
                                     0.0,//He
                                     0.0//Ar
                                     });
-                data["CalorificValue"] = ISO6976.dCalarify;//热值
+                    data["CalorificValue"] = ISO6976.dCalarify;//热值
+                
+                }
+                catch (Exception ex)
+                {
+                    data=new Dictionary<string, object>();
+                }
                 return data;
+
             });
         }
         /// <summary>

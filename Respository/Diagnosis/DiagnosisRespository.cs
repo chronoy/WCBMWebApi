@@ -520,10 +520,76 @@ namespace Respository
             }
             return details;
         }
-
-        public List<DiagnosticDataDetail> GetEquipmentDiagnosticDataDetailByLoop(int EquipmentID, string manufacturer)
+        public List<DiagnosticDataDetail> GetEquipmentDiagnosticDataDetailByEquipment(int equipmentID, string manufacturer)
         {
-            return null;
+            List<DiagnosticDataDetail> details = new List<DiagnosticDataDetail>();
+            switch (manufacturer)
+            {
+                case "ABB":
+                    using (ABBGCDiagnosticDataDetail detail = _context.ABBGCDiagnosticDataDetails.First(obj => obj.ID == equipmentID))
+                    {
+                        details.Add(new DiagnosticDataDetail() { Name = "C1", Result = _context.DiagnosticTTResultDescriptions.First(obj => obj.ID == detail.P1).DescriptionCN, Value = "/" });
+                        details.Add(new DiagnosticDataDetail() { Name = "C2", Result = _context.DiagnosticTTResultDescriptions.First(obj => obj.ID == detail.P2).DescriptionCN, Value = "/" });
+                        details.Add(new DiagnosticDataDetail() { Name = "C3", Result = _context.DiagnosticTTResultDescriptions.First(obj => obj.ID == detail.P3).DescriptionCN, Value = "/" });
+                        details.Add(new DiagnosticDataDetail() { Name = "NC4", Result = _context.DiagnosticTTResultDescriptions.First(obj => obj.ID == detail.P4).DescriptionCN, Value = "/" });
+                        details.Add(new DiagnosticDataDetail() { Name = "IC4", Result = _context.DiagnosticTTResultDescriptions.First(obj => obj.ID == detail.P5).DescriptionCN, Value = "/" });
+                        details.Add(new DiagnosticDataDetail() { Name = "NC5", Result = _context.DiagnosticTTResultDescriptions.First(obj => obj.ID == detail.P6).DescriptionCN, Value = "/" });
+                        details.Add(new DiagnosticDataDetail() { Name = "IC5", Result = _context.DiagnosticTTResultDescriptions.First(obj => obj.ID == detail.P7).DescriptionCN, Value = "/" });
+                        details.Add(new DiagnosticDataDetail() { Name = "C6", Result = _context.DiagnosticTTResultDescriptions.First(obj => obj.ID == detail.P8).DescriptionCN, Value = "/" });
+                        details.Add(new DiagnosticDataDetail() { Name = "C7", Result = _context.DiagnosticTTResultDescriptions.First(obj => obj.ID == detail.P9).DescriptionCN, Value = "/" });
+                        details.Add(new DiagnosticDataDetail() { Name = "C8", Result = _context.DiagnosticTTResultDescriptions.First(obj => obj.ID == detail.P10).DescriptionCN, Value = "/" });
+                        details.Add(new DiagnosticDataDetail() { Name = "C9", Result = _context.DiagnosticTTResultDescriptions.First(obj => obj.ID == detail.P11).DescriptionCN, Value = "/" });
+                        details.Add(new DiagnosticDataDetail() { Name = "C10", Result = _context.DiagnosticTTResultDescriptions.First(obj => obj.ID == detail.P12).DescriptionCN, Value = "/" });
+                        details.Add(new DiagnosticDataDetail() { Name = "N2", Result = _context.DiagnosticTTResultDescriptions.First(obj => obj.ID == detail.P13).DescriptionCN, Value = "/" });
+                        details.Add(new DiagnosticDataDetail() { Name = "CO2", Result = _context.DiagnosticTTResultDescriptions.First(obj => obj.ID == detail.P14).DescriptionCN, Value = "/" });
+                        details.Add(new DiagnosticDataDetail() { Name = "NEOC5", Result = _context.DiagnosticTTResultDescriptions.First(obj => obj.ID == detail.P15).DescriptionCN, Value = "/" });
+                        details.Add(new DiagnosticDataDetail() { Name = "色谱状态", Result = _context.DiagnosticTTResultDescriptions.First(obj => obj.ID == detail.P16).DescriptionCN, Value = "/" });
+                    }
+                    break;
+                case "Daniel":
+                    using (DanielGCDiagnosticDataDetail detail = _context.DanielGCDiagnosticDataDetails.First(obj => obj.ID == equipmentID))
+                    {
+                        details.Add(new DiagnosticDataDetail() { Name = "C1", Result = _context.DiagnosticTTResultDescriptions.First(obj => obj.ID == detail.P1).DescriptionCN, Value = "/" });
+                        details.Add(new DiagnosticDataDetail() { Name = "C2", Result = _context.DiagnosticTTResultDescriptions.First(obj => obj.ID == detail.P2).DescriptionCN, Value = "/" });
+                        details.Add(new DiagnosticDataDetail() { Name = "C3", Result = _context.DiagnosticTTResultDescriptions.First(obj => obj.ID == detail.P3).DescriptionCN, Value = "/" });
+                        details.Add(new DiagnosticDataDetail() { Name = "NC4", Result = _context.DiagnosticTTResultDescriptions.First(obj => obj.ID == detail.P4).DescriptionCN, Value = "/" });
+                        details.Add(new DiagnosticDataDetail() { Name = "IC4", Result = _context.DiagnosticTTResultDescriptions.First(obj => obj.ID == detail.P5).DescriptionCN, Value = "/" });
+                        details.Add(new DiagnosticDataDetail() { Name = "NC5", Result = _context.DiagnosticTTResultDescriptions.First(obj => obj.ID == detail.P6).DescriptionCN, Value = "/" });
+                        details.Add(new DiagnosticDataDetail() { Name = "IC5", Result = _context.DiagnosticTTResultDescriptions.First(obj => obj.ID == detail.P7).DescriptionCN, Value = "/" });
+                        details.Add(new DiagnosticDataDetail() { Name = "C6", Result = _context.DiagnosticTTResultDescriptions.First(obj => obj.ID == detail.P8).DescriptionCN, Value = "/" });
+                        details.Add(new DiagnosticDataDetail() { Name = "C7", Result = _context.DiagnosticTTResultDescriptions.First(obj => obj.ID == detail.P9).DescriptionCN, Value = "/" });
+                        details.Add(new DiagnosticDataDetail() { Name = "C8", Result = _context.DiagnosticTTResultDescriptions.First(obj => obj.ID == detail.P10).DescriptionCN, Value = "/" });
+                        details.Add(new DiagnosticDataDetail() { Name = "C9", Result = _context.DiagnosticTTResultDescriptions.First(obj => obj.ID == detail.P11).DescriptionCN, Value = "/" });
+                        details.Add(new DiagnosticDataDetail() { Name = "C10", Result = _context.DiagnosticTTResultDescriptions.First(obj => obj.ID == detail.P12).DescriptionCN, Value = "/" });
+                        details.Add(new DiagnosticDataDetail() { Name = "N2", Result = _context.DiagnosticTTResultDescriptions.First(obj => obj.ID == detail.P13).DescriptionCN, Value = "/" });
+                        details.Add(new DiagnosticDataDetail() { Name = "CO2", Result = _context.DiagnosticTTResultDescriptions.First(obj => obj.ID == detail.P14).DescriptionCN, Value = "/" });
+                        details.Add(new DiagnosticDataDetail() { Name = "NEOC5", Result = _context.DiagnosticTTResultDescriptions.First(obj => obj.ID == detail.P15).DescriptionCN, Value = "/" });
+                        details.Add(new DiagnosticDataDetail() { Name = "报警1", Result = _context.DiagnosticTTResultDescriptions.First(obj => obj.ID == detail.P16).DescriptionCN, Value = "/" });
+                        details.Add(new DiagnosticDataDetail() { Name = "报警2", Result = _context.DiagnosticTTResultDescriptions.First(obj => obj.ID == detail.P17).DescriptionCN, Value = "/" });
+                    }
+                    break;
+                case "Elster":
+                    using (ElsterGCDiagnosticDataDetail detail = _context.ElsterGCDiagnosticDataDetails.First(obj => obj.ID == equipmentID))
+                    {
+                        details.Add(new DiagnosticDataDetail() { Name = "C1", Result = _context.DiagnosticTTResultDescriptions.First(obj => obj.ID == detail.P1).DescriptionCN, Value = "/" });
+                        details.Add(new DiagnosticDataDetail() { Name = "C2", Result = _context.DiagnosticTTResultDescriptions.First(obj => obj.ID == detail.P2).DescriptionCN, Value = "/" });
+                        details.Add(new DiagnosticDataDetail() { Name = "C3", Result = _context.DiagnosticTTResultDescriptions.First(obj => obj.ID == detail.P3).DescriptionCN, Value = "/" });
+                        details.Add(new DiagnosticDataDetail() { Name = "NC4", Result = _context.DiagnosticTTResultDescriptions.First(obj => obj.ID == detail.P4).DescriptionCN, Value = "/" });
+                        details.Add(new DiagnosticDataDetail() { Name = "IC4", Result = _context.DiagnosticTTResultDescriptions.First(obj => obj.ID == detail.P5).DescriptionCN, Value = "/" });
+                        details.Add(new DiagnosticDataDetail() { Name = "NC5", Result = _context.DiagnosticTTResultDescriptions.First(obj => obj.ID == detail.P6).DescriptionCN, Value = "/" });
+                        details.Add(new DiagnosticDataDetail() { Name = "IC5", Result = _context.DiagnosticTTResultDescriptions.First(obj => obj.ID == detail.P7).DescriptionCN, Value = "/" });
+                        details.Add(new DiagnosticDataDetail() { Name = "C6", Result = _context.DiagnosticTTResultDescriptions.First(obj => obj.ID == detail.P8).DescriptionCN, Value = "/" });
+                        details.Add(new DiagnosticDataDetail() { Name = "C7", Result = _context.DiagnosticTTResultDescriptions.First(obj => obj.ID == detail.P9).DescriptionCN, Value = "/" });
+                        details.Add(new DiagnosticDataDetail() { Name = "C8", Result = _context.DiagnosticTTResultDescriptions.First(obj => obj.ID == detail.P10).DescriptionCN, Value = "/" });
+                        details.Add(new DiagnosticDataDetail() { Name = "C9", Result = _context.DiagnosticTTResultDescriptions.First(obj => obj.ID == detail.P11).DescriptionCN, Value = "/" });
+                        details.Add(new DiagnosticDataDetail() { Name = "C10", Result = _context.DiagnosticTTResultDescriptions.First(obj => obj.ID == detail.P12).DescriptionCN, Value = "/" });
+                        details.Add(new DiagnosticDataDetail() { Name = "N2", Result = _context.DiagnosticTTResultDescriptions.First(obj => obj.ID == detail.P13).DescriptionCN, Value = "/" });
+                        details.Add(new DiagnosticDataDetail() { Name = "CO2", Result = _context.DiagnosticTTResultDescriptions.First(obj => obj.ID == detail.P14).DescriptionCN, Value = "/" });
+                        details.Add(new DiagnosticDataDetail() { Name = "NEOC5", Result = _context.DiagnosticTTResultDescriptions.First(obj => obj.ID == detail.P15).DescriptionCN, Value = "/" });
+                    }
+                    break;
+            }
+            return details;
         }
     }
 }
