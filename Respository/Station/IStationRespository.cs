@@ -9,6 +9,7 @@ namespace Respository
 {
     public interface IStationRespository
     {
-        public List<Station> GetStations();     
+        public List<Station> GetStations();
+        public Station GetStationByID(int ID);
     }
 }

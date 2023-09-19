@@ -10,5 +10,6 @@ namespace Respository
     public interface IStationEquipmentRespository
     {
         public List<StationEquipment> GetStationEquipments();
+        public List<StationEquipment> GetStationEquipmentsBySttaion(int stationID);
     }
 }

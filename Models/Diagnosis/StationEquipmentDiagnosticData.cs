@@ -14,16 +14,18 @@ namespace Models
         [Key]
         public int ID { get; set; }
         [Column("CurrentDT")]
-        public string DateTime { get; set; }
+        public DateTime DateTime { get; set; }
         [Column("Result")]
-        public int ResultID { get; set; }
+        public byte ResultID { get; set; }
         [NotMapped]
         public string EquipmentName { get; set; }
         [NotMapped]
-        public string EquipmentCategoryI { get; set; }
+        public string EquipmentCategory { get; set; }
         [NotMapped]
         public string Manufacturer { get; set; }
         [NotMapped]
         public string Model { get; set; }
+        [NotMapped]
+        public string Result { get; set; }
     }
 }

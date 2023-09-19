@@ -20,9 +20,12 @@ namespace Models
         public int StationID { get; set; }
         public string Manufacturer { get; set; }
         public string Model { get; set; }
+        //public int OrderNumber { get; set; }
         [NotMapped]
         public Dictionary<string, Tag> Tags { get; set; }
         [NotMapped]
         public StationEquipmentDiagnosticData DiagnosticData { get; set; }
+        [NotMapped]
+        public string EquipmentCategoryName { get; set; }
     }
 }

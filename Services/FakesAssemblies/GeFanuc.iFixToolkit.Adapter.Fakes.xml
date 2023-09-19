@@ -1,0 +1,368 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>GeFanuc.iFixToolkit.Adapter.Fakes</name>
+    </assembly>
+    <members>
+        <member name="T:GeFanuc.iFixToolkit.Adapter.Fakes.ShimAlmBlockRec">
+            <summary>GeFanuc.iFixToolkit.Adapter.AlmBlockRec 的填充码类型</summary>
+        </member>
+        <member name="M:GeFanuc.iFixToolkit.Adapter.Fakes.ShimAlmBlockRec.#ctor">
+            <summary>初始化新的填充码实例</summary>
+        </member>
+        <member name="T:GeFanuc.iFixToolkit.Adapter.Fakes.ShimAlmBlockRec.AllInstances">
+            <summary>为所有实例成员定义填充码</summary>
+        </member>
+        <member name="M:GeFanuc.iFixToolkit.Adapter.Fakes.ShimAlmBlockRec.BehaveAsCurrent">
+            <summary>为已填充的类型的所有方法分配“Current”行为</summary>
+        </member>
+        <member name="M:GeFanuc.iFixToolkit.Adapter.Fakes.ShimAlmBlockRec.BehaveAsNotImplemented">
+            <summary>为已填充的类型的所有方法分配“NotImplemented”行为</summary>
+        </member>
+        <member name="P:GeFanuc.iFixToolkit.Adapter.Fakes.ShimAlmBlockRec.Behavior">
+            <summary>为已填充的类型的所有方法分配行为</summary>
+        </member>
+        <member name="T:GeFanuc.iFixToolkit.Adapter.Fakes.ShimAlmCanonicalValue">
+            <summary>GeFanuc.iFixToolkit.Adapter.AlmCanonicalValue 的填充码类型</summary>
+        </member>
+        <member name="M:GeFanuc.iFixToolkit.Adapter.Fakes.ShimAlmCanonicalValue.#ctor">
+            <summary>初始化新的填充码实例</summary>
+        </member>
+        <member name="T:GeFanuc.iFixToolkit.Adapter.Fakes.ShimAlmCanonicalValue.AllInstances">
+            <summary>为所有实例成员定义填充码</summary>
+        </member>
+        <member name="M:GeFanuc.iFixToolkit.Adapter.Fakes.ShimAlmCanonicalValue.BehaveAsCurrent">
+            <summary>为已填充的类型的所有方法分配“Current”行为</summary>
+        </member>
+        <member name="M:GeFanuc.iFixToolkit.Adapter.Fakes.ShimAlmCanonicalValue.BehaveAsNotImplemented">
+            <summary>为已填充的类型的所有方法分配“NotImplemented”行为</summary>
+        </member>
+        <member name="P:GeFanuc.iFixToolkit.Adapter.Fakes.ShimAlmCanonicalValue.Behavior">
+            <summary>为已填充的类型的所有方法分配行为</summary>
+        </member>
+        <member name="T:GeFanuc.iFixToolkit.Adapter.Fakes.ShimAlmExtensionFields">
+            <summary>GeFanuc.iFixToolkit.Adapter.AlmExtensionFields 的填充码类型</summary>
+        </member>
+        <member name="M:GeFanuc.iFixToolkit.Adapter.Fakes.ShimAlmExtensionFields.#ctor">
+            <summary>初始化新的填充码实例</summary>
+        </member>
+        <member name="T:GeFanuc.iFixToolkit.Adapter.Fakes.ShimAlmExtensionFields.AllInstances">
+            <summary>为所有实例成员定义填充码</summary>
+        </member>
+        <member name="M:GeFanuc.iFixToolkit.Adapter.Fakes.ShimAlmExtensionFields.BehaveAsCurrent">
+            <summary>为已填充的类型的所有方法分配“Current”行为</summary>
+        </member>
+        <member name="M:GeFanuc.iFixToolkit.Adapter.Fakes.ShimAlmExtensionFields.BehaveAsNotImplemented">
+            <summary>为已填充的类型的所有方法分配“NotImplemented”行为</summary>
+        </member>
+        <member name="P:GeFanuc.iFixToolkit.Adapter.Fakes.ShimAlmExtensionFields.Behavior">
+            <summary>为已填充的类型的所有方法分配行为</summary>
+        </member>
+        <member name="T:GeFanuc.iFixToolkit.Adapter.Fakes.ShimAlmID">
+            <summary>GeFanuc.iFixToolkit.Adapter.AlmID 的填充码类型</summary>
+        </member>
+        <member name="M:GeFanuc.iFixToolkit.Adapter.Fakes.ShimAlmID.#ctor">
+            <summary>初始化新的填充码实例</summary>
+        </member>
+        <member name="T:GeFanuc.iFixToolkit.Adapter.Fakes.ShimAlmID.AllInstances">
+            <summary>为所有实例成员定义填充码</summary>
+        </member>
+        <member name="M:GeFanuc.iFixToolkit.Adapter.Fakes.ShimAlmID.BehaveAsCurrent">
+            <summary>为已填充的类型的所有方法分配“Current”行为</summary>
+        </member>
+        <member name="M:GeFanuc.iFixToolkit.Adapter.Fakes.ShimAlmID.BehaveAsNotImplemented">
+            <summary>为已填充的类型的所有方法分配“NotImplemented”行为</summary>
+        </member>
+        <member name="P:GeFanuc.iFixToolkit.Adapter.Fakes.ShimAlmID.Behavior">
+            <summary>为已填充的类型的所有方法分配行为</summary>
+        </member>
+        <member name="T:GeFanuc.iFixToolkit.Adapter.Fakes.ShimAlmOperRec">
+            <summary>GeFanuc.iFixToolkit.Adapter.AlmOperRec 的填充码类型</summary>
+        </member>
+        <member name="M:GeFanuc.iFixToolkit.Adapter.Fakes.ShimAlmOperRec.#ctor">
+            <summary>初始化新的填充码实例</summary>
+        </member>
+        <member name="T:GeFanuc.iFixToolkit.Adapter.Fakes.ShimAlmOperRec.AllInstances">
+            <summary>为所有实例成员定义填充码</summary>
+        </member>
+        <member name="M:GeFanuc.iFixToolkit.Adapter.Fakes.ShimAlmOperRec.BehaveAsCurrent">
+            <summary>为已填充的类型的所有方法分配“Current”行为</summary>
+        </member>
+        <member name="M:GeFanuc.iFixToolkit.Adapter.Fakes.ShimAlmOperRec.BehaveAsNotImplemented">
+            <summary>为已填充的类型的所有方法分配“NotImplemented”行为</summary>
+        </member>
+        <member name="P:GeFanuc.iFixToolkit.Adapter.Fakes.ShimAlmOperRec.Behavior">
+            <summary>为已填充的类型的所有方法分配行为</summary>
+        </member>
+        <member name="T:GeFanuc.iFixToolkit.Adapter.Fakes.ShimENUMBUF">
+            <summary>GeFanuc.iFixToolkit.Adapter.ENUMBUF 的填充码类型</summary>
+        </member>
+        <member name="M:GeFanuc.iFixToolkit.Adapter.Fakes.ShimENUMBUF.#ctor">
+            <summary>初始化新的填充码实例</summary>
+        </member>
+        <member name="T:GeFanuc.iFixToolkit.Adapter.Fakes.ShimENUMBUF.AllInstances">
+            <summary>为所有实例成员定义填充码</summary>
+        </member>
+        <member name="M:GeFanuc.iFixToolkit.Adapter.Fakes.ShimENUMBUF.BehaveAsCurrent">
+            <summary>为已填充的类型的所有方法分配“Current”行为</summary>
+        </member>
+        <member name="M:GeFanuc.iFixToolkit.Adapter.Fakes.ShimENUMBUF.BehaveAsNotImplemented">
+            <summary>为已填充的类型的所有方法分配“NotImplemented”行为</summary>
+        </member>
+        <member name="P:GeFanuc.iFixToolkit.Adapter.Fakes.ShimENUMBUF.Behavior">
+            <summary>为已填充的类型的所有方法分配行为</summary>
+        </member>
+        <member name="T:GeFanuc.iFixToolkit.Adapter.Fakes.ShimEda">
+            <summary>GeFanuc.iFixToolkit.Adapter.Eda 的填充码类型</summary>
+        </member>
+        <member name="M:GeFanuc.iFixToolkit.Adapter.Fakes.ShimEda.#ctor">
+            <summary>初始化新的填充码实例</summary>
+        </member>
+        <member name="M:GeFanuc.iFixToolkit.Adapter.Fakes.ShimEda.#ctor(GeFanuc.iFixToolkit.Adapter.Eda)">
+            <summary>初始化给定实例的新填充码</summary>
+        </member>
+        <member name="T:GeFanuc.iFixToolkit.Adapter.Fakes.ShimEda.AllInstances">
+            <summary>为所有实例成员定义填充码</summary>
+        </member>
+        <member name="P:GeFanuc.iFixToolkit.Adapter.Fakes.ShimEda.AlmGetUserQueExStringInt16Int32OutInt32OutInt32OutStringBuilderStringBuilderStringBuilderInt32OutStringArrayOutFIX_SYSTEMTIMEOutFIX_SYSTEMTIMEOutAlmBlockRecOutAlmOperRecOutAlmExtensionFieldsOutAlmIDOutInt32OutStringBuilderInt32">
+            <summary>设置 Eda.AlmGetUserQueEx(String szQueName, Int16 nWait, Int32* pulAlmMsgType, Int32* pulTypers, Int32* pulPriority, StringBuilder pcText, StringBuilder pcLogicalNodeName, StringBuilder pcPhysicalNodeName, Int32* pulNumAreas, String[]* asAreas, FIX_SYSTEMTIME* paTimeLast, FIX_SYSTEMTIME* paTimeIn, AlmBlockRec* paAlmBlockRec, AlmOperRec* paAlmOperRec, AlmExtensionFields* paAlmExtFields, AlmID* paAlmId, Int32* iReserved, StringBuilder sbMsgID, Int32 iMsgIDSize) 的 填充码</summary>
+        </member>
+        <member name="P:GeFanuc.iFixToolkit.Adapter.Fakes.ShimEda.AlmSendTextStringInt64Int32StringArray">
+            <summary>设置 Eda.AlmSendText(String sText, Int64 ulTypers, Int32 inumAreas, String[] asAreas) 的 填充码</summary>
+        </member>
+        <member name="M:GeFanuc.iFixToolkit.Adapter.Fakes.ShimEda.BehaveAsCurrent">
+            <summary>为已填充的类型的所有方法分配“Current”行为</summary>
+        </member>
+        <member name="M:GeFanuc.iFixToolkit.Adapter.Fakes.ShimEda.BehaveAsNotImplemented">
+            <summary>为已填充的类型的所有方法分配“NotImplemented”行为</summary>
+        </member>
+        <member name="P:GeFanuc.iFixToolkit.Adapter.Fakes.ShimEda.Behavior">
+            <summary>为已填充的类型的所有方法分配行为</summary>
+        </member>
+        <member name="P:GeFanuc.iFixToolkit.Adapter.Fakes.ShimEda.Constructor">
+            <summary>设置 Eda.Eda(Eda this) 的 填充码</summary>
+        </member>
+        <member name="P:GeFanuc.iFixToolkit.Adapter.Fakes.ShimEda.EnumAllFieldsStringInt16StringArrayOutInt16Int16OutENUMBUFOut">
+            <summary>设置 Eda.EnumAllFields(String sNode, Int16 ntype, String[]* asFields, Int16 numrequest, Int16* numreceive, ENUMBUF* eb) 的 填充码</summary>
+        </member>
+        <member name="P:GeFanuc.iFixToolkit.Adapter.Fakes.ShimEda.EnumAllScadaNodesStringArrayOutInt16RefInt16Int16Out">
+            <summary>设置 Eda.EnumAllScadaNodes(String[]* asCallerNodes, Int16* nstartnode, Int16 nmaxcount, Int16* nreturn_count) 的 填充码</summary>
+        </member>
+        <member name="P:GeFanuc.iFixToolkit.Adapter.Fakes.ShimEda.EnumAllTagsStringInt16StringStringArrayOutInt16Int16OutENUMBUFOut">
+            <summary>设置 Eda.EnumAllTags(String sNode, Int16 ntype, String sFilter, String[]* asTags, Int16 numrequest, Int16* numreceive, ENUMBUF* eb) 的 填充码</summary>
+        </member>
+        <member name="P:GeFanuc.iFixToolkit.Adapter.Fakes.ShimEda.EnumScadaNodesStringArrayOutInt16RefInt16Int16Out">
+            <summary>设置 Eda.EnumScadaNodes(String[]* asCallerNodes, Int16* nstartnode, Int16 nmaxcount, Int16* nreturn_count) 的 填充码</summary>
+        </member>
+        <member name="P:GeFanuc.iFixToolkit.Adapter.Fakes.ShimEda.EnumTagsStringStringArrayOutInt16ArrayOutInt16Int16RefInt16Int16Out">
+            <summary>设置 Eda.EnumTags(String sznodeName, String[]* asNodeTags, Int16[]* anIpnlist, Int16 ntype, Int16* nstartipn, Int16 nmaxcount, Int16* ncount) 的 填充码</summary>
+        </member>
+        <member name="P:GeFanuc.iFixToolkit.Adapter.Fakes.ShimEda.QueryPdbsnIntPtrInt32ArrayStringArray">
+            <summary>设置 Eda.QueryPdbsn(IntPtr eh, Int32[] aiPdbsnList, String[] asNodeNames) 的 填充码</summary>
+        </member>
+        <member name="P:GeFanuc.iFixToolkit.Adapter.Fakes.ShimEda.SetPdbsnIntPtrInt32ArrayStringArrayInt16">
+            <summary>设置 Eda.SetPdbsn(IntPtr gnum, Int32[] aiPdbsn, String[] asNames, Int16 node_count) 的 填充码</summary>
+        </member>
+        <member name="T:GeFanuc.iFixToolkit.Adapter.Fakes.ShimFIX_SYSTEMTIME">
+            <summary>GeFanuc.iFixToolkit.Adapter.FIX_SYSTEMTIME 的填充码类型</summary>
+        </member>
+        <member name="M:GeFanuc.iFixToolkit.Adapter.Fakes.ShimFIX_SYSTEMTIME.#ctor">
+            <summary>初始化新的填充码实例</summary>
+        </member>
+        <member name="T:GeFanuc.iFixToolkit.Adapter.Fakes.ShimFIX_SYSTEMTIME.AllInstances">
+            <summary>为所有实例成员定义填充码</summary>
+        </member>
+        <member name="M:GeFanuc.iFixToolkit.Adapter.Fakes.ShimFIX_SYSTEMTIME.BehaveAsCurrent">
+            <summary>为已填充的类型的所有方法分配“Current”行为</summary>
+        </member>
+        <member name="M:GeFanuc.iFixToolkit.Adapter.Fakes.ShimFIX_SYSTEMTIME.BehaveAsNotImplemented">
+            <summary>为已填充的类型的所有方法分配“NotImplemented”行为</summary>
+        </member>
+        <member name="P:GeFanuc.iFixToolkit.Adapter.Fakes.ShimFIX_SYSTEMTIME.Behavior">
+            <summary>为已填充的类型的所有方法分配行为</summary>
+        </member>
+        <member name="T:GeFanuc.iFixToolkit.Adapter.Fakes.ShimFixError">
+            <summary>GeFanuc.iFixToolkit.Adapter.FixError 的填充码类型</summary>
+        </member>
+        <member name="M:GeFanuc.iFixToolkit.Adapter.Fakes.ShimFixError.#ctor">
+            <summary>初始化新的填充码实例</summary>
+        </member>
+        <member name="M:GeFanuc.iFixToolkit.Adapter.Fakes.ShimFixError.#ctor(GeFanuc.iFixToolkit.Adapter.FixError)">
+            <summary>初始化给定实例的新填充码</summary>
+        </member>
+        <member name="T:GeFanuc.iFixToolkit.Adapter.Fakes.ShimFixError.AllInstances">
+            <summary>为所有实例成员定义填充码</summary>
+        </member>
+        <member name="M:GeFanuc.iFixToolkit.Adapter.Fakes.ShimFixError.BehaveAsCurrent">
+            <summary>为已填充的类型的所有方法分配“Current”行为</summary>
+        </member>
+        <member name="M:GeFanuc.iFixToolkit.Adapter.Fakes.ShimFixError.BehaveAsNotImplemented">
+            <summary>为已填充的类型的所有方法分配“NotImplemented”行为</summary>
+        </member>
+        <member name="P:GeFanuc.iFixToolkit.Adapter.Fakes.ShimFixError.Behavior">
+            <summary>为已填充的类型的所有方法分配行为</summary>
+        </member>
+        <member name="P:GeFanuc.iFixToolkit.Adapter.Fakes.ShimFixError.Constructor">
+            <summary>设置 FixError.FixError(FixError this) 的 填充码</summary>
+        </member>
+        <member name="T:GeFanuc.iFixToolkit.Adapter.Fakes.ShimGlobals">
+            <summary>GeFanuc.iFixToolkit.Adapter.Globals 的填充码类型</summary>
+        </member>
+        <member name="M:GeFanuc.iFixToolkit.Adapter.Fakes.ShimGlobals.#ctor">
+            <summary>初始化新的填充码实例</summary>
+        </member>
+        <member name="M:GeFanuc.iFixToolkit.Adapter.Fakes.ShimGlobals.#ctor(GeFanuc.iFixToolkit.Adapter.Globals)">
+            <summary>初始化给定实例的新填充码</summary>
+        </member>
+        <member name="T:GeFanuc.iFixToolkit.Adapter.Fakes.ShimGlobals.AllInstances">
+            <summary>为所有实例成员定义填充码</summary>
+        </member>
+        <member name="M:GeFanuc.iFixToolkit.Adapter.Fakes.ShimGlobals.BehaveAsCurrent">
+            <summary>为已填充的类型的所有方法分配“Current”行为</summary>
+        </member>
+        <member name="M:GeFanuc.iFixToolkit.Adapter.Fakes.ShimGlobals.BehaveAsNotImplemented">
+            <summary>为已填充的类型的所有方法分配“NotImplemented”行为</summary>
+        </member>
+        <member name="P:GeFanuc.iFixToolkit.Adapter.Fakes.ShimGlobals.Behavior">
+            <summary>为已填充的类型的所有方法分配行为</summary>
+        </member>
+        <member name="P:GeFanuc.iFixToolkit.Adapter.Fakes.ShimGlobals.Constructor">
+            <summary>设置 Globals.Globals(Globals this) 的 填充码</summary>
+        </member>
+        <member name="T:GeFanuc.iFixToolkit.Adapter.Fakes.ShimHda">
+            <summary>GeFanuc.iFixToolkit.Adapter.Hda 的填充码类型</summary>
+        </member>
+        <member name="M:GeFanuc.iFixToolkit.Adapter.Fakes.ShimHda.#ctor">
+            <summary>初始化新的填充码实例</summary>
+        </member>
+        <member name="M:GeFanuc.iFixToolkit.Adapter.Fakes.ShimHda.#ctor(GeFanuc.iFixToolkit.Adapter.Hda)">
+            <summary>初始化给定实例的新填充码</summary>
+        </member>
+        <member name="T:GeFanuc.iFixToolkit.Adapter.Fakes.ShimHda.AllInstances">
+            <summary>为所有实例成员定义填充码</summary>
+        </member>
+        <member name="M:GeFanuc.iFixToolkit.Adapter.Fakes.ShimHda.BehaveAsCurrent">
+            <summary>为已填充的类型的所有方法分配“Current”行为</summary>
+        </member>
+        <member name="M:GeFanuc.iFixToolkit.Adapter.Fakes.ShimHda.BehaveAsNotImplemented">
+            <summary>为已填充的类型的所有方法分配“NotImplemented”行为</summary>
+        </member>
+        <member name="P:GeFanuc.iFixToolkit.Adapter.Fakes.ShimHda.Behavior">
+            <summary>为已填充的类型的所有方法分配行为</summary>
+        </member>
+        <member name="P:GeFanuc.iFixToolkit.Adapter.Fakes.ShimHda.Constructor">
+            <summary>设置 Hda.Hda(Hda this) 的 填充码</summary>
+        </member>
+        <member name="T:GeFanuc.iFixToolkit.Adapter.Fakes.ShimHelper">
+            <summary>GeFanuc.iFixToolkit.Adapter.Helper 的填充码类型</summary>
+        </member>
+        <member name="M:GeFanuc.iFixToolkit.Adapter.Fakes.ShimHelper.#ctor">
+            <summary>初始化新的填充码实例</summary>
+        </member>
+        <member name="M:GeFanuc.iFixToolkit.Adapter.Fakes.ShimHelper.#ctor(GeFanuc.iFixToolkit.Adapter.Helper)">
+            <summary>初始化给定实例的新填充码</summary>
+        </member>
+        <member name="T:GeFanuc.iFixToolkit.Adapter.Fakes.ShimHelper.AllInstances">
+            <summary>为所有实例成员定义填充码</summary>
+        </member>
+        <member name="M:GeFanuc.iFixToolkit.Adapter.Fakes.ShimHelper.BehaveAsCurrent">
+            <summary>为已填充的类型的所有方法分配“Current”行为</summary>
+        </member>
+        <member name="M:GeFanuc.iFixToolkit.Adapter.Fakes.ShimHelper.BehaveAsNotImplemented">
+            <summary>为已填充的类型的所有方法分配“NotImplemented”行为</summary>
+        </member>
+        <member name="P:GeFanuc.iFixToolkit.Adapter.Fakes.ShimHelper.Behavior">
+            <summary>为已填充的类型的所有方法分配行为</summary>
+        </member>
+        <member name="P:GeFanuc.iFixToolkit.Adapter.Fakes.ShimHelper.Constructor">
+            <summary>设置 Helper.Helper(Helper this) 的 填充码</summary>
+        </member>
+        <member name="T:GeFanuc.iFixToolkit.Adapter.Fakes.ShimHelper.ShimFixRegisterConsoleDelegate">
+            <summary>GeFanuc.iFixToolkit.Adapter.Helper.FixRegisterConsoleDelegate 的填充码类型</summary>
+        </member>
+        <member name="M:GeFanuc.iFixToolkit.Adapter.Fakes.ShimHelper.ShimFixRegisterConsoleDelegate.#ctor">
+            <summary>初始化新的填充码实例</summary>
+        </member>
+        <member name="M:GeFanuc.iFixToolkit.Adapter.Fakes.ShimHelper.ShimFixRegisterConsoleDelegate.#ctor(GeFanuc.iFixToolkit.Adapter.Helper.FixRegisterConsoleDelegate)">
+            <summary>初始化给定实例的新填充码</summary>
+        </member>
+        <member name="T:GeFanuc.iFixToolkit.Adapter.Fakes.ShimHelper.ShimFixRegisterConsoleDelegate.AllInstances">
+            <summary>为所有实例成员定义填充码</summary>
+        </member>
+        <member name="P:GeFanuc.iFixToolkit.Adapter.Fakes.ShimHelper.ShimFixRegisterConsoleDelegate.AllInstances.BeginInvokeAsyncCallbackObject">
+            <summary>设置 FixRegisterConsoleDelegate.BeginInvoke(FixRegisterConsoleDelegate this, AsyncCallback callback, Object object) 的 填充码</summary>
+        </member>
+        <member name="P:GeFanuc.iFixToolkit.Adapter.Fakes.ShimHelper.ShimFixRegisterConsoleDelegate.AllInstances.EndInvokeIAsyncResult">
+            <summary>设置 FixRegisterConsoleDelegate.EndInvoke(FixRegisterConsoleDelegate this, IAsyncResult result) 的 填充码</summary>
+        </member>
+        <member name="P:GeFanuc.iFixToolkit.Adapter.Fakes.ShimHelper.ShimFixRegisterConsoleDelegate.AllInstances.Invoke">
+            <summary>设置 FixRegisterConsoleDelegate.Invoke(FixRegisterConsoleDelegate this) 的 填充码</summary>
+        </member>
+        <member name="P:GeFanuc.iFixToolkit.Adapter.Fakes.ShimHelper.ShimFixRegisterConsoleDelegate.BeginInvokeAsyncCallbackObject">
+            <summary>设置 FixRegisterConsoleDelegate.BeginInvoke(FixRegisterConsoleDelegate this, AsyncCallback callback, Object object) 的 填充码</summary>
+        </member>
+        <member name="M:GeFanuc.iFixToolkit.Adapter.Fakes.ShimHelper.ShimFixRegisterConsoleDelegate.BehaveAsCurrent">
+            <summary>为已填充的类型的所有方法分配“Current”行为</summary>
+        </member>
+        <member name="M:GeFanuc.iFixToolkit.Adapter.Fakes.ShimHelper.ShimFixRegisterConsoleDelegate.BehaveAsNotImplemented">
+            <summary>为已填充的类型的所有方法分配“NotImplemented”行为</summary>
+        </member>
+        <member name="P:GeFanuc.iFixToolkit.Adapter.Fakes.ShimHelper.ShimFixRegisterConsoleDelegate.Behavior">
+            <summary>为已填充的类型的所有方法分配行为</summary>
+        </member>
+        <member name="M:GeFanuc.iFixToolkit.Adapter.Fakes.ShimHelper.ShimFixRegisterConsoleDelegate.Bind(System.ICloneable)">
+            <summary>将接口的成员绑定到此填充码。</summary>
+        </member>
+        <member name="M:GeFanuc.iFixToolkit.Adapter.Fakes.ShimHelper.ShimFixRegisterConsoleDelegate.Bind(System.Runtime.Serialization.ISerializable)">
+            <summary>将接口的成员绑定到此填充码。</summary>
+        </member>
+        <member name="P:GeFanuc.iFixToolkit.Adapter.Fakes.ShimHelper.ShimFixRegisterConsoleDelegate.ConstructorObjectIntPtr">
+            <summary>设置 FixRegisterConsoleDelegate.FixRegisterConsoleDelegate(FixRegisterConsoleDelegate this, Object object, IntPtr method) 的 填充码</summary>
+        </member>
+        <member name="P:GeFanuc.iFixToolkit.Adapter.Fakes.ShimHelper.ShimFixRegisterConsoleDelegate.EndInvokeIAsyncResult">
+            <summary>设置 FixRegisterConsoleDelegate.EndInvoke(FixRegisterConsoleDelegate this, IAsyncResult result) 的 填充码</summary>
+        </member>
+        <member name="P:GeFanuc.iFixToolkit.Adapter.Fakes.ShimHelper.ShimFixRegisterConsoleDelegate.Invoke">
+            <summary>设置 FixRegisterConsoleDelegate.Invoke(FixRegisterConsoleDelegate this) 的 填充码</summary>
+        </member>
+        <member name="T:GeFanuc.iFixToolkit.Adapter.Fakes.ShimVSP">
+            <summary>GeFanuc.iFixToolkit.Adapter.VSP 的填充码类型</summary>
+        </member>
+        <member name="M:GeFanuc.iFixToolkit.Adapter.Fakes.ShimVSP.#ctor">
+            <summary>初始化新的填充码实例</summary>
+        </member>
+        <member name="T:GeFanuc.iFixToolkit.Adapter.Fakes.ShimVSP.AllInstances">
+            <summary>为所有实例成员定义填充码</summary>
+        </member>
+        <member name="M:GeFanuc.iFixToolkit.Adapter.Fakes.ShimVSP.BehaveAsCurrent">
+            <summary>为已填充的类型的所有方法分配“Current”行为</summary>
+        </member>
+        <member name="M:GeFanuc.iFixToolkit.Adapter.Fakes.ShimVSP.BehaveAsNotImplemented">
+            <summary>为已填充的类型的所有方法分配“NotImplemented”行为</summary>
+        </member>
+        <member name="P:GeFanuc.iFixToolkit.Adapter.Fakes.ShimVSP.Behavior">
+            <summary>为已填充的类型的所有方法分配行为</summary>
+        </member>
+        <member name="T:GeFanuc.iFixToolkit.Adapter.Fakes.ShimalmUnion">
+            <summary>GeFanuc.iFixToolkit.Adapter.almUnion 的填充码类型</summary>
+        </member>
+        <member name="M:GeFanuc.iFixToolkit.Adapter.Fakes.ShimalmUnion.#ctor">
+            <summary>初始化新的填充码实例</summary>
+        </member>
+        <member name="T:GeFanuc.iFixToolkit.Adapter.Fakes.ShimalmUnion.AllInstances">
+            <summary>为所有实例成员定义填充码</summary>
+        </member>
+        <member name="M:GeFanuc.iFixToolkit.Adapter.Fakes.ShimalmUnion.BehaveAsCurrent">
+            <summary>为已填充的类型的所有方法分配“Current”行为</summary>
+        </member>
+        <member name="M:GeFanuc.iFixToolkit.Adapter.Fakes.ShimalmUnion.BehaveAsNotImplemented">
+            <summary>为已填充的类型的所有方法分配“NotImplemented”行为</summary>
+        </member>
+        <member name="P:GeFanuc.iFixToolkit.Adapter.Fakes.ShimalmUnion.Behavior">
+            <summary>为已填充的类型的所有方法分配行为</summary>
+        </member>
+        <member name="T:Microsoft.QualityTools.Testing.Fakes.Delegates.GeFanuciFixToolkitAdapterDelegates">
+            <summary>包含用于 GeFanuc.iFixToolkit.Adapter 的存根和填充码的自定义委托</summary>
+        </member>
+    </members>
+</doc>

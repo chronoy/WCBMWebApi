@@ -6,31 +6,32 @@ using System.Text;
 
 namespace Models
 {
+    [Table("tRealtimeDiagnosticData")]
     [Keyless]
     public class StationLoopDiagnosticData
     {
         //Loop ID
         public int ID { get; set; }
         [Column("CurrentDT")]
-        public string DateTime { get; set; }
+        public DateTime DateTime { get; set; }
         [Column("FM")]
-        public int FMDiagnositcResultID { get; set; }
+        public byte FMDiagnositcResultID { get; set; }
         [Column("TT")]
-        public int TTDiagnositcResultID { get; set; }
+        public byte TTDiagnositcResultID { get; set; }
         [Column("PT")]
-        public int PTDiagnositcResultID { get; set; }
+        public byte PTDiagnositcResultID { get; set; }
         [Column("FC")]
-        public int FCDiagnositcResultID { get; set; }
+        public byte FCDiagnositcResultID { get; set; }
         [Column("VOS")]
-        public int VOSDiagnositcResultID { get; set; }
+        public byte VOSDiagnositcResultID { get; set; }
         [Column("LoopStatus")]
-        public int LoopStatusID { get; set; }
+        public byte LoopStatusID { get; set; }
         [NotMapped]
         public string LoopName { get; set; }
         [NotMapped]
-        public string Flowmeter { get; set; }
+        public string LoopCategory { get; set; }
         [NotMapped]
-        public string FlowmeterTypeDescription { get; set; }
+        public string LoopDescription { get; set; }
         [NotMapped]
         public string FMDiagnosticResult { get; set; }
         [NotMapped]
@@ -41,5 +42,7 @@ namespace Models
         public string FCDiagnosticResult { get; set; }
         [NotMapped]
         public string VOSDiagnosticResult { get; set; }
+        [NotMapped]
+        public string LoopStatus { get; set; }
     }
 }
