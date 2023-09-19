@@ -13,6 +13,6 @@ namespace Services
         public Task<List<HistoricalStationLoopCheckData>> GetStationLoopCheckReport(string reportCategory, string brandName, int equipmentID, DateTime startDateTime, DateTime endDateTime);
         public Task<Dictionary<string, object>> GetManualCheckData(int loopID, string brandName);
 
-
+        public Task<Dictionary<string, object>> GetOfflineCheck(OfflineCheck offlineCheck);
     }
 }

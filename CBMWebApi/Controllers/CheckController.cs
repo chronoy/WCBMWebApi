@@ -61,5 +61,12 @@ namespace CBMWebApi.Controllers
             await _service.GetManualCheckData(loopID, brandName);
             return data;
         }
+
+        [HttpPost]
+        public async Task<Dictionary<string, object>> GetOfflineCheck([FromForm] OfflineCheck offlineCheck)
+        {
+            Dictionary<string, object> data = new Dictionary<string, object>();
+            return await _service.GetOfflineCheck(offlineCheck);
+        }
     }
 }

@@ -17,4 +17,10 @@
     <ProjectReference Include="..\Services\Services.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="GasStandardFormula">
+      <HintPath>..\dll\GasStandardFormula.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>
