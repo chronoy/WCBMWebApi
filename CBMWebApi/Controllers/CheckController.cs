@@ -72,5 +72,12 @@ namespace CBMWebApi.Controllers
             rtn["Data"] = data;
             return rtn;
         }
+
+        [HttpPost]
+        public async Task<Dictionary<string, object>> GetOfflineCheck([FromForm] OfflineCheck offlineCheck)
+        {
+            Dictionary<string, object> data = new Dictionary<string, object>();
+            return await _service.GetOfflineCheck(offlineCheck);
+        }
     }
 }
