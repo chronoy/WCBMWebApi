@@ -45,10 +45,10 @@ namespace Respository
             return realtimeAlarm;
         }
 
-        public List<RealtimeDiagnosticAlarm> GetRealtimeDiagnosticAlarm(int stationID, int loopID)
+        public List<DiagnosticAlarm> GetRealtimeDiagnosticAlarm(int stationID, int loopID)
         {
-            List<RealtimeDiagnosticAlarm> diagnostics = new();
-            var data = (from d in _context.RealtimeDiagnosticAlarms
+            List<DiagnosticAlarm> diagnostics = new();
+            var data = (from d in _context.DiagnosticAlarms
                         join loop in _context.StationLoops on d.LoopID equals loop.ID
                         where d.Status!= "OK"
                         select new
@@ -67,7 +67,7 @@ namespace Respository
             {
                 diagnostics = (from d in data
                                where d.StationID == stationID
-                               select new RealtimeDiagnosticAlarm
+                               select new DiagnosticAlarm
                                {
                                    StartTime = d.StartTime,
                                    EndTime = d.EndTime,
@@ -81,7 +81,7 @@ namespace Respository
             {
                 diagnostics = (from d in data
                                where d.LoopID == loopID
-                               select new RealtimeDiagnosticAlarm
+                               select new DiagnosticAlarm
                                {
                                    StartTime = d.StartTime,
                                    EndTime = d.EndTime,
