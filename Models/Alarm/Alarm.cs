@@ -33,12 +33,15 @@ namespace Models
         public string OperatorName { get; set; }
         [Column("ALM_OPFULLNAME")]
         public string FullOperatorName { get; set; }
+
     }
 
+    [Keyless]
     [Table("tRealtimeAlarm")]
     public class RealtimeAlarm : Alarm
     {
-
+        [Column("ALM_ACKED")]
+        public string ACKED { get; set; }
     }
 
     [Table("tHistoricalAlarm")]
