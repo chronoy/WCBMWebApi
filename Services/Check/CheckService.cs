@@ -6,6 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Respository;
+using GasStandardFormula;
+using System.Runtime.Intrinsics.Arm;
 
 namespace Services
 {
@@ -42,7 +44,6 @@ namespace Services
                             var realtimeVOSCheckChartDatas = _respository.GetRealtimeCheckDataDanielVOSChartDatas(loopID);
                             HistoricalDanielFRCheckData historicalFRCheckData = new HistoricalDanielFRCheckData();
                             HistoricalDanielVOSCheckData historicalDanielVOSCheckData = new HistoricalDanielVOSCheckData();
-
                             if (realtimeFRCheckData != null && realtimeVOSCheckData != null)
                             {
                                 EntityToEntity(realtimeFRCheckData, historicalFRCheckData);
@@ -261,7 +262,81 @@ namespace Services
             });
         }
 
+        public Task<Dictionary<string, object>> GetOfflineCheck(OfflineCheck offlineCheck)
+        {
+            return Task.Run(() =>
+            {
+                Dictionary<string, object> data = new Dictionary<string, object>();
+                try
+                {
+                    GasStandardFormula.Formula Formular = new GasStandardFormula.Formula();
+                    AGA10STRUCT aga10 = new AGA10STRUCT();
+                    Formular.Aga10(ref aga10,
+                             new double[21]{Convert.ToDouble(offlineCheck.C1),
+                                    Convert.ToDouble(offlineCheck.N2),
+                                    Convert.ToDouble(offlineCheck.CO2),
+                                    Convert.ToDouble(offlineCheck.C2),
+                                    Convert.ToDouble(offlineCheck.C3),
+                                    0.0,//H2O,
+                                    0.0,//H2S,
+                                    0.0,//H2
+                                    0.0,//CO
+                                    0.0,//O2
+                                    Convert.ToDouble(offlineCheck.IC4),
+                                    Convert.ToDouble(offlineCheck.NC4),
+                                    Convert.ToDouble(offlineCheck.IC5)+Convert.ToDouble(offlineCheck.NeoC5),
+                                    Convert.ToDouble(offlineCheck.NC5),
+                                    Convert.ToDouble(offlineCheck.C6),
+                                    0 ,//Convert.ToDouble(condition["C7"]),
+                                    0 ,//Convert.ToDouble(condition["C8"]),
+                                    0,//Convert.ToDouble(condition["C9"]),
+                                    0 , //Convert.ToDouble(condition["C10"]), 
+                                    0.0,//He
+                                    0.0//Ar
+                                        },
+                                     new double[2] { Convert.ToDouble(offlineCheck.Temperature),
+                                             Convert.ToDouble(offlineCheck.Pressure) * 0.001}
+                                    );
+                    data["StandardDensity"] = aga10.dRhob;
+                    data["StandardCompressFactor"] = aga10.dZb;
+                    data["GrossDensity"] = aga10.dRhof; 
+                    data["GrossCompressFactor"] = aga10.dZf;
+                    Formular = new GasStandardFormula.Formula();
+                    ISO6976Struct ISO6976 = new ISO6976Struct();
+                    Formular.ISO6976(ref ISO6976, new double[21]{
+                                    Convert.ToDouble(offlineCheck.C1),
+                                    Convert.ToDouble(offlineCheck.N2),
+                                    Convert.ToDouble(offlineCheck.CO2),
+                                    Convert.ToDouble(offlineCheck.C2),
+                                    Convert.ToDouble(offlineCheck.C3),
+                                    0.0,//H2O,
+                                    0.0,//H2S,
+                                    0.0,//H2
+                                    0.0,//CO
+                                    0.0,//O2
+                                    Convert.ToDouble(offlineCheck.IC4),
+                                    Convert.ToDouble(offlineCheck.NC4),
+                                    Convert.ToDouble(offlineCheck.IC5)+Convert.ToDouble(offlineCheck.NeoC5),
+                                    Convert.ToDouble(offlineCheck.NC5),
+                                    Convert.ToDouble(offlineCheck.C6),
+                                    0 ,//Convert.ToDouble(condition["C7"]),
+                                    0 ,//Convert.ToDouble(condition["C8"]),
+                                    0,//Convert.ToDouble(condition["C9"]),
+                                    0 , //Convert.ToDouble(condition["C10"]), 
+                                    0.0,//He
+                                    0.0//Ar
+                                    });
+                    data["CalorificValue"] = ISO6976.dCalarify;//热值
+                
+                }
+                catch (Exception ex)
+                {
+                    data=new Dictionary<string, object>();
+                }
+                return data;
 
+            });
+        }
         /// <summary>
         /// 将一个实体的值赋值到另外一个实体
         /// </summary>

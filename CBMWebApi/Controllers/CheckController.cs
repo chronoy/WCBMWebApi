@@ -19,10 +19,10 @@ namespace CBMWebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<Dictionary<string, object>> EquipmentCheckReport([FromForm] string reportCategory, [FromForm] string brandName, [FromForm] int equipmentID, [FromForm] DateTime startDateTime, [FromForm] DateTime endDateTime)
+        public async Task<Dictionary<string, object>> EquipmentCheckReport([FromForm] string reportCategory, [FromForm] string manufacturer, [FromForm] int equipmentID, [FromForm] DateTime startDateTime, [FromForm] DateTime endDateTime)
         {
             Dictionary<string, object> rtn = new Dictionary<string, object>();
-            List<HistoricalStationEquipmentCheckData> stationEquipmentCheckData = await _service.GetStationEquipmentCheckReport(reportCategory, brandName, equipmentID, startDateTime, endDateTime);
+            List<HistoricalStationEquipmentCheckData> stationEquipmentCheckData = await _service.GetStationEquipmentCheckReport(reportCategory, manufacturer, equipmentID, startDateTime, endDateTime);
             if (stationEquipmentCheckData == null)
             {
                 rtn["MSG"] = "OtherError";
@@ -60,6 +60,25 @@ namespace CBMWebApi.Controllers
             Dictionary<string, object> rtn = new Dictionary<string, object>();
             var data = await _service.GetManualCheckData(loopID, brandName);
             if (data == null)
+            {
+                rtn["MSG"] = "OtherError";
+                rtn["Code"] = "400";
+            }
+            else
+            {
+                rtn["MSG"] = "OK";
+                rtn["Code"] = "200";
+            }
+            rtn["Data"] = data;
+            return rtn;
+        }
+
+        [HttpPost]
+        public async Task<Dictionary<string, object>> GetOfflineCheck([FromForm] OfflineCheck offlineCheck)
+        {
+            Dictionary<string, object> rtn = new Dictionary<string, object>();
+            var data =await _service.GetOfflineCheck(offlineCheck);
+            if (data.Values.Count == 0) 
             {
                 rtn["MSG"] = "OtherError";
                 rtn["Code"] = "400";

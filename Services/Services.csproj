@@ -37,6 +37,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Reference Include="GasStandardFormula">
+      <HintPath>..\dll\GasStandardFormula.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
     <Reference Include="GeFanuc.iFixToolkit.Adapter">
       <HintPath>..\Source\GeFanuc.iFixToolkit.Adapter.dll</HintPath>
       <Private></Private>
@@ -47,5 +52,4 @@
     <AdditionalDesignTimeBuildInput Remove="FakesAssemblies\**" />
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
-
 </Project>

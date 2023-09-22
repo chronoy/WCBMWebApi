@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Respository
 {
@@ -17,41 +19,81 @@ namespace Respository
             _context = context;
         }
 
-        public List<RealtimeAlarm> GetRealtimeAlarm(string alarmArea, string priority)
+        public List<RealtimeAlarm> GetRealtimeAlarm(List<string> alarmAreas, List<string> prioritys)
         {
-            var realtimeAlarm = (from real in _context.RealtimeAlarms
-                                 where real.Area.Contains(alarmArea) && real.Status != "OK"
-                                 select new RealtimeAlarm
-                                 {
-                                     StartTime = real.StartTime,
-                                     EndTime = real.EndTime,
-                                     NodeName = real.NodeName.TrimEnd(),
-                                     TagName = real.TagName.TrimEnd(),
-                                     Value = real.Value.TrimEnd(),
-                                     MessageType = real.MessageType.TrimEnd(),
-                                     Description = real.Description.TrimEnd(),
-                                     Priority = real.Priority.TrimEnd(),
-                                     Status = real.Status.TrimEnd(),
-                                     Area = real.Area.TrimEnd(),
-                                     OperatorName = real.OperatorName.TrimEnd(),
-                                     FullOperatorName = real.FullOperatorName.TrimEnd(),
-                                 }).OrderByDescending(o => o.StartTime).ThenByDescending(t => t.EndTime).ToList();
+            List<RealtimeAlarm> alarms = (from real in _context.RealtimeAlarms
+                                          select new RealtimeAlarm
+                                          {
+                                              ID=real.ID,
+                                              StartTime = real.StartTime,
+                                              EndTime = real.EndTime,
+                                              NodeName = real.NodeName.TrimEnd(),
+                                              TagName = real.TagName.TrimEnd(),
+                                              Value = real.Value.TrimEnd(),
+                                              MessageType = real.MessageType.TrimEnd(),
+                                              Description = real.Description.TrimEnd(),
+                                              Priority = real.Priority.TrimEnd(),
+                                              Status = real.Status.TrimEnd(),
+                                              Area = String.Join("_", real.Area.Split(',', StringSplitOptions.None).ToList().GetRange(4, 3)),
+                                              OperatorName = real.OperatorName.TrimEnd(),
+                                              FullOperatorName = real.FullOperatorName.TrimEnd(),
+                                              ACKED=real.ACKED                                  
+                                          }).ToList();
 
-            if (priority != "%")
-            {
-                realtimeAlarm = realtimeAlarm.Where(x => x.Priority.Contains(priority)).OrderByDescending(o => o.StartTime).ThenByDescending(t => t.EndTime).ToList();
-            }
-
-            return realtimeAlarm;
+                             
+            return (from real in alarms
+                    where alarmAreas.Contains(real.Area) && prioritys.Contains(real.Priority)
+                    select real).OrderByDescending(o => o.StartTime).ToList();
         }
+        public string AckRealtimeAlarm(List<string> tagNames)
+        {
+            using (var tran = _context.Database.BeginTransaction(IsolationLevel.ReadCommitted))
+            {
+                try
+                {
 
+                    List<RealtimeAlarm> deletes = (from alarm in _context.RealtimeAlarms
+                                                   where alarm.Status == "OK" && tagNames.Contains(alarm.TagName)
+                                                   select alarm).ToList();
+                    List<RealtimeAlarm> updates = (from alarm in _context.RealtimeAlarms
+                                                   where alarm.Status != "OK" && tagNames.Contains(alarm.TagName)
+                                                   select new RealtimeAlarm
+                                                   {
+                                                       ID=alarm.ID,
+                                                       StartTime = alarm.StartTime,
+                                                       EndTime = alarm.EndTime,
+                                                       NodeName = alarm.NodeName,
+                                                       TagName = alarm.TagName,
+                                                       Value = alarm.Value,
+                                                       MessageType = alarm.MessageType,
+                                                       Description = alarm.Description,
+                                                       Priority = alarm.Priority,
+                                                       Status = alarm.Status,
+                                                       Area = alarm.Area,
+                                                       OperatorName = alarm.OperatorName,
+                                                       FullOperatorName = alarm.FullOperatorName,
+                                                       ACKED = "ACK"
+                                                   }).ToList();
+
+                    _context.RealtimeAlarms.RemoveRange(deletes);
+                    _context.RealtimeAlarms.UpdateRange(updates);
+                    _context.SaveChanges();
+                    tran.Commit();
+                }
+                catch (Exception ex)
+                {
+                    tran.Rollback();
+                    return "OtherError";
+                }
+                return "OK";
+            }
+        }
         public List<DiagnosticAlarm> GetRealtimeDiagnosticAlarm(int stationID, int loopID)
         {
-
             List<DiagnosticAlarm> diagnostics = new();
             var data = (from d in _context.DiagnosticAlarms
                         join loop in _context.StationLoops on d.LoopID equals loop.ID
-                        where d.Status != "OK"
+                        where d.Status!= "OK"
                         select new
                         {
                             d.StartTime,
@@ -159,5 +201,7 @@ namespace Respository
                           select alarm).ToList();
             return new AlarmCount { Name = name, AlarmName = alarmName, AlarmArea = alarmArea, Count = alarms.Count };
         }
+
+        
     }
 }

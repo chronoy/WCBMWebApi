@@ -76,6 +76,46 @@ namespace CBMWebApi.Controllers
         }
 
         [HttpPost]
+        public async Task<Dictionary<string, object>> GetLoopDiagnosticDataDetailByLoop([FromForm] int loopID,[FromForm] string manufacturer, [FromForm] string diagnosisType)
+        {
+            Dictionary<string, object> rtn = new();
+            List<DiagnosticDataDetail> details = await _diagnosisService.GetLoopDiagnosticDataDetailByLoop(loopID, manufacturer, diagnosisType);
+            if (details == null)
+            {
+                rtn["MSG"] = "OtherError";
+                rtn["Code"] = "400";
+            }
+            else
+            {
+                rtn["MSG"] = "OK";
+                rtn["Code"] = "200";
+            }
+            rtn["Data"] = details;
+            return rtn;
+        }
+
+        [HttpPost]
+        public async Task<Dictionary<string, object>> GetEquipmentDiagnosticDataDetailByEquipment([FromForm] int equipmentID, [FromForm] string manufacturer)
+        {
+            Dictionary<string, object> rtn = new();
+            List<DiagnosticDataDetail> details = await _diagnosisService.GetEquipmentDiagnosticDataDetailByEquipment(equipmentID, manufacturer);
+            if (details == null)
+            {
+                rtn["MSG"] = "OtherError";
+                rtn["Code"] = "400";
+            }
+            else
+            {
+                rtn["MSG"] = "OK";
+                rtn["Code"] = "200";
+            }
+            rtn["Data"] = details;
+            return rtn;
+        }
+
+
+
+        [HttpPost]
         public async Task<Dictionary<string, object>> GetStations()
         {
             Dictionary<string, object> rtn = new();

@@ -9,8 +9,10 @@ namespace Services
 {
     public interface ICheckService
     {
-        public Task<List<HistoricalStationEquipmentCheckData>> GetStationEquipmentCheckReport(string reportCategory, string brandName, int equipmentID, DateTime startDateTime, DateTime endDateTime);
-        public Task<List<HistoricalStationLoopCheckData>> GetStationLoopCheckReport(string reportCategory, string brandName, int equipmentID, DateTime startDateTime, DateTime endDateTime);
-        public Task<Dictionary<string, object>> GetManualCheckData(int loopID, string brandName);
+        public Task<List<HistoricalStationEquipmentCheckData>> GetStationEquipmentCheckReport(string reportCategory, string manufacturer, int equipmentID, DateTime startDateTime, DateTime endDateTime);
+        public Task<List<HistoricalStationLoopCheckData>> GetStationLoopCheckReport(string reportCategory, string manufacturer, int equipmentID, DateTime startDateTime, DateTime endDateTime);
+        public Task<Dictionary<string, object>> GetManualCheckData(int loopID, string manufacturer);
+        public Task<Dictionary<string, object>> GetOfflineCheck(OfflineCheck offlineCheck);
+
     }
 }
