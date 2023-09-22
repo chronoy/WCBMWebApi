@@ -40,6 +40,26 @@ namespace CBMWebApi.Controllers
             return rtn;
         }
 
+
+        [HttpPost]
+        public async Task<Dictionary<string, object>> ACKRealtimeAlarm([FromForm] List<string> tagNames)
+        {
+            Dictionary<string, object> rtn = new Dictionary<string, object>();
+            string msg = await _alarmService.AckRealtimeAlarm(tagNames);
+            if (msg == "OtherError")
+            {
+                rtn["MSG"] = "OtherError";
+                rtn["Code"] = "400";
+            }
+            else
+            {
+                rtn["MSG"] = "OK";
+                rtn["Code"] = "200";
+            }
+            return rtn;
+        }
+
+
         [HttpPost]
         public async Task<Dictionary<string, object>> ExportExcelRealtimeAlarm([FromForm] List<string> alarmAreas, [FromForm] List<string> prioritys)
         {
