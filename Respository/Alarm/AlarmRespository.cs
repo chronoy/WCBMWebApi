@@ -17,10 +17,13 @@ namespace Respository
             _context = context;
         }
 
-        public List<RealtimeAlarm> GetRealtimeAlarm(string alarmArea, string priority)
+        public List<RealtimeAlarm> GetRealtimeAlarm(List<string> alarmAreas, List<string> prioritys)
         {
+
+            string a = "a,b,c";
+            string b = String.Join("_",a.Split(',').ToList().GetRange(1,2) ); 
             var realtimeAlarm = (from real in _context.RealtimeAlarms
-                                 where real.Area.Contains(alarmArea) && real.Status != "OK"
+                                 where alarmAreas.Contains(String.Join("_", a.Split(',', StringSplitOptions.None).ToList().GetRange(1, 2))) && real.Status != "OK"
                                  select new RealtimeAlarm
                                  {
                                      StartTime = real.StartTime,
@@ -37,10 +40,10 @@ namespace Respository
                                      FullOperatorName = real.FullOperatorName.TrimEnd(),
                                  }).OrderByDescending(o => o.StartTime).ThenByDescending(t => t.EndTime).ToList();
 
-            if (priority != "%")
-            {
-                realtimeAlarm = realtimeAlarm.Where(x => x.Priority.Contains(priority)).OrderByDescending(o => o.StartTime).ThenByDescending(t => t.EndTime).ToList();
-            }
+            //if (priority != "%")
+            //{
+            //    realtimeAlarm = realtimeAlarm.Where(x => x.Priority.Contains(priority)).OrderByDescending(o => o.StartTime).ThenByDescending(t => t.EndTime).ToList();
+            //}
 
             return realtimeAlarm;
         }
