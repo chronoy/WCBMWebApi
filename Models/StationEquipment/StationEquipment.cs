@@ -18,9 +18,9 @@ namespace Models
         public int CollectDataTypeID { get; set; }
         public int EquipmentCategoryID { get;set; }
         public int StationID { get; set; }
-        public string Manufacturer { get; set; }
-        public string Model { get; set; }
-        //public int OrderNumber { get; set; }
+        public string? Manufacturer { get; set; }
+        public string? Model { get; set; }
+        public int OrderNumber { get; set; }
         [NotMapped]
         public Dictionary<string, Tag> Tags { get; set; }
         [NotMapped]

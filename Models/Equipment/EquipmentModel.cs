@@ -14,8 +14,8 @@ namespace Models
         [Key]
         public int ID { get; set; }
         public string Name { get; set; }
-        public string Descritption { get; set; }
-        public int EquipmentCategoryID { get; set; }    
-        public int EquipmentManufacturerID { get;}
+        public string? Description { get; set; }
+        public int EquipmentCategoryID { get; set; }
+        public int EquipmentManufacturerID { get; set; }
     }
 }

@@ -2,7 +2,7 @@
 using Models;
 using Services;
 
-namespace CBMWebApi.Controllers
+namespace CBMCenterApi.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]

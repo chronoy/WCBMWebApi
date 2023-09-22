@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Services
 {
-    public class StationService:IStationService
+    public class StationService : IStationService
     {
         private readonly IStationRespository _respository;
         public StationService(IStationRespository respository)
@@ -16,9 +16,14 @@ namespace Services
             _respository = respository;
         }
 
+        public Task<List<Station>> GetStations()
+        {
+            return Task.Run(() => _respository.GetStations());
+        }
+
         public Task<Station> GetStationByID(int ID)
         {
-            return Task.Run(()=>_respository.GetStationByID(ID));
+            return Task.Run(() => _respository.GetStationByID(ID));
         }
     }
 }

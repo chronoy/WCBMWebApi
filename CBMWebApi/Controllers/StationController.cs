@@ -74,5 +74,78 @@ namespace CBMWebApi.Controllers
             rtn["EquipmentAlarmCount"] = equipmentAlarmCount;
             return rtn;
         }
+
+        [HttpPost]
+        public async Task<Dictionary<string, object>> GetStations()
+        {
+            Dictionary<string, object> rtn = new();
+            var stations = await _stationService.GetStations();
+            if (stations == null)
+            {
+                rtn["MSG"] = "OtherError";
+                rtn["Code"] = "400";
+            }
+            else
+            {
+                rtn["MSG"] = "OK";
+                rtn["Code"] = "200";
+            }
+            rtn["Data"] = stations;
+            return rtn;
+        }
+
+        [HttpPost]
+        public async Task<Dictionary<string, object>> GetStationLoops([FromForm] List<int> stationIDs)
+        {
+            Dictionary<string, object> rtn = new();
+            List<StationLoop> loops = new List<StationLoop>();
+            foreach (int stationID in stationIDs)
+            {
+                var stationLoops = await _stationLoopService.GetStationLoopsByStation(stationID);
+                if (stationLoops != null)
+                {
+                    loops = loops.Union(stationLoops).ToList();
+                }
+            }
+            if (loops.Count == 0)
+            {
+                rtn["MSG"] = "OtherError";
+                rtn["Code"] = "400";
+            }
+            else
+            {
+                rtn["MSG"] = "OK";
+                rtn["Code"] = "200";
+            }
+            rtn["Data"] = loops;
+            return rtn;
+        }
+
+        [HttpPost]
+        public async Task<Dictionary<string, object>> GetStationEquipments([FromForm] List<int> stationIDs)
+        {
+            Dictionary<string, object> rtn = new();
+            List<StationEquipment> equipments = new List<StationEquipment>();
+            foreach (int stationID in stationIDs)
+            {
+                var stationEquipments = await _stationEquipmentService.GetStationEquipmentsBySttaion(stationID);
+                if (stationEquipments != null)
+                {
+                    equipments = equipments.Union(stationEquipments).ToList();
+                }
+            }
+            if (equipments.Count == 0)
+            {
+                rtn["MSG"] = "OtherError";
+                rtn["Code"] = "400";
+            }
+            else
+            {
+                rtn["MSG"] = "OK";
+                rtn["Code"] = "200";
+            }
+            rtn["Data"] = equipments;
+            return rtn;
+        }
     }
 }

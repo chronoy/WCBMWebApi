@@ -8,12 +8,16 @@ using OfficeOpenXml.Style;
 using System.IO;
 using System.Reflection;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using iText.Kernel.Pdf.Canvas.Parser.Listener;
+using iText.Kernel.Pdf.Canvas.Parser;
+using iText.Kernel.Pdf;
 
 namespace Services
 {
-    public class ExcelExportHelper:IExcelExportHelper
+    public class ExcelExportHelper : IExcelExportHelper
     {
-        public  string ExcelContentType
+        public string ExcelContentType
         {
             get
             {
@@ -26,12 +30,12 @@ namespace Services
         /// <typeparam name="T"></typeparam>
         /// <param name="data"></param>
         /// <returns></returns>
-        public  DataTable ListToDataTable<T>(List<T> data,string[] columnNames )
+        public DataTable ListToDataTable<T>(List<T> data, string[] columnNames)
         {
 
-            List<PropertyInfo> properties = new List<PropertyInfo>(); 
+            List<PropertyInfo> properties = new List<PropertyInfo>();
             DataTable dataTable = new DataTable();
-            foreach(string colName in columnNames)
+            foreach (string colName in columnNames)
             {
                 PropertyInfo property = typeof(T).GetProperty(colName);
                 properties.Add(property);
@@ -60,7 +64,7 @@ namespace Services
         /// <param name="showSrNo">//是否显示行编号</param>
         /// <param name="columnsToTake">要导出的列</param>
         /// <returns></returns>
-        public  byte[] ExportExcel(DataTable dataTable, string templatePath,int startRowFrom , bool showSrNo = false)
+        public byte[] ExportExcel(DataTable dataTable, string templatePath, int startRowFrom, bool showSrNo = false)
         {
             byte[] result = null;
             ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
@@ -88,13 +92,13 @@ namespace Services
                 foreach (DataColumn item in dataTable.Columns)
                 {
                     ExcelRange columnCells = workSheet.Cells[workSheet.Dimension.Start.Row, columnIndex, workSheet.Dimension.End.Row, columnIndex];
-            
-                        workSheet.Column(columnIndex).AutoFit();
+
+                    workSheet.Column(columnIndex).AutoFit();
                     //}
                     columnIndex++;
                 }
-              
-                if (dataTable.Rows.Count>0)
+
+                if (dataTable.Rows.Count > 0)
                 {
                     using (ExcelRange r = workSheet.Cells[startRowFrom, 1, startRowFrom + dataTable.Rows.Count - 1, dataTable.Columns.Count])
                     {
@@ -109,7 +113,7 @@ namespace Services
                         r.Style.Border.Right.Color.SetColor(System.Drawing.Color.Black);
                     }
                 }
-              
+
                 result = package.GetAsByteArray();
 
             }
@@ -125,10 +129,51 @@ namespace Services
         /// <param name="isShowSlNo"></param>
         /// <param name="ColumnsToTake"></param>
         /// <returns></returns>
-        public Task <byte[]> ExportExcel<T>(List<T> data,string[] columnNames, string templatePath,int startRowFrom = 2 , bool isShowSlNo = false)
+        public Task<byte[]> ExportExcel<T>(List<T> data, string[] columnNames, string templatePath, int startRowFrom = 2, bool isShowSlNo = false)
         {
-            return Task.Run(() => ExportExcel(ListToDataTable<T>(data, columnNames), templatePath, startRowFrom,  isShowSlNo));
+            return Task.Run(() => ExportExcel(ListToDataTable<T>(data, columnNames), templatePath, startRowFrom, isShowSlNo));
         }
 
+        /// <summary>
+        /// 导入Excel
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="file"></param>
+        /// <returns></returns>
+        public Task<List<T>> ImportExcel<T>(IFormFile file, int startRowSkip = 1, string columnRow = "1:1") where T : new()
+        {
+            return Task.Run(() =>
+            {
+                ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
+                var package = new ExcelPackage(file.OpenReadStream());
+                var workbook = package.Workbook;
+                var worksheet = workbook.Worksheets.First();
+                if (worksheet == null) return new List<T>();
+                worksheet.TrimLastEmptyRows();
+                return worksheet.ConvertSheetToObjects<T>(startRowSkip, columnRow).ToList();
+            });
+        }
+
+        /// <summary>
+        /// 导入Excel
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="sheet"></param>
+        /// <returns></returns>
+        public Task<List<T>> ImportExcel<T>(ExcelWorksheet sheet, int startRowSkip = 1, string columnRow = "1:1") where T : new()
+        {
+            return Task.Run(() =>
+            {
+                ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
+                if (sheet == null) return new List<T>();
+                sheet.TrimLastEmptyRows();
+                return sheet.ConvertSheetToObjects<T>(startRowSkip, columnRow).ToList();
+            });
+        }
+
+        public Task<List<string>> GetPDFText(IFormFile file)
+        {
+            return Task.Run(() => PDFTextExtractor.ExtractText(file.OpenReadStream()));
+        }
     }
 }

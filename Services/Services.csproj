@@ -26,6 +26,8 @@
 
   <ItemGroup>
     <PackageReference Include="EPPlus" Version="6.2.9" />
+    <PackageReference Include="itext7" Version="8.0.1" />
+    <PackageReference Include="itext7.font-asian" Version="8.0.1" />
     <PackageReference Include="Microsoft.QualityTools.Testing.Fakes" Version="16.11.230815" />
   </ItemGroup>
 
@@ -43,6 +45,7 @@
 
   <ItemGroup>
     <AdditionalDesignTimeBuildInput Remove="FakesAssemblies\**" />
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
 
 </Project>
