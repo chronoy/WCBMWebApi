@@ -210,6 +210,11 @@ namespace Respository
                                                 FullOperatorName = alm.FullOperatorName.TrimEnd(),
                                             }).ToList();
 
+            List<HistoricalAlarm> historicalAlarms = (from alm in alarms
+                                                      where alarmAreas.Contains(alm.Area)
+                                                      select alm
+                                                      ).ToList();
+
             List<HistoricalStatisticalAlarm> statisticalAlarms = (from alm in alarms
                                                                   where alarmAreas.Contains(alm.Area)
                                                                   group alm by new
