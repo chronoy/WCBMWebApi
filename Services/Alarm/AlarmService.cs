@@ -34,10 +34,15 @@ namespace Services
             return Task.Run(() => _alarmRespository.GetRealtimeDiagnosticAlarm(stationID, loopID));
         }
 
-        public Task<List<HistoricalAlarm>> GetHistoricalAlarm(DateTime startDateTime, DateTime endDateTime, string alarmArea)
+        public Task<List<HistoricalAlarm>> GetHistoricalAlarm(DateTime startDateTime, DateTime endDateTime, List<string> alarmAreas, List<string> prioritys)
         {
-            return Task.Run(() => _alarmRespository.GetHistoricalAlarm(startDateTime, endDateTime, alarmArea));
+            return Task.Run(() => _alarmRespository.GetHistoricalAlarm(startDateTime, endDateTime, alarmAreas, prioritys));
         }
+        public Task<List<HistoricalStatisticalAlarm>> GetHistoricalStatisticalAlarm(DateTime startDateTime, DateTime endDateTime, List<string> alarmAreas, List<string> prioritys)
+        {
+            return Task.Run(() => _alarmRespository.GetHistoricalStatisticalAlarm(startDateTime, endDateTime, alarmAreas, prioritys));
+        }
+
         public Task<List<AlarmKPI>> GetHistoricalAlarmKPI(int topNumber, string sortType, DateTime startDateTime, DateTime endDateTime, string alarmArea)
         {
             return Task.Run(() => _alarmRespository.GetHistoricalAlarmKPI(topNumber, sortType, startDateTime, endDateTime, alarmArea));

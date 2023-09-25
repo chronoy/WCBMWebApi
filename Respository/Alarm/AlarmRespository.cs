@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Reflection;
 
 namespace Respository
 {
@@ -138,29 +139,102 @@ namespace Respository
             return diagnostics;
         }
 
-        public List<HistoricalAlarm> GetHistoricalAlarm(DateTime startDateTime, DateTime endDateTime, string alarmArea)
+        public List<HistoricalAlarm> GetHistoricalAlarm(DateTime startDateTime, DateTime endDateTime, List<string> alarmAreas, List<string> prioritys)
         {
-            var historicalAlarm = (from his in _context.HistoricalAlarms
-                                   where his.StartTime > startDateTime && his.EndTime < endDateTime &&
-                                   his.MessageType.Contains("ALARM") && his.Area.Contains(alarmArea)
+
+            List<HistoricalAlarm> alarms = (from alm in _context.HistoricalAlarms 
+                                            where alm.StartTime >= startDateTime && 
+                                                  alm.EndTime <= endDateTime && 
+                                                  prioritys.Contains(alm.Priority) && 
+                                                  alm.MessageType=="ALARM"
+                                            select new HistoricalAlarm
+                                            {
+                                                HisID = alm.HisID,
+                                                StartTime = alm.StartTime,
+                                                EndTime = alm.EndTime,
+                                                NodeName = alm.NodeName.TrimEnd(),
+                                                TagName = alm.TagName.TrimEnd(),
+                                                Value = alm.Value.TrimEnd(),
+                                                MessageType = alm.MessageType.TrimEnd(),
+                                                Description = alm.Description.TrimEnd(),
+                                                Priority = alm.Priority.TrimEnd(),
+                                                Status = alm.Status.TrimEnd(),
+                                                Area = String.Join("_", alm.Area.Split(',', StringSplitOptions.None).ToList().GetRange(4, 3)),
+                                                OperatorName = alm.OperatorName.TrimEnd(),
+                                                FullOperatorName = alm.FullOperatorName.TrimEnd(), 
+                                            }).ToList();
+
+            var historicalAlarms = (from alm in alarms
+                                   where alarmAreas.Contains(alm.Area)
                                    select new HistoricalAlarm
                                    {
-                                       HisID = his.HisID,
-                                       StartTime = his.StartTime,
-                                       EndTime = his.EndTime,
-                                       NodeName = his.NodeName.TrimEnd(),
-                                       TagName = his.TagName.TrimEnd(),
-                                       Value = his.Value.TrimEnd(),
-                                       MessageType = his.MessageType.TrimEnd(),
-                                       Description = his.Description.TrimEnd(),
-                                       Priority = his.Priority.TrimEnd(),
-                                       Status = his.Status.TrimEnd(),
-                                       Area = his.Area.TrimEnd(),
-                                       OperatorName = his.OperatorName.TrimEnd(),
-                                       FullOperatorName = his.FullOperatorName.TrimEnd(),
+                                       HisID = alm.HisID,
+                                       StartTime = alm.StartTime,
+                                       EndTime = alm.EndTime,
+                                       NodeName = alm.NodeName.TrimEnd(),
+                                       TagName = alm.TagName.TrimEnd(),
+                                       Value = alm.Value.TrimEnd(),
+                                       MessageType = alm.MessageType.TrimEnd(),
+                                       Description = alm.Description.TrimEnd(),
+                                       Priority = alm.Priority.TrimEnd(),
+                                       Status = alm.Status.TrimEnd(),
+                                       Area = alm.Area.TrimEnd(),
+                                       OperatorName = alm.OperatorName.TrimEnd(),
+                                       FullOperatorName = alm.FullOperatorName.TrimEnd(),
                                    }).OrderByDescending(o => o.StartTime).ThenByDescending(t => t.EndTime).ToList();
-            return historicalAlarm;
+            return historicalAlarms;
         }
+        public List<HistoricalStatisticalAlarm> GetHistoricalStatisticalAlarm(DateTime startDateTime, DateTime endDateTime, List<string> alarmAreas, List<string> prioritys)
+        {
+
+            List<HistoricalAlarm> alarms = (from alm in _context.HistoricalAlarms
+                                            where alm.StartTime >= startDateTime &&
+                                                  alm.EndTime <= endDateTime &&
+                                                  prioritys.Contains(alm.Priority) &&
+                                                  alm.MessageType == "ALARM" &&
+                                                  alm.Status == "OK"
+                                            select new HistoricalAlarm
+                                            {
+                                                HisID = alm.HisID,
+                                                StartTime = alm.StartTime,
+                                                EndTime = alm.EndTime,
+                                                NodeName = alm.NodeName.TrimEnd(),
+                                                TagName = alm.TagName.TrimEnd(),
+                                                Value = alm.Value.TrimEnd(),
+                                                MessageType = alm.MessageType.TrimEnd(),
+                                                Description = alm.Description.TrimEnd(),
+                                                Priority = alm.Priority.TrimEnd(),
+                                                Status = alm.Status.TrimEnd(),
+                                                Area = String.Join("_", alm.Area.Split(',', StringSplitOptions.None).ToList().GetRange(4, 3)),
+                                                OperatorName = alm.OperatorName.TrimEnd(),
+                                                FullOperatorName = alm.FullOperatorName.TrimEnd(),
+                                            }).ToList();
+
+            List<HistoricalAlarm> historicalAlarms = (from alm in alarms
+                                                      where alarmAreas.Contains(alm.Area)
+                                                      select alm
+                                                      ).ToList();
+
+            List<HistoricalStatisticalAlarm> statisticalAlarms = (from alm in alarms
+                                                                  where alarmAreas.Contains(alm.Area)
+                                                                  group alm by new
+                                                                  {
+                                                                      alm.TagName,
+                                                                      alm.Description
+                                                                  } into almGroup
+                                                                  select new HistoricalStatisticalAlarm
+                                                                  {
+                                                                      TagName = almGroup.Key.TagName,
+                                                                      Description = almGroup.Key.Description,
+                                                                      StartTime = almGroup.Min(grp => grp.StartTime),
+                                                                      EndTime = almGroup.Max(grp => grp.EndTime),
+                                                                      Duration = TimeSpan.FromSeconds(almGroup.Sum(grp => (grp.EndTime - grp.StartTime).TotalSeconds)),
+                                                                      Count = almGroup.Count()
+                                                                  }).ToList();
+
+            return statisticalAlarms;
+        }
+
 
         public List<AlarmKPI> GetHistoricalAlarmKPI(int topNumber, string sortType, DateTime startDateTime, DateTime endDateTime, string alarmArea)
         {

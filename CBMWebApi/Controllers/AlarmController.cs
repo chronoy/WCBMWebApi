@@ -107,11 +107,11 @@ namespace CBMWebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<Dictionary<string, object>> GetHistoricalAlarm([FromForm] DateTime startDateTime, [FromForm] DateTime endDateTime, [FromForm] string alarmArea)
+        public async Task<Dictionary<string, object>> GetHistoricalAlarm([FromForm] DateTime startDateTime, [FromForm] DateTime endDateTime, [FromForm] List<string> alarmAreas, [FromForm] List<string> prioritys)
         {
             Dictionary<string, object> rtn = new Dictionary<string, object>();
-            var historicalAlarm = await _alarmService.GetHistoricalAlarm(startDateTime, endDateTime, alarmArea);
-            if (historicalAlarm == null)
+            var historicalAlarms = await _alarmService.GetHistoricalAlarm(startDateTime, endDateTime, alarmAreas,prioritys);
+            if (historicalAlarms == null)
             {
                 rtn["MSG"] = "OtherError";
                 rtn["Code"] = "400";
@@ -121,15 +121,15 @@ namespace CBMWebApi.Controllers
                 rtn["MSG"] = "OK";
                 rtn["Code"] = "200";
             }
-            rtn["Data"] = historicalAlarm;
+            rtn["Data"] = historicalAlarms;
             return rtn;
         }
 
         [HttpPost]
-        public async Task<Dictionary<string, object>> ExportExcelHistoricalAlarm([FromForm] DateTime startDateTime, [FromForm] DateTime endDateTime, [FromForm] string alarmArea)
+        public async Task<Dictionary<string, object>> ExportExcelHistoricalAlarm([FromForm] DateTime startDateTime, [FromForm] DateTime endDateTime, [FromForm] List<string> alarmAreas, [FromForm] List<string> prioritys)
         {
             Dictionary<string, object> rtn = new Dictionary<string, object>();
-            var list = await _alarmService.GetHistoricalAlarm(startDateTime, endDateTime, alarmArea);
+            var list = await _alarmService.GetHistoricalAlarm(startDateTime, endDateTime, alarmAreas, prioritys);
             string templatePath = Path.Combine(_hostingEnvironment.WebRootPath, @"ExcelTempate\历史报警统计表.xlsx");
             string[] columnNames = _Configuration["HistoricalAlarmExportColumnNames"].ToString().Split(",");
             byte[] filecontent = await _excelExportHelper.ExportExcel(list.ToList(), columnNames, templatePath, 2, true);
@@ -138,6 +138,24 @@ namespace CBMWebApi.Controllers
             return rtn;
         }
 
+        [HttpPost]
+        public async Task<Dictionary<string, object>> GetHistoricalStatisticalAlarm([FromForm] DateTime startDateTime, [FromForm] DateTime endDateTime, [FromForm] List<string> alarmAreas, [FromForm] List<string> prioritys)
+        {
+            Dictionary<string, object> rtn = new Dictionary<string, object>();
+            var statisticalAlarms = await _alarmService.GetHistoricalStatisticalAlarm(startDateTime, endDateTime, alarmAreas, prioritys);
+            if (statisticalAlarms == null)
+            {
+                rtn["MSG"] = "OtherError";
+                rtn["Code"] = "400";
+            }
+            else
+            {
+                rtn["MSG"] = "OK";
+                rtn["Code"] = "200";
+            }
+            rtn["Data"] = statisticalAlarms;
+            return rtn;
+        }
 
         [HttpPost]
         public async Task<Dictionary<string, object>> GetHistoricalAlarmKPI([FromForm] int topNumber, [FromForm] string sortType, [FromForm] DateTime startDateTime, [FromForm] DateTime endDateTime, [FromForm] string alarmArea)
