@@ -16,5 +16,7 @@ namespace Respository
         public List<HistoricalStatisticalAlarm> GetHistoricalStatisticalAlarm(DateTime startDateTime, DateTime endDateTime, List<string> alarmAreas, List<string> prioritys);
         public List<AlarmKPI> GetHistoricalAlarmKPI(int topNumber, string sortType, DateTime startDateTime, DateTime endDateTime, string alarmArea);
         public AlarmCount GetAlarmCountByStation(string name, string alarmName, string alarmArea);
+        public List<RealtimeAlarm> GetRealtimeAlarmByArea(string alarmAreas, List<string> prioritys);
+
     }
 }

@@ -71,5 +71,10 @@ namespace Services
             });
 
         }
+
+        public Task<List<RealtimeAlarm>> GetRealtimeAlarmByArea(string alarmAreas, List<string> prioritys)
+        {
+            return Task.Run(() => _alarmRespository.GetRealtimeAlarmByArea(alarmAreas, prioritys));
+        }
     }
 }

@@ -276,6 +276,32 @@ namespace Respository
             return new AlarmCount { Name = name, AlarmName = alarmName, AlarmArea = alarmArea, Count = alarms.Count };
         }
 
-        
+        public List<RealtimeAlarm> GetRealtimeAlarmByArea(string alarmAreas, List<string> prioritys)
+        {
+            List<RealtimeAlarm> alarms = (from real in _context.RealtimeAlarms
+                                          select new RealtimeAlarm
+                                          {
+                                              ID = real.ID,
+                                              StartTime = real.StartTime,
+                                              EndTime = real.EndTime,
+                                              NodeName = real.NodeName.TrimEnd(),
+                                              TagName = real.TagName.TrimEnd(),
+                                              Value = real.Value.TrimEnd(),
+                                              MessageType = real.MessageType.TrimEnd(),
+                                              Description = real.Description.TrimEnd(),
+                                              Priority = real.Priority.TrimEnd(),
+                                              Status = real.Status.TrimEnd(),
+                                              Area = real.Area.TrimEnd(),
+                                              OperatorName = real.OperatorName.TrimEnd(),
+                                              FullOperatorName = real.FullOperatorName.TrimEnd(),
+                                              ACKED = real.ACKED
+                                          }).ToList();
+
+
+            return (from real in alarms
+                    where real.Area.Contains(alarmAreas) && prioritys.Contains(real.Priority)
+                    select real).OrderByDescending(o => o.StartTime).ToList();
+        }
+
     }
 }

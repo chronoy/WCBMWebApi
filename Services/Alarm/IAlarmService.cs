@@ -17,5 +17,7 @@ namespace Services
 
         public Task<List<AlarmKPI>> GetHistoricalAlarmKPI(int topNumber, string sortType, DateTime startDateTime, DateTime endDateTime, string alarmArea);
         public Task<List<AlarmCount>> GetAlarmCountByStation(Station station);
+
+        public Task<List<RealtimeAlarm>> GetRealtimeAlarmByArea(string alarmAreas, List<string> prioritys);
     }
 }
