@@ -5,6 +5,8 @@ using Models;
 using Services;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Threading;
+using static System.Collections.Specialized.BitVector32;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -76,7 +78,7 @@ namespace CBMWebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<Dictionary<string, object>> GetLoopDiagnosticDataDetailByLoop([FromForm] int loopID,[FromForm] string manufacturer, [FromForm] string diagnosisType)
+        public async Task<Dictionary<string, object>> GetLoopDiagnosticDataDetailByLoop([FromForm] int loopID, [FromForm] string manufacturer, [FromForm] string diagnosisType)
         {
             Dictionary<string, object> rtn = new();
             List<DiagnosticDataDetail> details = await _diagnosisService.GetLoopDiagnosticDataDetailByLoop(loopID, manufacturer, diagnosisType);
@@ -112,7 +114,43 @@ namespace CBMWebApi.Controllers
             rtn["Data"] = details;
             return rtn;
         }
-
-
+        [HttpPost]
+        public async Task<Dictionary<string, object>> GetStationStatistics([FromForm] List<int> stationIDs)
+        {
+            Dictionary<string, object> rtn = new Dictionary<string, object>();
+            List<Station> stationsData = new List<Station>();
+            List<Station> stations = await _stationService.GetStationsByStations(stationIDs);
+            List<StationLoopDiagnosticData> loopStatus = await _diagnosisService.GetLoopStatusByStations(stationIDs);
+            foreach (Station station in stations)
+            {
+                List<PDBTag> stationTags = await _PDBService.GetLoopTagsByStation(station);
+                var stationLoopStatus = loopStatus.Where(looopStatus => looopStatus.StationName.Equals(station.Name)).ToList();
+                station.StationStatistics["loopStatus"] = stationLoopStatus;
+                List<Dictionary<string, object>> loopParameterStandards = new List<Dictionary<string, object>>();
+                Dictionary<string, object> loopParameterStandard = new Dictionary<string, object>();
+                foreach (StationLoop loop in station.Loops)
+                {
+                    PDBTag standardTemperature = stationTags.FirstOrDefault(tag => tag.Name.Contains(station.AbbrName + "_" + loop.AbbrName + "_Temperature"));
+                    PDBTag standardPressure = stationTags.FirstOrDefault(tag => tag.Name.Contains(station.AbbrName + "_" + loop.AbbrName + "_Pressure"));
+                    if (standardTemperature != null && standardPressure != null)
+                    {
+                        if (!standardTemperature.Value.Contains("??") && !standardPressure.Value.Contains("??"))
+                        {
+                            standardTemperature.Value = "25"; standardPressure.Value = "101";
+                            loopParameterStandard["LoopAbbrName"] = loop.AbbrName;
+                            loopParameterStandard["StationAbbrName"] = loop.AbbrName;
+                            loopParameterStandard["standardTemperature"] = Convert.ToDouble(standardTemperature.Value) == 25 ? true : false;
+                            loopParameterStandard["standardPressure"] = Convert.ToDouble(standardPressure.Value) == 101 ? true : false;
+                            loopParameterStandards.Add(loopParameterStandard);
+                        }
+                    }
+                }
+                station.StationStatistics["loopParameterStandards"] = loopParameterStandards;
+                station.Loops = new List<StationLoop>();
+                stationsData.Add(station);
+            }
+             rtn["Data"]= stationsData;
+            return rtn;
+        }
     }
 }

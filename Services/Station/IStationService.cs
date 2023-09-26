@@ -11,5 +11,6 @@ namespace Services
     public interface IStationService
     {
         public Task<Station> GetStationByID(int ID);
+        public Task<List<Station>> GetStationsByStations(List<int> stationIDs);
     }
 }

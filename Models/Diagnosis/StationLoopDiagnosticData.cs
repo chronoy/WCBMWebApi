@@ -44,5 +44,7 @@ namespace Models
         public string VOSDiagnosticResult { get; set; }
         [NotMapped]
         public string LoopStatus { get; set; }
+        [NotMapped]
+        public string StationName { get; set; }
     }
 }

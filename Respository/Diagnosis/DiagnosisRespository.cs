@@ -43,7 +43,7 @@ namespace Respository
                                        PTDiagnosticResult = _context.DiagnosticResultDescriptions.FirstOrDefault(x => x.ID == diagnosis.PTDiagnositcResultID).DescriptionCN,
                                        FCDiagnosticResult = _context.DiagnosticResultDescriptions.FirstOrDefault(x => x.ID == diagnosis.FCDiagnositcResultID).DescriptionCN,
                                        VOSDiagnosticResult = _context.DiagnosticResultDescriptions.FirstOrDefault(x => x.ID == diagnosis.VOSDiagnositcResultID).DescriptionCN,
-                                       LoopStatus = status.DescriptionCN
+                                       LoopStatus = status.DescriptionCN,
                                    }).ToList();
 
             return loopDiagnosticDatas;
@@ -590,6 +590,26 @@ namespace Respository
                     break;
             }
             return details;
+        }
+
+        public List<StationLoopDiagnosticData> GetLoopStatusByStations(List<int> stationIDs) 
+        {
+            List<StationLoopDiagnosticData> loopDiagnosticDatas = new List<StationLoopDiagnosticData>();
+
+            loopDiagnosticDatas = (from diagnosis in _context.StationLoopDiagnosticDatas
+                                   join loop in _context.StationLoops on diagnosis.ID equals loop.ID
+                                   join category in _context.EquipmentCategories on loop.EquipmentCategoryID equals category.ID
+                                   join status in _context.DiagnosticStatusDescriptions on diagnosis.LoopStatusID equals status.ID
+                                   join station in _context.Stations.Where(station => stationIDs.Contains(station.ID)) on loop.StationID equals station.ID
+                                   select new StationLoopDiagnosticData
+                                   {
+                                       ID = diagnosis.ID,
+                                       LoopName = loop.AbbrName,
+                                       LoopStatusID = diagnosis.LoopStatusID,
+                                       LoopStatus = status.DescriptionCN,
+                                       StationName=station.Name,
+                                   }).ToList();
+            return loopDiagnosticDatas;
         }
     }
 }

@@ -11,5 +11,7 @@ namespace Respository
     {
         public List<Station> GetStations();
         public Station GetStationByID(int ID);
+
+        public List<Station> GetStationsByStations(List<int> stationIDs);
     }
 }

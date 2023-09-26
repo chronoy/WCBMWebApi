@@ -34,5 +34,10 @@ namespace Services
         {
             return Task.Run(() => _diagnosisRespository.GetEquipmentDiagnosticDataDetailByEquipment(equipmentID, manufacturer));
         }
+
+        public Task<List<StationLoopDiagnosticData>> GetLoopStatusByStations(List<int> stationIDs)
+        {
+            return Task.Run(() => _diagnosisRespository.GetLoopStatusByStations(stationIDs));
+        }
     }
 }
