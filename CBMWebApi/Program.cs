@@ -36,6 +36,8 @@ builder.Services.AddScoped<IProductionReportRespository, ProductionReportResposi
 builder.Services.AddScoped<IProductionReportService, ProductionReportService>();
 builder.Services.AddScoped<IDiagnosisRespository, DiagnosisRespository>();
 builder.Services.AddScoped<IDiagnosisService, DiagnosisService>();
+builder.Services.AddScoped<IReferenceMaterialCertificateRespository, ReferenceMaterialCertificateRespository>();
+builder.Services.AddScoped<IReferenceMaterialCertificateService, ReferenceMaterialCertificateService>();
 builder.Services.AddScoped<IExcelExportHelper, ExcelExportHelper>();
 
 var app = builder.Build();

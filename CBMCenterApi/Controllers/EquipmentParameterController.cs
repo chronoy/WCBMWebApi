@@ -505,7 +505,7 @@ namespace CBMCenterApi.Controllers
         {
             Dictionary<string, object> rtn = new Dictionary<string, object>();
 
-            var equipmentPressures = await _equipmentParameterService.GetEquipmentParameters<EquipmentPressureLevel>(x => true);
+            var equipmentPressures = await _equipmentParameterService.GetEquipmentParameters<EquipmentPressureClass>(x => true);
             if (equipmentPressures == null)
             {
                 rtn["MSG"] = "OtherError";
@@ -521,7 +521,7 @@ namespace CBMCenterApi.Controllers
         }
 
         [HttpPost]
-        public async Task<Dictionary<string, object>> AddEquipmentPressure([FromForm] EquipmentPressureLevel pressureLevel)
+        public async Task<Dictionary<string, object>> AddEquipmentPressure([FromForm] EquipmentPressureClass pressureLevel)
         {
             Dictionary<string, object> rtn = new Dictionary<string, object>();
 
@@ -542,7 +542,7 @@ namespace CBMCenterApi.Controllers
         }
 
         [HttpPost]
-        public async Task<Dictionary<string, object>> UpdateEquipmentPressure([FromForm] EquipmentPressureLevel pressureLevel)
+        public async Task<Dictionary<string, object>> UpdateEquipmentPressure([FromForm] EquipmentPressureClass pressureLevel)
         {
             Dictionary<string, object> rtn = new Dictionary<string, object>();
 
@@ -566,7 +566,7 @@ namespace CBMCenterApi.Controllers
         {
             Dictionary<string, object> rtn = new Dictionary<string, object>();
 
-            var result = await _equipmentParameterService.DeleteEquipmentParameterBy<EquipmentPressureLevel>(x => x.ID == id);
+            var result = await _equipmentParameterService.DeleteEquipmentParameterBy<EquipmentPressureClass>(x => x.ID == id);
             if (!result)
             {
                 rtn["MSG"] = "OtherError";

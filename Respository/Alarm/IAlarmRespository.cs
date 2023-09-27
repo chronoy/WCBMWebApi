@@ -14,6 +14,6 @@ namespace Respository
         public List<DiagnosticAlarm> GetRealtimeDiagnosticAlarm(int stationID, int loopID);
         public List<HistoricalAlarm> GetHistoricalAlarm(DateTime startDateTime, DateTime endDateTime, string alarmArea);
         public List<AlarmKPI> GetHistoricalAlarmKPI(int topNumber, string sortType, DateTime startDateTime, DateTime endDateTime, string alarmArea);
-        public AlarmCount GetAlarmCountByStation(string name, string alarmName, string alarmArea);
+        public AlarmCount GetAlarmCountByStation(string name, string alarmName, string stationName, string loopName);
     }
 }

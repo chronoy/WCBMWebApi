@@ -47,7 +47,7 @@ namespace CBMCenterApi.Controllers
         }
 
         [HttpPost]
-        public async Task<Dictionary<string, object>> AddEquipment(Equipment equipment)
+        public async Task<Dictionary<string, object>> AddEquipment([FromForm] Equipment equipment)
         {
             Dictionary<string, object> rtn = new Dictionary<string, object>();
 
@@ -67,7 +67,7 @@ namespace CBMCenterApi.Controllers
         }
 
         [HttpPost]
-        public async Task<Dictionary<string, object>> UpdateEquipment(Equipment equipment)
+        public async Task<Dictionary<string, object>> UpdateEquipment([FromForm] Equipment equipment)
         {
             Dictionary<string, object> rtn = new Dictionary<string, object>();
 

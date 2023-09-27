@@ -24,7 +24,7 @@ namespace Respository
             List<RealtimeAlarm> alarms = (from real in _context.RealtimeAlarms
                                           select new RealtimeAlarm
                                           {
-                                              ID=real.ID,
+                                              ID = real.ID,
                                               StartTime = real.StartTime,
                                               EndTime = real.EndTime,
                                               NodeName = real.NodeName.TrimEnd(),
@@ -37,10 +37,10 @@ namespace Respository
                                               Area = String.Join("_", real.Area.Split(',', StringSplitOptions.None).ToList().GetRange(4, 3)),
                                               OperatorName = real.OperatorName.TrimEnd(),
                                               FullOperatorName = real.FullOperatorName.TrimEnd(),
-                                              ACKED=real.ACKED                                  
+                                              ACKED = real.ACKED
                                           }).ToList();
 
-                             
+
             return (from real in alarms
                     where alarmAreas.Contains(real.Area) && prioritys.Contains(real.Priority)
                     select real).OrderByDescending(o => o.StartTime).ToList();
@@ -59,7 +59,7 @@ namespace Respository
                                                    where alarm.Status != "OK" && tagNames.Contains(alarm.TagName)
                                                    select new RealtimeAlarm
                                                    {
-                                                       ID=alarm.ID,
+                                                       ID = alarm.ID,
                                                        StartTime = alarm.StartTime,
                                                        EndTime = alarm.EndTime,
                                                        NodeName = alarm.NodeName,
@@ -93,7 +93,7 @@ namespace Respository
             List<DiagnosticAlarm> diagnostics = new();
             var data = (from d in _context.DiagnosticAlarms
                         join loop in _context.StationLoops on d.LoopID equals loop.ID
-                        where d.Status!= "OK"
+                        where d.Status != "OK"
                         select new
                         {
                             d.StartTime,
@@ -193,15 +193,16 @@ namespace Respository
             return propertyInfo.GetValue(obj, null);
         }
 
-        public AlarmCount GetAlarmCountByStation(string name, string alarmName, string alarmArea)
+        public AlarmCount GetAlarmCountByStation(string name, string alarmName, string stationName, string loopName)
         {
             var alarms = (from alarm in _context.RealtimeAlarms
                           where alarm.MessageType == "ALARM" && alarm.Status != "OK" &&
-                          alarm.Area.Contains(alarmArea)
+                          alarm.Area.Contains(stationName) && alarm.Area.Contains(loopName) &&
+                          alarm.Area.Contains(alarmName)
                           select alarm).ToList();
-            return new AlarmCount { Name = name, AlarmName = alarmName, AlarmArea = alarmArea, Count = alarms.Count };
+            return new AlarmCount { Name = name, AlarmName = alarmName, AlarmArea = $"{stationName}_{loopName}_{alarmName}", Count = alarms.Count };
         }
 
-        
+
     }
 }

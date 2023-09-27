@@ -17,23 +17,25 @@ namespace Respository
             _context = context;
         }
 
-        public List<Trend> GetHistoricalTrend(string IFIXNodeName, int loopID, int trendGroupID)
+        public List<Trend> GetHistoricalTrend(string IFIXNodeName, List<string> trendTags)
         {
-            var historicalTrend = (from loop in _context.StationLoops
-                                   join station in _context.Stations on loop.StationID equals station.ID
-                                   join tg in _context.TrendGroups on loop.CollectDataTypeID equals tg.CollectDataTypeID
-                                   join tt in _context.TrendTags on tg.ID equals tt.TrendGroupID
-                                   where loop.ID == loopID && tg.ID == trendGroupID
-                                   orderby tt.ID
+            var historicalTrend = (from trendTag in _context.TrendTags
+                                   where trendTags.Contains(trendTag.Address)
+                                   orderby trendTag.ID
                                    select new Trend
                                    {
-                                       Name = $"{station.AbbrName}_{loop.AbbrName}_{tt.Name}",
-                                       Address = $"{IFIXNodeName}:{station.AbbrName}_{loop.AbbrName}_{tt.Address}",
-                                       HighLimit = tt.HighLimit,
-                                       LowLimit = tt.LowLimit,
-                                       Description = tt.Description,
+                                       Name = trendTag.Name.Replace("", "_"),
+                                       Address = $"{IFIXNodeName}:{trendTag.Address}",
+                                       HighLimit = trendTag.HighLimit,
+                                       LowLimit = trendTag.LowLimit,
+                                       Description = trendTag.Description,
                                    }).ToList();
             return historicalTrend;
+        }
+
+        public List<TrendTag> GetTrendTags()
+        {
+            return _context.TrendTags.ToList();
         }
     }
 }

@@ -9,6 +9,7 @@ namespace Services
 {
     public interface IStationLoopService
     {
+        public Task<List<StationLoop>> GetStationLoops();
         public Task<List<StationLoop>> GetStationLoopsByStation(int stationID);
     }
 }

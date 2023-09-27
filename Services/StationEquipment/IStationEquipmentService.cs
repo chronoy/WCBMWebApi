@@ -9,6 +9,7 @@ namespace Services
 {
     public interface IStationEquipmentService
     {
+        public Task<List<StationEquipment>> GetStationEquipments();
         public Task<List<StationEquipment>> GetStationEquipmentsBySttaion(int stationID);
     }
 }

@@ -111,7 +111,7 @@ namespace Respository
             }
             else
             {
-                string[] pressures = _context.EquipmentPressureLevels.Select(s => s.Name).ToArray();
+                string[] pressures = _context.EquipmentPressureClasses.Select(s => s.Name).ToArray();
                 result = result.Where(x => pressures.Contains(x.PressureLevel));
             }
 
@@ -164,10 +164,43 @@ namespace Respository
             using var tran = _context.Database.BeginTransaction(IsolationLevel.ReadCommitted);
             try
             {
-                entity.UpdateDate = DateTime.Now;
-                _context.Equipments.Update(entity);
-                _context.SaveChanges();
-                tran.Commit();
+                var equipment = _context.Equipments.FirstOrDefault(x => x.ID == entity.ID);
+                if (equipment != null)
+                {
+                    equipment.UpdateDate = DateTime.Now;
+                    equipment.LineName = entity.LineName;
+                    equipment.CompanyName = entity.CompanyName;
+                    equipment.StationName = entity.StationName;
+                    equipment.Category = entity.Category;
+                    equipment.Manufacturer = entity.Manufacturer;
+                    equipment.EquipmentModel = entity.EquipmentModel;
+                    equipment.Customer = entity.Customer;
+                    equipment.ProcessLocation = entity.ProcessLocation;
+                    equipment.SerialNumber = entity.SerialNumber;
+                    equipment.Caliber = entity.Caliber;
+                    equipment.Range = entity.Range;
+                    equipment.Accuracy = entity.Accuracy;
+                    equipment.Uncertainty = entity.Uncertainty;
+                    equipment.PressureLevel = entity.PressureLevel;
+                    equipment.InsideDiameter = entity.InsideDiameter;
+                    equipment.Length = entity.Length;
+                    equipment.KFactor = entity.KFactor;
+                    equipment.CommonFlow = entity.CommonFlow;
+                    equipment.InstallationCondition = entity.InstallationCondition;
+                    equipment.ProductionDate = entity.ProductionDate;
+                    equipment.Status = entity.Status;
+                    equipment.TradeProperty = entity.TradeProperty;
+                    equipment.VerificationEndDate = entity.VerificationEndDate;
+                    equipment.VerificationPeriod = entity.VerificationPeriod;
+                    equipment.VerificationAgency = entity.VerificationAgency;
+                    equipment.VerificationCertificateNumber = entity.VerificationCertificateNumber;
+                    equipment.MaintenanceStatus = entity.MaintenanceStatus;
+                    equipment.DesignDrawings = entity.DesignDrawings;
+                    equipment.Note = entity.Note;
+                    _context.Equipments.Update(equipment);
+                    _context.SaveChanges();
+                    tran.Commit();
+                }
             }
             catch (Exception)
             {
@@ -183,8 +216,44 @@ namespace Respository
             using var tran = _context.Database.BeginTransaction(IsolationLevel.ReadCommitted);
             try
             {
-                listEntity.ForEach(e => e.UpdateDate = DateTime.Now);
-                _context.Equipments.UpdateRange(listEntity);
+                listEntity.ForEach(e =>
+                {
+                    var equipment = _context.Equipments.FirstOrDefault(x => x.ID == e.ID);
+                    if (equipment != null)
+                    {
+                        equipment.UpdateDate = DateTime.Now;
+                        equipment.LineName = e.LineName;
+                        equipment.CompanyName = e.CompanyName;
+                        equipment.StationName = e.StationName;
+                        equipment.Category = e.Category;
+                        equipment.Manufacturer = e.Manufacturer;
+                        equipment.EquipmentModel = e.EquipmentModel;
+                        equipment.Customer = e.Customer;
+                        equipment.ProcessLocation = e.ProcessLocation;
+                        equipment.SerialNumber = e.SerialNumber;
+                        equipment.Caliber = e.Caliber;
+                        equipment.Range = e.Range;
+                        equipment.Accuracy = e.Accuracy;
+                        equipment.Uncertainty = e.Uncertainty;
+                        equipment.PressureLevel = e.PressureLevel;
+                        equipment.InsideDiameter = e.InsideDiameter;
+                        equipment.Length = e.Length;
+                        equipment.KFactor = e.KFactor;
+                        equipment.CommonFlow = e.CommonFlow;
+                        equipment.InstallationCondition = e.InstallationCondition;
+                        equipment.ProductionDate = e.ProductionDate;
+                        equipment.Status = e.Status;
+                        equipment.TradeProperty = e.TradeProperty;
+                        equipment.VerificationEndDate = e.VerificationEndDate;
+                        equipment.VerificationPeriod = e.VerificationPeriod;
+                        equipment.VerificationAgency = e.VerificationAgency;
+                        equipment.VerificationCertificateNumber = e.VerificationCertificateNumber;
+                        equipment.MaintenanceStatus = e.MaintenanceStatus;
+                        equipment.DesignDrawings = e.DesignDrawings;
+                        equipment.Note = e.Note;
+                        _context.Equipments.Update(equipment);
+                    }
+                });
                 result = _context.SaveChanges() > 0;
                 tran.Commit();
             }
