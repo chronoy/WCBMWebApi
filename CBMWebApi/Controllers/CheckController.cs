@@ -40,8 +40,7 @@ namespace CBMWebApi.Controllers
         public async Task<Dictionary<string, object>> LoopCheckReport([FromForm] string reportCategory, [FromForm] string manufacturer, [FromForm] int loopID, [FromForm] DateTime startDateTime, [FromForm] DateTime endDateTime)
         {
             Dictionary<string, object> rtn = new Dictionary<string, object>();
-            List<HistoricalStationLoopCheckData> stationLoopCheckData = await _service.GetStationLoopCheckReport(reportCategory,         public async Task<Dictionary<string, object>> LoopCheckReport([FromForm] string reportCategory, [FromForm] string manufacturer, [FromForm] int loopID, [FromForm] DateTime startDateTime, [FromForm] DateTime endDateTime)
-, loopID, startDateTime, endDateTime);
+            List<HistoricalStationLoopCheckData> stationLoopCheckData = await _service.GetStationLoopCheckReport(reportCategory, manufacturer, loopID, startDateTime, endDateTime);
             if (stationLoopCheckData == null)
             {
                 rtn["MSG"] = "OtherError";
