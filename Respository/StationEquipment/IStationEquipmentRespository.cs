@@ -11,5 +11,6 @@ namespace Respository
     {
         public List<StationEquipment> GetStationEquipments();
         public List<StationEquipment> GetStationEquipmentsBySttaion(int stationID);
+        public StationEquipment GetStationEquipmentByID(int ID);
     }
 }

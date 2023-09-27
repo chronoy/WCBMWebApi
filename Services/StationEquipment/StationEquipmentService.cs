@@ -22,7 +22,12 @@ namespace Services
             return Task.Run(() => _respository.GetStationEquipments());
         }
 
-        public Task<List<StationEquipment>> GetStationEquipmentsBySttaion(int stationID)
+        public Task<StationEquipment> GetStationEquipmentByID(int ID)
+        {
+            return Task.Run(() => _respository.GetStationEquipmentByID(ID));
+        }
+
+        public Task<List<StationEquipment>> GetStationEquipmentsByStation(int stationID)
         {
             return Task.Run(() => _respository.GetStationEquipmentsBySttaion(stationID));
         }

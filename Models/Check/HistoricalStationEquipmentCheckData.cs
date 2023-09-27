@@ -53,4 +53,32 @@ namespace Models
         [Column("GCID")]
         public int EquipmentID { get; set; }
     }
+
+    [Table("tHistoricalGCRepeatabilityCheckData")]
+    public class GCRepeatabilityCheckData
+    {
+        [Key]
+        [Column("ID")]
+        public int ID { get; set; }
+        [Column("DateTime")]
+        public DateTime DateTime { get; set; }
+        [Column("GCID")]
+        public int GCID { get; set; }
+        [Column("ComponentName")]
+        public string ComponentName { get; set; }
+        [Column("FirstValue")]
+        public double FirstValue { get; set; }
+        [Column("SecondValue")]
+        public double SecondValue { get; set; }
+        [Column("C")]
+        public double C { get; set; }
+        [Column("ComponentRange")]
+        public string ComponentRange { get; set; }
+        [Column("Repeatability")]
+        public double Repeatability { get; set; }
+        [Column("Condition")]
+        public double Condition { get; set; }
+        [Column("Result")]
+        public string Result { get; set; }
+    }
 }

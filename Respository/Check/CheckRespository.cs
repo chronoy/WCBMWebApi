@@ -11,10 +11,10 @@ using System.Threading.Tasks;
 
 namespace Respository
 {
-    public class CheckRespository : ICheckRespository
+    public class CheckRespository :BaseClass, ICheckRespository
     {
         private readonly SQLServerDBContext _context;
-        public CheckRespository(SQLServerDBContext context)
+        public CheckRespository(SQLServerDBContext context):base(context)
         {
             _context = context;
         }
@@ -399,12 +399,6 @@ namespace Respository
             return reports;
         }
 
-        private static object GetPropertyValue(object obj, string property)
-        {
-            System.Reflection.PropertyInfo propertyInfo = obj.GetType().GetProperty(property);
-            return propertyInfo.GetValue(obj, null);
-        }
-
         public Dictionary<string, string> GetRealtimeFRCheckData(int loopID, string manufacturer)
         {
             Dictionary<string, string> result = new();
@@ -480,39 +474,13 @@ namespace Respository
 
         public string AddHistoricalCheckData<T>(ref T entity) where T : class
         {
-            using var tran = _context.Database.BeginTransaction(IsolationLevel.ReadCommitted);
-            try
-            {
-                _context.Set<T>().Add(entity);
-                _context.SaveChanges();
-                _context.Entry(entity);
-                tran.Commit();
-            }
-            catch (Exception ex)
-            {
-                tran.Rollback();
-
-                return "OtherError";
-            }
-            return "OK";
+            return AddEntity(ref entity);
         }
 
         public string AddHistoricalCheckDataChartDatas<T>(List<T> entities) where T : class
         {
-            using var tran = _context.Database.BeginTransaction(IsolationLevel.ReadCommitted);
-            try
-            {
-                _context.Set<T>().AddRange(entities);
-                _context.SaveChanges();
-                tran.Commit();
-            }
-            catch (Exception ex)
-            {
-                tran.Rollback();
 
-                return "OtherError";
-            }
-            return "OK";
+            return AddEntitys(entities);
         }
 
         public List<RealtimeDanielFRCheckData> GetRealtimeDanielFRCheckDatas(int loopID)
@@ -541,9 +509,15 @@ namespace Respository
             }
         }
 
+
         public List<RealtimeDanielVOSCheckData> GetRealtimeDanielVOSCheckDatas(int loopID)
         {
             return _context.RealtimeDanielVOSCheckDatas.Where(realtimecheck => realtimecheck.ID == loopID).ToList();
+        }
+
+        public List<RealtimeDanielCheckDataVOSChartData> GetRealtimeCheckDataDanielVOSChartDatas(int loopID)
+        {
+            return _context.RealtimeCheckDataDanielVOSChartDatas.Where(realtimeCheckChartData => realtimeCheckChartData.ID == loopID).ToList();
         }
 
         public string AddHistoricalDanielVOSCheckData(HistoricalDanielVOSCheckData historicalDanielVOSCheckData, ref int hisID)
@@ -566,11 +540,6 @@ namespace Respository
             }
         }
 
-        public List<RealtimeDanielCheckDataVOSChartData> GetRealtimeCheckDataDanielVOSChartDatas(int loopID)
-        {
-            return _context.RealtimeCheckDataDanielVOSChartDatas.Where(realtimeCheckChartData => realtimeCheckChartData.ID == loopID).ToList();
-        }
-
         public string AddHistoricalCheckDataDanielVOSChartDatas(List<HistoricalDanielCheckDataVOSChartData> historicalCheckDataDanielVOSChartDatas)
         {
             using (var tran = _context.Database.BeginTransaction(IsolationLevel.ReadCommitted))
@@ -589,5 +558,18 @@ namespace Respository
                 return "OK";
             }
         }
+
+        public string AddOnlineGCRepeatabilityCheck(List<GCRepeatabilityCheckData> entities)
+        {
+            return AddEntitys(entities);
+        }
+
+        private static object GetPropertyValue(object obj, string property)
+        {
+            System.Reflection.PropertyInfo propertyInfo = obj.GetType().GetProperty(property);
+            return propertyInfo.GetValue(obj, null);
+        }
+
+       
     }
 }
