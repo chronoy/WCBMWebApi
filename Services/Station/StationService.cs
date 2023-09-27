@@ -25,5 +25,9 @@ namespace Services
         {
             return Task.Run(() => _respository.GetStationByID(ID));
         }
+        public Task<List<Station>> GetStationsByStations(List<int> stationIDs)
+        {
+            return Task.Run(() => _respository.GetStationsByStations(stationIDs));
+        }
     }
 }

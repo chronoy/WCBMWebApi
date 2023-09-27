@@ -5,6 +5,8 @@ using Models;
 using Services;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Threading;
+using static System.Collections.Specialized.BitVector32;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -76,7 +78,7 @@ namespace CBMWebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<Dictionary<string, object>> GetLoopDiagnosticDataDetailByLoop([FromForm] int loopID,[FromForm] string manufacturer, [FromForm] string diagnosisType)
+        public async Task<Dictionary<string, object>> GetLoopDiagnosticDataDetailByLoop([FromForm] int loopID, [FromForm] string manufacturer, [FromForm] string diagnosisType)
         {
             Dictionary<string, object> rtn = new();
             List<DiagnosticDataDetail> details = await _diagnosisService.GetLoopDiagnosticDataDetailByLoop(loopID, manufacturer, diagnosisType);

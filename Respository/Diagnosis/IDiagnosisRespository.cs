@@ -9,5 +9,7 @@ namespace Respository
 
         public List<DiagnosticDataDetail> GetLoopDiagnosticDataDetailByLoop(int loopID,string manufacturer, string diagnosisType);
         public List<DiagnosticDataDetail> GetEquipmentDiagnosticDataDetailByEquipment(int equipmentID, string manufacturer);
+
+        public List<StationLoopDiagnosticData> GetLoopStatusByStations(List<int> stationIDs);
     }
 }

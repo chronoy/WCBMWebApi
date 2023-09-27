@@ -12,5 +12,6 @@ namespace Services
     {
         public Task<List<Station>> GetStations();
         public Task<Station> GetStationByID(int ID);
+        public Task<List<Station>> GetStationsByStations(List<int> stationIDs);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -22,6 +23,10 @@ namespace Models
         public string IPAddress { get; set; }
         [NotMapped]
         public string IPPort { get; set; }
+        public List<StationLoop> Loops { get; set; } = new List<StationLoop>();
+        public List<StationEquipment> Equipments { get; set; } = new List<StationEquipment>();
+        [NotMapped]
+        public Dictionary<string, object> StationStatistics { get; set; } = new Dictionary<string, object>();
     }
 }
 

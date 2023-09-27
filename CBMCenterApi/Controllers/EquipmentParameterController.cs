@@ -9,6 +9,7 @@ namespace CBMCenterApi.Controllers
     public class EquipmentParameterController : ControllerBase
     {
         private readonly IEquipmentParameterService _equipmentParameterService;
+
         public EquipmentParameterController(IEquipmentParameterService equipmentParameterService)
         {
             _equipmentParameterService = equipmentParameterService;
@@ -46,6 +47,7 @@ namespace CBMCenterApi.Controllers
                     rtn["MSG"] = result;
                     rtn["Code"] = "400";
                     break;
+
                 case "OK":
                     rtn["MSG"] = result;
                     rtn["Code"] = "200";
@@ -127,6 +129,7 @@ namespace CBMCenterApi.Controllers
                     rtn["MSG"] = result;
                     rtn["Code"] = "400";
                     break;
+
                 case "OK":
                     rtn["MSG"] = result;
                     rtn["Code"] = "200";
@@ -208,6 +211,7 @@ namespace CBMCenterApi.Controllers
                     rtn["MSG"] = result;
                     rtn["Code"] = "400";
                     break;
+
                 case "OK":
                     rtn["MSG"] = result;
                     rtn["Code"] = "200";
@@ -289,6 +293,7 @@ namespace CBMCenterApi.Controllers
                     rtn["MSG"] = result;
                     rtn["Code"] = "400";
                     break;
+
                 case "OK":
                     rtn["MSG"] = result;
                     rtn["Code"] = "200";
@@ -370,6 +375,7 @@ namespace CBMCenterApi.Controllers
                     rtn["MSG"] = result;
                     rtn["Code"] = "400";
                     break;
+
                 case "OK":
                     rtn["MSG"] = result;
                     rtn["Code"] = "200";
@@ -451,6 +457,7 @@ namespace CBMCenterApi.Controllers
                     rtn["MSG"] = result;
                     rtn["Code"] = "400";
                     break;
+
                 case "OK":
                     rtn["MSG"] = result;
                     rtn["Code"] = "200";
@@ -532,6 +539,7 @@ namespace CBMCenterApi.Controllers
                     rtn["MSG"] = result;
                     rtn["Code"] = "400";
                     break;
+
                 case "OK":
                     rtn["MSG"] = result;
                     rtn["Code"] = "200";
@@ -613,6 +621,7 @@ namespace CBMCenterApi.Controllers
                     rtn["MSG"] = result;
                     rtn["Code"] = "400";
                     break;
+
                 case "OK":
                     rtn["MSG"] = result;
                     rtn["Code"] = "200";
