@@ -10,6 +10,7 @@ namespace Services
     public interface IStationEquipmentService
     {
         public Task<List<StationEquipment>> GetStationEquipments();
-        public Task<List<StationEquipment>> GetStationEquipmentsBySttaion(int stationID);
+        public Task<List<StationEquipment>> GetStationEquipmentsByStation(int stationID);
+        public Task<StationEquipment> GetStationEquipmentByID(int ID);
     }
 }

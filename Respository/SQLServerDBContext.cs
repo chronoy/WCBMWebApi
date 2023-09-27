@@ -137,6 +137,9 @@ namespace Respository
         public DbSet<HistoricalDanielGCCheckData> HistoricalDanielGCCheckDatas { get; set; }
         public DbSet<HistoricalElsterGCCheckData> HistoricalElsterGCCheckDatas { get; set; }
 
+        public DbSet<GCRepeatabilityCheckData> HistoricalGCRepeatabilityCheckDatas { get; set; }
+
+
         public DbSet<CheckDescriptionStatus> CheckDescriptionStatuses { get; set; }
         //public DbSet<VOSKeyCheckData> VOSKeyCheckDatas { get; set; }
         // public DbSet<LoopUncertain> LoopUncertains { get; set; }

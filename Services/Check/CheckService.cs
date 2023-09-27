@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Respository;
 using GasStandardFormula;
 using System.Runtime.Intrinsics.Arm;
+using iText.StyledXmlParser.Jsoup.Nodes;
 
 namespace Services
 {
@@ -337,6 +338,35 @@ namespace Services
 
             });
         }
+
+        public Task<List<GCRepeatabilityCheckData>> GetOnlineGCRepeatabilityCheck(int ID, List<Data> firstDatas, List<Data> secondDatas)
+        {
+            return Task.Run(() =>
+            {
+                List<GCRepeatabilityCheckData> datas = new List<GCRepeatabilityCheckData>();
+                DateTime dateTime = DateTime.Now;
+                for(int i=0;i<firstDatas.Count;i++)
+                {
+                    datas.Add(new GCRepeatabilityCheckData
+                    {
+                        GCID = ID,
+                        DateTime = dateTime,
+                        ComponentName = firstDatas[i].Name,
+                        FirstValue = double.Parse(firstDatas[i].Value),
+                        SecondValue = double.Parse(secondDatas[i].Value),
+                        C=1.13,
+                        ComponentRange= GCRepeatabilityRange(double.Parse(firstDatas[i].Value)),
+                        Condition= GCRepeatabilityCondition(double.Parse(firstDatas[i].Value)),
+                        Repeatability=Math.Abs(double.Parse(firstDatas[i].Value)- double.Parse(secondDatas[i].Value))/1.13,
+                        Result = Math.Abs(double.Parse(firstDatas[i].Value) - double.Parse(secondDatas[i].Value)) / 1.13> GCRepeatabilityCondition(double.Parse(firstDatas[i].Value))?"不合格":"合格"
+                    });
+                }
+                _respository.AddOnlineGCRepeatabilityCheck(datas);
+                return datas;
+            });
+        }
+
+
         /// <summary>
         /// 将一个实体的值赋值到另外一个实体
         /// </summary>
@@ -357,5 +387,33 @@ namespace Services
                 }
             }
         }
+        private string GCRepeatabilityRange(double value)
+        {
+            if (value < 0.1)
+                return "x<0.1";
+            if (value < 1)
+                return "0.1≤x<1.0";
+            if (value < 5)
+                return "1.0≤x<5.0";
+            if (value < 10)
+                return "5.0≤x<10.0";
+            else
+                return "x>10.0";
+        }
+        private double GCRepeatabilityCondition(double value)
+        {
+            if (value < 0.1)
+                return 0.01;
+            if (value < 1)
+                return 0.04;
+            if (value < 5)
+                return 0.07;
+            if (value < 10)
+                return 0.08;
+            else
+                return 0.20;
+        }
+
+
     }
 }

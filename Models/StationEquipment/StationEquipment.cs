@@ -22,6 +22,10 @@ namespace Models
         public string? Model { get; set; }
         public int OrderNumber { get; set; }
         [NotMapped]
+        public string StationName { get; set; }
+        [NotMapped]
+        public string StationAbbrName { get; set; }
+        [NotMapped]
         public Dictionary<string, Tag> Tags { get; set; }
         [NotMapped]
         public StationEquipmentDiagnosticData DiagnosticData { get; set; }

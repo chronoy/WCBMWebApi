@@ -91,5 +91,23 @@ namespace CBMWebApi.Controllers
             rtn["Data"] = data;
             return rtn;
         }
+        [HttpPost]
+        public async Task<Dictionary<string, object>> GetOnlineGCRepeatabilityCheck([FromForm] int ID, [FromForm] List<Data> firstDatas, [FromForm] List<Data> secondDatas)
+        {
+            Dictionary<string, object> rtn = new Dictionary<string, object>();
+            var data = await _service.GetOnlineGCRepeatabilityCheck(ID, firstDatas, secondDatas);
+            if (data == null)
+            {
+                rtn["MSG"] = "OtherError";
+                rtn["Code"] = "400";
+            }
+            else
+            {
+                rtn["MSG"] = "OK";
+                rtn["Code"] = "200";
+            }
+            rtn["Data"] = data;
+            return rtn;
+        }
     }
 }
