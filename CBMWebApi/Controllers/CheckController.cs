@@ -37,10 +37,11 @@ namespace CBMWebApi.Controllers
             return rtn;
         }
         [HttpPost]
-        public async Task<Dictionary<string, object>> LoopCheckReport([FromForm] string reportCategory, [FromForm] string brandName, [FromForm] int loopID, [FromForm] DateTime startDateTime, [FromForm] DateTime endDateTime)
+        public async Task<Dictionary<string, object>> LoopCheckReport([FromForm] string reportCategory, [FromForm] string manufacturer, [FromForm] int loopID, [FromForm] DateTime startDateTime, [FromForm] DateTime endDateTime)
         {
             Dictionary<string, object> rtn = new Dictionary<string, object>();
-            List<HistoricalStationLoopCheckData> stationLoopCheckData = await _service.GetStationLoopCheckReport(reportCategory, brandName, loopID, startDateTime, endDateTime);
+            List<HistoricalStationLoopCheckData> stationLoopCheckData = await _service.GetStationLoopCheckReport(reportCategory,         public async Task<Dictionary<string, object>> LoopCheckReport([FromForm] string reportCategory, [FromForm] string manufacturer, [FromForm] int loopID, [FromForm] DateTime startDateTime, [FromForm] DateTime endDateTime)
+, loopID, startDateTime, endDateTime);
             if (stationLoopCheckData == null)
             {
                 rtn["MSG"] = "OtherError";
@@ -55,10 +56,10 @@ namespace CBMWebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<Dictionary<string, object>> GetManualCheckData([FromForm] int loopID , [FromForm] string brandName)
+        public async Task<Dictionary<string, object>> GetManualCheckData([FromForm] int loopID , [FromForm] string manufacturer)
         {
             Dictionary<string, object> rtn = new Dictionary<string, object>();
-            var data = await _service.GetManualCheckData(loopID, brandName);
+            var data = await _service.GetManualCheckData(loopID, manufacturer);
             if (data == null)
             {
                 rtn["MSG"] = "OtherError";
