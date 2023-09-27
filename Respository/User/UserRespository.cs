@@ -7,6 +7,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Data;
 using System.Numerics;
+using System.Linq.Expressions;
 
 namespace Respository
 {
@@ -24,58 +25,62 @@ namespace Respository
             try
             {
                 int userID = user.ID;
-                user.companies = (from u in _context.UserStations
-                                  join c in _context.companies on u.StationID equals c.ID
-                                  where u.UserID == userID
+                var userStation = _context.UserStations.Where(x => x.UserID == userID).ToList();
+                user.Stations = (from u in userStation
+                                 join s in _context.Stations on u.StationID equals s.ID
+                                 join c in _context.Collectors on s.CollectorID equals c.ID into tempc
+                                 from tc in tempc.DefaultIfEmpty()
+                                 select new Station
+                                 {
+                                     ID = s.ID,
+                                     Name = s.Name,
+                                     AbbrName = s.AbbrName,
+                                     CollectorID = s.CollectorID,
+                                     AreaID = s.AreaID,
+                                     IPAddress = tc != null ? tc.IPAddress : "",
+                                     IPPort = tc != null ? tc.IPPort : ""
+                                 }).ToList();
+                user.Loops = (from u in userStation
+                              join l in _context.StationLoops on u.StationID equals l.StationID
+                              select l).ToList();
+                user.Equipments = (from u in userStation
+                                   join e in _context.StationEquipments on u.StationID equals e.StationID
+                                   join category in _context.EquipmentCategories on e.EquipmentCategoryID equals category.ID into tempc
+                                   from tc in tempc.DefaultIfEmpty()
+                                   select new StationEquipment
+                                   {
+                                       ID = e.ID,
+                                       Name = e.Name,
+                                       AbbrName = e.AbbrName,
+                                       StationID = e.StationID,
+                                       CollectDataTypeID = e.CollectDataTypeID,
+                                       EquipmentCategoryID = e.EquipmentCategoryID,
+                                       //EquipmentCategoryName = tc != null ? tc.Name : "",
+                                       Manufacturer = e.Manufacturer,
+                                       Model = e.Model
+                                   }).ToList();
+                user.Companies = (from u in userStation
+                                  join s in _context.Stations on u.StationID equals s.ID
+                                  join a in _context.Areas on s.AreaID equals a.ID
+                                  join c in _context.companies on a.CompanyID equals c.ID
                                   select new Company
                                   {
                                       ID = u.StationID,
                                       Name = c.Name,
                                       AbbrName = c.AbbrName,
-                                      FullName = c.FullName,
-                                      Areas = (from a in _context.Areas
-                                               where a.CompanyID == c.ID
-                                               select new Area
-                                               {
-                                                   ID = a.ID,
-                                                   Name = a.Name,
-                                                   FullName = a.FullName,
-                                                   AbbrName = a.AbbrName,
-                                                   CompanyID = a.CompanyID,
-                                                   Stations = (from s in _context.Stations
-                                                               where s.AreaID == a.ID
-                                                               join c in _context.Collectors on s.CollectorID equals c.ID into tempc
-                                                               from tc in tempc.DefaultIfEmpty()
-                                                               select new Station
-                                                               {
-                                                                   ID = s.ID,
-                                                                   Name = s.Name,
-                                                                   AbbrName = s.AbbrName,
-                                                                   CollectorID = s.CollectorID,
-                                                                   AreaID = s.AreaID,
-                                                                   IPAddress = tc.IPAddress,
-                                                                   IPPort = tc.IPPort,
-                                                                   Loops = (from l in _context.StationLoops
-                                                                            where l.StationID == s.ID
-                                                                            select l).ToList(),
-                                                                   Equipments = (from e in _context.StationEquipments
-                                                                                 where e.StationID == s.ID
-                                                                                 join type in _context.EquipmentCategories on e.EquipmentCategoryID equals type.ID
-                                                                                 select new StationEquipment
-                                                                                 {
-                                                                                     ID = e.ID,
-                                                                                     Name = e.Name,
-                                                                                     AbbrName = e.AbbrName,
-                                                                                     EquipmentCategoryID = e.EquipmentCategoryID,
-                                                                                     EquipmentCategoryName = type.Name,
-                                                                                     CollectDataTypeID = e.CollectDataTypeID,
-                                                                                     Manufacturer = e.Manufacturer,
-                                                                                     Model = e.Model,
-                                                                                     StationID = e.StationID
-                                                                                 }).ToList()
-                                                               }).ToList()
-                                               }).ToList()
+                                      FullName = c.FullName
                                   }).ToList();
+                user.Areas = (from u in userStation
+                              join s in _context.Stations on u.StationID equals s.ID
+                              join a in _context.Areas on s.AreaID equals a.ID
+                              select new Area
+                              {
+                                  ID = a.ID,
+                                  Name = a.Name,
+                                  FullName = a.FullName,
+                                  AbbrName = a.AbbrName,
+                                  CompanyID = a.CompanyID
+                              }).ToList();
                 return "OK";
             }
             catch (Exception ex)
@@ -169,6 +174,130 @@ namespace Respository
             }
             // 返回加密的字符串
             return sb.ToString();
+        }
+
+        public List<User> GetUsers(Expression<Func<User, bool>> whereLambda)
+        {
+            var data = _context.Users.Where(whereLambda);
+
+            List<User> userList = (from u in data
+                                   join r in _context.Roles on u.RoleID equals r.ID into temp
+                                   from t in temp.DefaultIfEmpty()
+                                   select new User
+                                   {
+                                       ID = u.ID,
+                                       Name = u.Name,
+                                       Password = u.Password,
+                                       PersonName = u.PersonName,
+                                       ContactNumber = u.ContactNumber,
+                                       RoleID = u.RoleID,
+                                       RoleName = t != null ? t.Name : ""
+                                   }).ToList();
+            return userList;
+        }
+
+        public List<UserStation> GetUserStations(Expression<Func<UserStation, bool>> whereLambda)
+        {
+            return _context.UserStations.Where(whereLambda).ToList();
+        }
+
+        public string AddUser(User user)
+        {
+            using var tran = _context.Database.BeginTransaction(IsolationLevel.ReadCommitted);
+            try
+            {
+                _context.Users.Add(user);
+                _context.SaveChanges();
+                _context.Entry(user);
+                tran.Commit();
+            }
+            catch (Exception ex)
+            {
+                tran.Rollback();
+
+                return "OtherError";
+            }
+            return "OK";
+        }
+
+        public string UpdateUser(User user)
+        {
+            using var tran = _context.Database.BeginTransaction(IsolationLevel.ReadCommitted);
+            try
+            {
+                _context.Users.Update(user);
+                _context.SaveChanges();
+                tran.Commit();
+            }
+            catch (Exception)
+            {
+                tran.Rollback();
+                return "OtherError";
+            }
+            return "OK";
+        }
+
+        public bool DeleteUser(int id)
+        {
+            bool result = false;
+            using var tran = _context.Database.BeginTransaction(IsolationLevel.ReadCommitted);
+            try
+            {
+                List<User> listDeleting = _context.Users.Where(x => x.ID == id).ToList();
+                listDeleting.ForEach(u =>
+                {
+                    _context.Users.Attach(u);
+                    _context.Users.Remove(u);
+                });
+                result = _context.SaveChanges() > 0;
+                tran.Commit();
+            }
+            catch (Exception)
+            {
+                tran.Rollback();
+                return result;
+            }
+            return result;
+        }
+
+        public string AddUserStation(List<UserStation> userStations)
+        {
+            using var tran = _context.Database.BeginTransaction(IsolationLevel.ReadCommitted);
+            try
+            {
+                _context.UserStations.AddRange(userStations);
+                _context.SaveChanges();
+                tran.Commit();
+            }
+            catch (Exception ex)
+            {
+                tran.Rollback();
+                return "OtherError";
+            }
+            return "OK";
+        }
+
+        public bool DeleteUserStationBy(Expression<Func<UserStation, bool>> whereLambda)
+        {
+            bool result = false;
+            using var tran = _context.Database.BeginTransaction(IsolationLevel.ReadCommitted);
+            try
+            {
+                List<UserStation> listDeleting = _context.UserStations.Where(whereLambda).ToList();
+                listDeleting.ForEach(u =>
+                {
+                    _context.UserStations.Attach(u);
+                    _context.UserStations.Remove(u);
+                });
+                result = _context.SaveChanges() > 0;
+                tran.Commit();
+            }
+            catch (Exception)
+            {
+                tran.Rollback();
+                return result;
+            }
+            return result;
         }
     }
 }

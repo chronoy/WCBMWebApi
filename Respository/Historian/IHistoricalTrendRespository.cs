@@ -9,6 +9,8 @@ namespace Respository
 {
     public interface IHistoricalTrendRespository
     {
-        public List<Trend> GetHistoricalTrend(string IFIXNodeName, int loopID, int trendGroupID);
+        public List<Trend> GetHistoricalTrend(string IFIXNodeName, List<string> trendTags);
+
+        public List<TrendTag> GetTrendTags();
     }
 }

@@ -12,11 +12,9 @@ namespace Models
     {
         [Key]
         public int ID { get; set; }
-        public string Name { get; set; }
-        public string FullName { get; set; }
-        public string AbbrName { get; set; }
+        public string? Name { get; set; }
+        public string? FullName { get; set; }
+        public string? AbbrName { get; set; }
         public int CompanyID { get; set; }
-        [NotMapped]
-        public List<Station> Stations { get; set; } 
     }
 }

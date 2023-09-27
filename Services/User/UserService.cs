@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using Models;
@@ -58,6 +59,56 @@ namespace Services
         public Task<List<UserLogRecord>> GetUserLogRecords(int userID, DateTime startDateTime, DateTime endDateTime)
         {
             return Task.Run(() => _userRespository.GetUserLogRecords(userID, startDateTime, endDateTime));
+        }
+
+        public Task<List<User>> GetUsers(Expression<Func<User, bool>> whereLambda)
+        {
+            return Task.Run(() => _userRespository.GetUsers(whereLambda));
+        }
+
+        public Task<List<UserStation>> GetUserStations(Expression<Func<UserStation, bool>> whereLambda)
+        {
+            return Task.Run(() => _userRespository.GetUserStations(whereLambda));
+        }
+
+        public Task<User> AddUser(User user)
+        {
+            return Task.Run(() =>
+            {
+                User model = new();
+                var userList = _userRespository.GetUsers(x => x.Name == user.Name);
+                if (userList.Count > 0)
+                {
+                    model = userList?.FirstOrDefault() ?? new();
+                }
+                else
+                {
+                    _userRespository.AddUser(user);
+                    model = user;
+                }
+
+                return model;
+            });
+        }
+
+        public Task<string> UpdateUser(User user)
+        {
+            return Task.Run(() => _userRespository.UpdateUser(user));
+        }
+
+        public Task<bool> DeleteUser(int id)
+        {
+            return Task.Run(() => _userRespository.DeleteUser(id));
+        }
+
+        public Task<string> AddUserStation(List<UserStation> userStations)
+        {
+            return Task.Run(() => _userRespository.AddUserStation(userStations));
+        }
+
+        public Task<bool> DeleteUserStationBy(Expression<Func<UserStation, bool>> whereLambda)
+        {
+            return Task.Run(() => _userRespository.DeleteUserStationBy(whereLambda));
         }
     }
 }

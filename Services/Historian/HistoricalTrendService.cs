@@ -25,8 +25,7 @@ namespace Services
             _IFixNodeName = configuration["IFIXNodeName"];
         }
 
-        public Task<Dictionary<string, object>> GetHistoricalTrendsData(int LoopID,
-                                            int TrendGroupID,
+        public Task<Dictionary<string, object>> GetHistoricalTrendsData(List<string> trendTags,
                                             DateTime startDateTime,
                                             string interval,
                                             string duration)
@@ -36,7 +35,7 @@ namespace Services
                 List<Dictionary<string, object>> trends = new List<Dictionary<string, object>>();
                 List<string> times = new List<string>();
 
-                List<Trend> trendInfos = _historicalTrendRespository.GetHistoricalTrend(_IFixNodeName, LoopID, TrendGroupID).ToList();
+                List<Trend> trendInfos = _historicalTrendRespository.GetHistoricalTrend(_IFixNodeName, trendTags).ToList();
                 foreach (Trend trendInfo in trendInfos)
                 {
                     Dictionary<string, object> trend = new Dictionary<string, object>();
@@ -191,13 +190,12 @@ namespace Services
             });
         }
 
-        public async Task<List<Dictionary<string, object>>> GetExportHistoricalTrendsData(int LoopID,
-                                    int TrendGroupID,
+        public async Task<List<Dictionary<string, object>>> GetExportHistoricalTrendsData(List<string> trendTags,
                                     DateTime startDateTime,
                                     string interval,
                                     string duration)
         {
-            var chartData = await GetHistoricalTrendsData(LoopID, TrendGroupID, startDateTime, interval, duration);
+            var chartData = await GetHistoricalTrendsData(trendTags, startDateTime, interval, duration);
 
             List<Dictionary<string, object>> datas = new();
 
@@ -219,14 +217,13 @@ namespace Services
             return datas;
         }
 
-        public async Task<byte[]> ExportHistoricalTrendsDataReport(int LoopID,
-                                            int TrendGroupID,
+        public async Task<byte[]> ExportHistoricalTrendsDataReport(List<string> trendTags,
                                             DateTime startDateTime,
                                             string interval,
                                             string duration,
                                             string templatePath)
         {
-            List<Dictionary<string, object>> historicalTrends = await GetExportHistoricalTrendsData(LoopID, TrendGroupID, startDateTime, interval, duration);
+            List<Dictionary<string, object>> historicalTrends = await GetExportHistoricalTrendsData(trendTags, startDateTime, interval, duration);
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 
             FileInfo existingFile = new(templatePath);
@@ -264,6 +261,11 @@ namespace Services
 
             byte[] result = package.GetAsByteArray();
             return result;
+        }
+
+        public Task<List<TrendTag>> GetTrendTags()
+        {
+            return Task.Run(() => _historicalTrendRespository.GetTrendTags());
         }
     }
 }

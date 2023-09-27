@@ -6,7 +6,7 @@ namespace CBMCenterApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class LoginController : Controller
+    public class LoginController : ControllerBase
     {
         private readonly IUserService _userService;
         public LoginController(IUserService userService)

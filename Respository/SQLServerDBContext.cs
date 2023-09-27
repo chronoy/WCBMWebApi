@@ -35,7 +35,6 @@ namespace Respository
 
         //Trend
         public DbSet<Trend> Trends { get; set; }
-        public DbSet<TrendGroup> TrendGroups { get; set; }
         public DbSet<TrendTag> TrendTags { get; set; }
 
        //Diagnostic
@@ -163,8 +162,17 @@ namespace Respository
         public DbSet<EquipmentStation> EquipmentStations { get; set; }
         public DbSet<EquipmentModel> EquipmentModels { get; set; }
         public DbSet<EquipmentAccuracy> EquipmentAccuracies { get; set; }
-        public DbSet<EquipmentPressureLevel> EquipmentPressureLevels { get; set; }
+        public DbSet<EquipmentPressureClass> EquipmentPressureClasses { get; set; }
         public DbSet<EquipmentManufacturer> EquipmentManufacturers { get; set; }
+
+        // Equipment Metering Certificate
+        public DbSet<EquipmentMeteringCertificate> EquipmentMeteringCertificates { get; set; }
+        public DbSet<EquipmentMeteringCheckedData> EquipmentMeteringCheckedDatas { get; set; }
+        public DbSet<EquipmentMeteringDetectingEquipment> EquipmentMeteringDetectingEquipment { get; set; }
+        public DbSet<EquipmentMeteringResultData> equipmentMeteringResultDatas { get; set; }
+
+        // Reference Material Certificate
+        public DbSet<ReferenceMaterialCertificate> ReferenceMaterialCertificates { get; set; }
     }
 }
 

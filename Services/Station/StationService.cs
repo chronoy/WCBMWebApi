@@ -16,6 +16,11 @@ namespace Services
             _respository = respository;
         }
 
+        public Task<List<Station>> GetStations()
+        {
+            return Task.Run(() => _respository.GetStations());
+        }
+
         public Task<Station> GetStationByID(int ID)
         {
             return Task.Run(() => _respository.GetStationByID(ID));

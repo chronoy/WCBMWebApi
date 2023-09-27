@@ -57,15 +57,15 @@ namespace Services
                 var equipments = _stationEquipmentRespository.GetStationEquipmentsBySttaion(station.ID);
                 foreach (StationLoop loop in loops)
                 {
-                    alarms.Add(_alarmRespository.GetAlarmCountByStation(loop.AbbrName, "PT", station.AbbrName + "_" + loop.AbbrName + "_P"));
-                    alarms.Add(_alarmRespository.GetAlarmCountByStation(loop.AbbrName, "TT", station.AbbrName + "_" + loop.AbbrName + "_T"));
-                    alarms.Add(_alarmRespository.GetAlarmCountByStation(loop.AbbrName, "FM", station.AbbrName + "_" + loop.AbbrName + "_M"));
-                    alarms.Add(_alarmRespository.GetAlarmCountByStation(loop.AbbrName, "FC", station.AbbrName + "_" + loop.AbbrName + "_F"));
+                    alarms.Add(_alarmRespository.GetAlarmCountByStation(loop.AbbrName, "PT", station.AbbrName, loop.AbbrName));
+                    alarms.Add(_alarmRespository.GetAlarmCountByStation(loop.AbbrName, "TT", station.AbbrName, loop.AbbrName));
+                    alarms.Add(_alarmRespository.GetAlarmCountByStation(loop.AbbrName, "FM", station.AbbrName, loop.AbbrName));
+                    alarms.Add(_alarmRespository.GetAlarmCountByStation(loop.AbbrName, "FC", station.AbbrName, loop.AbbrName));
                 }
 
                 foreach (StationEquipment equipment in equipments)
                 {
-                    alarms.Add(_alarmRespository.GetAlarmCountByStation(equipment.AbbrName, "GCAnalyzer", station.AbbrName + "_" + equipment.AbbrName));
+                    alarms.Add(_alarmRespository.GetAlarmCountByStation(equipment.AbbrName, "GC", station.AbbrName, equipment.AbbrName));
                 }
                 return alarms;
             });

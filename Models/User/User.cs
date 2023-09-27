@@ -19,7 +19,16 @@ namespace Models
         public int RoleID { get; set; }
         [NotMapped]
         public string RoleName { get; set; }
-        public List<Company> companies { get; set; }
+        [NotMapped]
+        public List<Company> Companies { get; set; }
+        [NotMapped]
+        public List<Area> Areas { get; set; }
+        [NotMapped]
+        public List<Station> Stations { get; set; }
+        [NotMapped]
+        public List<StationLoop> Loops { get; set; }
+        [NotMapped]
+        public List<StationEquipment> Equipments { get; set; }
         //public List<EquipmentManufacturer> EquipmentManufacturers { get; set; }
         //public List<EquipmentCategory> EquipmentCategorys { get; set; }
     }
