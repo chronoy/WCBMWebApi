@@ -81,5 +81,11 @@ namespace Models
         public string? RSAppearance { get; set; }
         public string? RSInsulationResistance { get; set; }
         public string? Note { get; set; }
+        [NotMapped]
+        public List<EquipmentMeteringCheckedData>? MeteringCheckedDatas { get; set; }
+        [NotMapped]
+        public List<EquipmentMeteringDetectingEquipment>? MeteringDetectingEquipment { get; set; }
+        [NotMapped]
+        public List<EquipmentMeteringResultData>? MeteringResultDatas { get; set; }
     }
 }

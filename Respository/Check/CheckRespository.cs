@@ -399,12 +399,6 @@ namespace Respository
             return reports;
         }
 
-        private static object GetPropertyValue(object obj, string property)
-        {
-            System.Reflection.PropertyInfo propertyInfo = obj.GetType().GetProperty(property);
-            return propertyInfo.GetValue(obj, null);
-        }
-
         public Dictionary<string, string> GetRealtimeFRCheckData(int loopID, string manufacturer)
         {
             Dictionary<string, string> result = new();
@@ -473,12 +467,22 @@ namespace Respository
             }
         }
 
+        /// <summary>
+        /// 获取实时检定数据，根据传输的实体类获取不同的数据
+        /// </summary>
+        /// <param name="whereLambda">条件Lambda表达式</param>
+        /// <returns>数据实体列表</returns>
         public List<T> GetRealtimeCheckDatas<T>(Expression<Func<T, bool>> whereLambda) where T : class
         {
             return _context.Set<T>().Where(whereLambda).AsNoTracking().ToList();
         }
 
-        public string AddHistoricalCheckData<T>(ref T entity) where T : class
+        /// <summary>
+        /// 添加历史检定数据，根据传输的实体类往对应实体中添加数据并保存至数据库
+        /// </summary>
+        /// <param name="entity">历史检定数据实体类</param>
+        /// <returns>添加结果</returns>
+        public string AddHistoricalCheckData<T>(T entity) where T : class
         {
             using var tran = _context.Database.BeginTransaction(IsolationLevel.ReadCommitted);
             try
@@ -497,6 +501,11 @@ namespace Respository
             return "OK";
         }
 
+        /// <summary>
+        /// 添加历史检定数据图表数据，根据传输的实体类往对应实体中添加数据并保存至数据库
+        /// </summary>
+        /// <param name="entities">历史检定数据图表数据列表</param>
+        /// <returns>添加结果</returns>
         public string AddHistoricalCheckDataChartDatas<T>(List<T> entities) where T : class
         {
             using var tran = _context.Database.BeginTransaction(IsolationLevel.ReadCommitted);
@@ -515,79 +524,10 @@ namespace Respository
             return "OK";
         }
 
-        public List<RealtimeDanielFRCheckData> GetRealtimeDanielFRCheckDatas(int loopID)
+        private static object GetPropertyValue(object obj, string property)
         {
-            return _context.RealtimeDanielFRCheckDatas.Where(realtimecheck => realtimecheck.ID == loopID).ToList();
-        }
-
-        public string AddHistoricalDanielFRCheckData(HistoricalDanielFRCheckData historicalDanielFRCheckData, ref int hisID)
-        {
-            using (var tran = _context.Database.BeginTransaction(IsolationLevel.ReadCommitted))
-            {
-                try
-                {
-                    _context.HistoricalDanielFRCheckDatas.Add(historicalDanielFRCheckData);
-                    _context.SaveChanges();
-                    hisID = historicalDanielFRCheckData.HisID;
-                    tran.Commit();
-                }
-                catch (Exception ex)
-                {
-                    tran.Rollback();
-
-                    return "OtherError";
-                }
-                return "OK";
-            }
-        }
-
-        public List<RealtimeDanielVOSCheckData> GetRealtimeDanielVOSCheckDatas(int loopID)
-        {
-            return _context.RealtimeDanielVOSCheckDatas.Where(realtimecheck => realtimecheck.ID == loopID).ToList();
-        }
-
-        public string AddHistoricalDanielVOSCheckData(HistoricalDanielVOSCheckData historicalDanielVOSCheckData, ref int hisID)
-        {
-            using (var tran = _context.Database.BeginTransaction(IsolationLevel.ReadCommitted))
-            {
-                try
-                {
-                    _context.HistoricalDanielVOSCheckDatas.Add(historicalDanielVOSCheckData);
-                    _context.SaveChanges();
-                    hisID = historicalDanielVOSCheckData.HisID;
-                    tran.Commit();
-                }
-                catch (Exception ex)
-                {
-                    tran.Rollback();
-                    return "OtherError";
-                }
-                return "OK";
-            }
-        }
-
-        public List<RealtimeDanielCheckDataVOSChartData> GetRealtimeCheckDataDanielVOSChartDatas(int loopID)
-        {
-            return _context.RealtimeCheckDataDanielVOSChartDatas.Where(realtimeCheckChartData => realtimeCheckChartData.ID == loopID).ToList();
-        }
-
-        public string AddHistoricalCheckDataDanielVOSChartDatas(List<HistoricalDanielCheckDataVOSChartData> historicalCheckDataDanielVOSChartDatas)
-        {
-            using (var tran = _context.Database.BeginTransaction(IsolationLevel.ReadCommitted))
-            {
-                try
-                {
-                    _context.HistoricalCheckDataDanielVOSChartDatas.AddRange(historicalCheckDataDanielVOSChartDatas);
-                    _context.SaveChanges();
-                    tran.Commit();
-                }
-                catch (Exception ex)
-                {
-                    tran.Rollback();
-                    return "OtherError";
-                }
-                return "OK";
-            }
+            System.Reflection.PropertyInfo propertyInfo = obj.GetType().GetProperty(property);
+            return propertyInfo.GetValue(obj, null);
         }
     }
 }
