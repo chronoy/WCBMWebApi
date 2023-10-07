@@ -11,10 +11,10 @@ using System.Threading.Tasks;
 
 namespace Respository
 {
-    public class CheckRespository : ICheckRespository
+    public class CheckRespository :BaseClass, ICheckRespository
     {
         private readonly SQLServerDBContext _context;
-        public CheckRespository(SQLServerDBContext context)
+        public CheckRespository(SQLServerDBContext context):base(context)
         {
             _context = context;
         }
@@ -399,6 +399,12 @@ namespace Respository
             return reports;
         }
 
+        private static object GetPropertyValue(object obj, string property)
+        {
+            System.Reflection.PropertyInfo propertyInfo = obj.GetType().GetProperty(property);
+            return propertyInfo.GetValue(obj, null);
+        }
+
         public Dictionary<string, string> GetRealtimeFRCheckData(int loopID, string manufacturer)
         {
             Dictionary<string, string> result = new();
@@ -484,21 +490,7 @@ namespace Respository
         /// <returns>添加结果</returns>
         public string AddHistoricalCheckData<T>(T entity) where T : class
         {
-            using var tran = _context.Database.BeginTransaction(IsolationLevel.ReadCommitted);
-            try
-            {
-                _context.Set<T>().Add(entity);
-                _context.SaveChanges();
-                _context.Entry(entity);
-                tran.Commit();
-            }
-            catch (Exception ex)
-            {
-                tran.Rollback();
-
-                return "OtherError";
-            }
-            return "OK";
+            return AddEntity(ref entity);
         }
 
         /// <summary>
@@ -508,20 +500,89 @@ namespace Respository
         /// <returns>添加结果</returns>
         public string AddHistoricalCheckDataChartDatas<T>(List<T> entities) where T : class
         {
-            using var tran = _context.Database.BeginTransaction(IsolationLevel.ReadCommitted);
-            try
-            {
-                _context.Set<T>().AddRange(entities);
-                _context.SaveChanges();
-                tran.Commit();
-            }
-            catch (Exception ex)
-            {
-                tran.Rollback();
 
-                return "OtherError";
+            return AddEntitys(entities);
+        }
+
+        public List<RealtimeDanielFRCheckData> GetRealtimeDanielFRCheckDatas(int loopID)
+        {
+            return _context.RealtimeDanielFRCheckDatas.Where(realtimecheck => realtimecheck.ID == loopID).ToList();
+        }
+
+        public string AddHistoricalDanielFRCheckData(HistoricalDanielFRCheckData historicalDanielFRCheckData, ref int hisID)
+        {
+            using (var tran = _context.Database.BeginTransaction(IsolationLevel.ReadCommitted))
+            {
+                try
+                {
+                    _context.HistoricalDanielFRCheckDatas.Add(historicalDanielFRCheckData);
+                    _context.SaveChanges();
+                    hisID = historicalDanielFRCheckData.HisID;
+                    tran.Commit();
+                }
+                catch (Exception ex)
+                {
+                    tran.Rollback();
+
+                    return "OtherError";
+                }
+                return "OK";
             }
-            return "OK";
+        }
+
+
+        public List<RealtimeDanielVOSCheckData> GetRealtimeDanielVOSCheckDatas(int loopID)
+        {
+            return _context.RealtimeDanielVOSCheckDatas.Where(realtimecheck => realtimecheck.ID == loopID).ToList();
+        }
+
+        public List<RealtimeDanielCheckDataVOSChartData> GetRealtimeCheckDataDanielVOSChartDatas(int loopID)
+        {
+            return _context.RealtimeCheckDataDanielVOSChartDatas.Where(realtimeCheckChartData => realtimeCheckChartData.ID == loopID).ToList();
+        }
+
+        public string AddHistoricalDanielVOSCheckData(HistoricalDanielVOSCheckData historicalDanielVOSCheckData, ref int hisID)
+        {
+            using (var tran = _context.Database.BeginTransaction(IsolationLevel.ReadCommitted))
+            {
+                try
+                {
+                    _context.HistoricalDanielVOSCheckDatas.Add(historicalDanielVOSCheckData);
+                    _context.SaveChanges();
+                    hisID = historicalDanielVOSCheckData.HisID;
+                    tran.Commit();
+                }
+                catch (Exception ex)
+                {
+                    tran.Rollback();
+                    return "OtherError";
+                }
+                return "OK";
+            }
+        }
+
+        public string AddHistoricalCheckDataDanielVOSChartDatas(List<HistoricalDanielCheckDataVOSChartData> historicalCheckDataDanielVOSChartDatas)
+        {
+            using (var tran = _context.Database.BeginTransaction(IsolationLevel.ReadCommitted))
+            {
+                try
+                {
+                    _context.HistoricalCheckDataDanielVOSChartDatas.AddRange(historicalCheckDataDanielVOSChartDatas);
+                    _context.SaveChanges();
+                    tran.Commit();
+                }
+                catch (Exception ex)
+                {
+                    tran.Rollback();
+                    return "OtherError";
+                }
+                return "OK";
+            }
+        }
+
+        public string AddOnlineGCRepeatabilityCheck(List<GCRepeatabilityCheckData> entities)
+        {
+            return AddEntitys(entities);
         }
 
         private static object GetPropertyValue(object obj, string property)

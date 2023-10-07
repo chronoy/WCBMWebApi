@@ -37,10 +37,10 @@ namespace CBMWebApi.Controllers
             return rtn;
         }
         [HttpPost]
-        public async Task<Dictionary<string, object>> LoopCheckReport([FromForm] string reportCategory, [FromForm] string brandName, [FromForm] int loopID, [FromForm] DateTime startDateTime, [FromForm] DateTime endDateTime)
+        public async Task<Dictionary<string, object>> LoopCheckReport([FromForm] string reportCategory, [FromForm] string manufacturer, [FromForm] int loopID, [FromForm] DateTime startDateTime, [FromForm] DateTime endDateTime)
         {
             Dictionary<string, object> rtn = new Dictionary<string, object>();
-            List<HistoricalStationLoopCheckData> stationLoopCheckData = await _service.GetStationLoopCheckReport(reportCategory, brandName, loopID, startDateTime, endDateTime);
+            List<HistoricalStationLoopCheckData> stationLoopCheckData = await _service.GetStationLoopCheckReport(reportCategory, manufacturer, loopID, startDateTime, endDateTime);
             if (stationLoopCheckData == null)
             {
                 rtn["MSG"] = "OtherError";
@@ -55,10 +55,10 @@ namespace CBMWebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<Dictionary<string, object>> GetManualCheckData([FromForm] int loopID , [FromForm] string brandName)
+        public async Task<Dictionary<string, object>> GetManualCheckData([FromForm] int loopID , [FromForm] string manufacturer)
         {
             Dictionary<string, object> rtn = new Dictionary<string, object>();
-            var data = await _service.GetManualCheckData(loopID, brandName);
+            var data = await _service.GetManualCheckData(loopID, manufacturer);
             if (data == null)
             {
                 rtn["MSG"] = "OtherError";
@@ -79,6 +79,24 @@ namespace CBMWebApi.Controllers
             Dictionary<string, object> rtn = new Dictionary<string, object>();
             var data =await _service.GetOfflineCheck(offlineCheck);
             if (data.Values.Count == 0) 
+            {
+                rtn["MSG"] = "OtherError";
+                rtn["Code"] = "400";
+            }
+            else
+            {
+                rtn["MSG"] = "OK";
+                rtn["Code"] = "200";
+            }
+            rtn["Data"] = data;
+            return rtn;
+        }
+        [HttpPost]
+        public async Task<Dictionary<string, object>> GetOnlineGCRepeatabilityCheck([FromForm] int ID, [FromForm] List<Data> firstDatas, [FromForm] List<Data> secondDatas)
+        {
+            Dictionary<string, object> rtn = new Dictionary<string, object>();
+            var data = await _service.GetOnlineGCRepeatabilityCheck(ID, firstDatas, secondDatas);
+            if (data == null)
             {
                 rtn["MSG"] = "OtherError";
                 rtn["Code"] = "400";

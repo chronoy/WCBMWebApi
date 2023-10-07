@@ -9,6 +9,7 @@ using Respository;
 using System.Linq;
 using System.Timers;
 using System.ComponentModel;
+using static System.Collections.Specialized.BitVector32;
 
 namespace Services
 {
@@ -67,7 +68,25 @@ namespace Services
             });
         }
 
-
+        public Task<List<PDBTag>> GetGCComponent(StationEquipment equipment)
+        {
+            return Task.Run(() => {
+                List<string> componentNames=new List<string>() { equipment.StationAbbrName + "_" + equipment.AbbrName + "_C1" ,
+                                                             equipment.StationAbbrName + "_" + equipment.AbbrName + "_C2" ,
+                                                             equipment.StationAbbrName + "_" + equipment.AbbrName + "_C3" ,
+                                                             equipment.StationAbbrName + "_" + equipment.AbbrName + "_NC4" ,
+                                                             equipment.StationAbbrName + "_" + equipment.AbbrName + "_IC4" ,
+                                                             equipment.StationAbbrName + "_" + equipment.AbbrName + "_NC5" ,
+                                                             equipment.StationAbbrName + "_" + equipment.AbbrName + "_IC5" ,
+                                                             equipment.StationAbbrName + "_" + equipment.AbbrName + "_NeoC5" ,
+                                                             equipment.StationAbbrName + "_" + equipment.AbbrName + "_C6" ,
+                                                             equipment.StationAbbrName + "_" + equipment.AbbrName + "_N2" ,
+                                                             equipment.StationAbbrName + "_" + equipment.AbbrName + "_CO2"
+                                                            };
+                List<PDBTag> tags = _tags.Where(tag => componentNames.Contains(tag.Name)).ToList();
+                return tags;
+            });
+        }
 
         //public Task<Dictionary<string, Tag>> GetPDBTags(List<string> TagNames)
         //{
@@ -91,7 +110,7 @@ namespace Services
             _tmrUpdate.AutoReset = true;
             Update_Elapsed(null, null);
         }
-
+       
     }
 }
 

@@ -46,7 +46,7 @@ namespace CBMWebApi.Controllers
             Station station = await _stationService.GetStationByID(stationID);
             List<PDBTag> stationTags = await _PDBService.GetLoopTagsByStation(station);
             List<StationLoop> loops = await _stationLoopService.GetStationLoopsByStation(stationID);
-            List<StationEquipment> equipments = await _stationEquipmentService.GetStationEquipmentsBySttaion(stationID);
+            List<StationEquipment> equipments = await _stationEquipmentService.GetStationEquipmentsByStation(stationID);
             List<AlarmCount> alarmCounts = await _alarmService.GetAlarmCountByStation(station);
             List<StationLoopDiagnosticData> loopDiagnosticDatas = await _diagnosisService.GetLoopDiagnosticDataByStation(station.ID);
             List<StationEquipmentDiagnosticData> equipmentDiagnosticDatas = await _diagnosisService.GetEquipmentDiagnosticDataByStation(station.ID);

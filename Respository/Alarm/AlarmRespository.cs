@@ -46,6 +46,7 @@ namespace Respository
                     where alarmAreas.Contains(real.Area) && prioritys.Contains(real.Priority)
                     select real).OrderByDescending(o => o.StartTime).ToList();
         }
+
         public string AckRealtimeAlarm(List<string> tagNames)
         {
             using (var tran = _context.Database.BeginTransaction(IsolationLevel.ReadCommitted))
@@ -89,6 +90,34 @@ namespace Respository
                 return "OK";
             }
         }
+
+        public List<RealtimeAlarm> GetRealtimeAlarmByArea(string alarmAreas, List<string> prioritys)
+        {
+            List<RealtimeAlarm> alarms = (from real in _context.RealtimeAlarms
+                                          select new RealtimeAlarm
+                                          {
+                                              ID = real.ID,
+                                              StartTime = real.StartTime,
+                                              EndTime = real.EndTime,
+                                              NodeName = real.NodeName.TrimEnd(),
+                                              TagName = real.TagName.TrimEnd(),
+                                              Value = real.Value.TrimEnd(),
+                                              MessageType = real.MessageType.TrimEnd(),
+                                              Description = real.Description.TrimEnd(),
+                                              Priority = real.Priority.TrimEnd(),
+                                              Status = real.Status.TrimEnd(),
+                                              Area = real.Area.TrimEnd(),
+                                              OperatorName = real.OperatorName.TrimEnd(),
+                                              FullOperatorName = real.FullOperatorName.TrimEnd(),
+                                              ACKED = real.ACKED
+                                          }).ToList();
+
+
+            return (from real in alarms
+                    where real.Area.Contains(alarmAreas) && prioritys.Contains(real.Priority)
+                    select real).OrderByDescending(o => o.StartTime).ToList();
+        }
+
         public List<DiagnosticAlarm> GetRealtimeDiagnosticAlarm(int stationID, int loopID)
         {
             List<DiagnosticAlarm> diagnostics = new();
@@ -142,11 +171,11 @@ namespace Respository
         public List<HistoricalAlarm> GetHistoricalAlarm(DateTime startDateTime, DateTime endDateTime, List<string> alarmAreas, List<string> prioritys)
         {
 
-            List<HistoricalAlarm> alarms = (from alm in _context.HistoricalAlarms 
-                                            where alm.StartTime >= startDateTime && 
-                                                  alm.EndTime <= endDateTime && 
-                                                  prioritys.Contains(alm.Priority) && 
-                                                  alm.MessageType=="ALARM"
+            List<HistoricalAlarm> alarms = (from alm in _context.HistoricalAlarms
+                                            where alm.StartTime >= startDateTime &&
+                                                  alm.EndTime <= endDateTime &&
+                                                  prioritys.Contains(alm.Priority) &&
+                                                  alm.MessageType == "ALARM"
                                             select new HistoricalAlarm
                                             {
                                                 HisID = alm.HisID,
@@ -161,29 +190,30 @@ namespace Respository
                                                 Status = alm.Status.TrimEnd(),
                                                 Area = String.Join("_", alm.Area.Split(',', StringSplitOptions.None).ToList().GetRange(4, 3)),
                                                 OperatorName = alm.OperatorName.TrimEnd(),
-                                                FullOperatorName = alm.FullOperatorName.TrimEnd(), 
+                                                FullOperatorName = alm.FullOperatorName.TrimEnd(),
                                             }).ToList();
 
             var historicalAlarms = (from alm in alarms
-                                   where alarmAreas.Contains(alm.Area)
-                                   select new HistoricalAlarm
-                                   {
-                                       HisID = alm.HisID,
-                                       StartTime = alm.StartTime,
-                                       EndTime = alm.EndTime,
-                                       NodeName = alm.NodeName.TrimEnd(),
-                                       TagName = alm.TagName.TrimEnd(),
-                                       Value = alm.Value.TrimEnd(),
-                                       MessageType = alm.MessageType.TrimEnd(),
-                                       Description = alm.Description.TrimEnd(),
-                                       Priority = alm.Priority.TrimEnd(),
-                                       Status = alm.Status.TrimEnd(),
-                                       Area = alm.Area.TrimEnd(),
-                                       OperatorName = alm.OperatorName.TrimEnd(),
-                                       FullOperatorName = alm.FullOperatorName.TrimEnd(),
-                                   }).OrderByDescending(o => o.StartTime).ThenByDescending(t => t.EndTime).ToList();
+                                    where alarmAreas.Contains(alm.Area)
+                                    select new HistoricalAlarm
+                                    {
+                                        HisID = alm.HisID,
+                                        StartTime = alm.StartTime,
+                                        EndTime = alm.EndTime,
+                                        NodeName = alm.NodeName.TrimEnd(),
+                                        TagName = alm.TagName.TrimEnd(),
+                                        Value = alm.Value.TrimEnd(),
+                                        MessageType = alm.MessageType.TrimEnd(),
+                                        Description = alm.Description.TrimEnd(),
+                                        Priority = alm.Priority.TrimEnd(),
+                                        Status = alm.Status.TrimEnd(),
+                                        Area = alm.Area.TrimEnd(),
+                                        OperatorName = alm.OperatorName.TrimEnd(),
+                                        FullOperatorName = alm.FullOperatorName.TrimEnd(),
+                                    }).OrderByDescending(o => o.StartTime).ThenByDescending(t => t.EndTime).ToList();
             return historicalAlarms;
         }
+        
         public List<HistoricalStatisticalAlarm> GetHistoricalStatisticalAlarm(DateTime startDateTime, DateTime endDateTime, List<string> alarmAreas, List<string> prioritys)
         {
 
@@ -234,8 +264,7 @@ namespace Respository
 
             return statisticalAlarms;
         }
-
-
+        
         public List<AlarmKPI> GetHistoricalAlarmKPI(int topNumber, string sortType, DateTime startDateTime, DateTime endDateTime, string alarmArea)
         {
             var historicalAlarmKPI = (from kpi in
@@ -260,13 +289,12 @@ namespace Respository
                                       }).OrderBy(o => GetPropertyValue(o, sortType)).Take(topNumber).ToList();
             return historicalAlarmKPI;
         }
-
         private static object GetPropertyValue(object obj, string property)
         {
             System.Reflection.PropertyInfo propertyInfo = obj.GetType().GetProperty(property);
             return propertyInfo.GetValue(obj, null);
         }
-
+        
         public AlarmCount GetAlarmCountByStation(string name, string alarmName, string stationName, string loopName)
         {
             var alarms = (from alarm in _context.RealtimeAlarms
@@ -276,33 +304,5 @@ namespace Respository
                           select alarm).ToList();
             return new AlarmCount { Name = name, AlarmName = alarmName, AlarmArea = $"{stationName}_{loopName}_{alarmName}", Count = alarms.Count };
         }
-
-        public List<RealtimeAlarm> GetRealtimeAlarmByArea(string alarmAreas, List<string> prioritys)
-        {
-            List<RealtimeAlarm> alarms = (from real in _context.RealtimeAlarms
-                                          select new RealtimeAlarm
-                                          {
-                                              ID = real.ID,
-                                              StartTime = real.StartTime,
-                                              EndTime = real.EndTime,
-                                              NodeName = real.NodeName.TrimEnd(),
-                                              TagName = real.TagName.TrimEnd(),
-                                              Value = real.Value.TrimEnd(),
-                                              MessageType = real.MessageType.TrimEnd(),
-                                              Description = real.Description.TrimEnd(),
-                                              Priority = real.Priority.TrimEnd(),
-                                              Status = real.Status.TrimEnd(),
-                                              Area = real.Area.TrimEnd(),
-                                              OperatorName = real.OperatorName.TrimEnd(),
-                                              FullOperatorName = real.FullOperatorName.TrimEnd(),
-                                              ACKED = real.ACKED
-                                          }).ToList();
-
-
-            return (from real in alarms
-                    where real.Area.Contains(alarmAreas) && prioritys.Contains(real.Priority)
-                    select real).OrderByDescending(o => o.StartTime).ToList();
-        }
-
     }
 }

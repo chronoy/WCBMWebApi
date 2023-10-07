@@ -32,5 +32,10 @@ namespace Respository
         /// <param name="entities">历史检定数据图表数据列表</param>
         /// <returns>添加结果</returns>
         public string AddHistoricalCheckDataChartDatas<T>(List<T> entities) where T : class;
+
+        public string AddOnlineGCRepeatabilityCheck(List<GCRepeatabilityCheckData> entities);
+
+
+
     }
 }
