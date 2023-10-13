@@ -45,7 +45,8 @@ namespace CBMWebApi.Controllers
             {
                 rtn["MSG"] = "OtherError";
                 rtn["Code"] = "400";
-            } else
+            }
+            else
             {
                 rtn["MSG"] = "OK";
                 rtn["Code"] = "200";
@@ -55,7 +56,7 @@ namespace CBMWebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<Dictionary<string, object>> GetManualCheckData([FromForm] int loopID , [FromForm] string manufacturer)
+        public async Task<Dictionary<string, object>> GetManualCheckData([FromForm] int loopID, [FromForm] string manufacturer)
         {
             Dictionary<string, object> rtn = new Dictionary<string, object>();
             var data = await _service.GetManualCheckData(loopID, manufacturer);
@@ -77,8 +78,8 @@ namespace CBMWebApi.Controllers
         public async Task<Dictionary<string, object>> GetOfflineCheck([FromForm] OfflineCheck offlineCheck)
         {
             Dictionary<string, object> rtn = new Dictionary<string, object>();
-            var data =await _service.GetOfflineCheck(offlineCheck);
-            if (data.Values.Count == 0) 
+            var data = await _service.GetOfflineCheck(offlineCheck);
+            if (data.Values.Count == 0)
             {
                 rtn["MSG"] = "OtherError";
                 rtn["Code"] = "400";

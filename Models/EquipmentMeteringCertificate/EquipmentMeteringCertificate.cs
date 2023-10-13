@@ -21,6 +21,7 @@ namespace Models
         public string? EquipmentCategory { get; set; }
         public string? EquipmentManufacturer { get; set; }
         public string? EquipmentModel { get; set; }
+        public string? EquipmentSerialNumber { get; set; }
         public string? EquipmentAccuracy { get; set; }
         public string? CertificateConclusion { get; set; }
         public string? ApprovedBy { get; set; }

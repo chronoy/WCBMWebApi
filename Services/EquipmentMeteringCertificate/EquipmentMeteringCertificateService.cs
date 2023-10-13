@@ -20,5 +20,20 @@ namespace Services
         {
             return Task.Run(()=>_equipmentMeteringCertificateRespository.GetEquipmentMeteringCertificates());
         }
+
+        public Task<string> AddEquipmentMeteringCertificate(EquipmentMeteringCertificate entity)
+        {
+            return Task.Run(() => _equipmentMeteringCertificateRespository.AddEquipmentMeteringCertificate(entity));
+        }
+
+        public Task<string> UpdateEquipmentMeteringCertificate(EquipmentMeteringCertificate entity)
+        {
+            return Task.Run(() => _equipmentMeteringCertificateRespository.UpdateEquipmentMeteringCertificate(entity));
+        }
+
+        public Task<bool> DeleteEquipmentMeteringCertificate(List<int> ids)
+        {
+            return Task.Run(() => _equipmentMeteringCertificateRespository.DeleteEquipmentMeteringCertificate(ids));
+        }
     }
 }

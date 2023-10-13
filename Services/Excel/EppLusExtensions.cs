@@ -106,7 +106,7 @@ namespace Services
             for (int i = 1; i <= worksheet.Dimension.End.Column; i++)
             {
                 var rowEmpty = worksheet.Cells[worksheet.Dimension.End.Row, i].Value == null;
-                if (!rowEmpty && worksheet.Cells[worksheet.Dimension.End.Row, i].Value.ToString() == "合计")
+                if (rowEmpty)
                 {
                     empties.Add(true);
                     break;

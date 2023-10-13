@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 
 namespace Respository
 {
-    public class EquipmentRespository : IEquipmentRespository
+    public class EquipmentRespository : BaseClass, IEquipmentRespository
     {
         private readonly SQLServerDBContext _context;
-        public EquipmentRespository(SQLServerDBContext context)
+        public EquipmentRespository(SQLServerDBContext context) : base(context)
         {
             _context = context;
         }
@@ -120,172 +120,104 @@ namespace Respository
 
         public string AddEquipment(Equipment entity)
         {
-            using var tran = _context.Database.BeginTransaction(IsolationLevel.ReadCommitted);
-            try
-            {
-                entity.EnterDate = DateTime.Now;
-                entity.UpdateDate = DateTime.Now;
-                _context.Equipments.AddRange(entity);
-                _context.SaveChanges();
-                _context.Entry(entity);
-                tran.Commit();
-            }
-            catch (Exception ex)
-            {
-                tran.Rollback();
-
-                return "OtherError";
-            }
-            return "OK";
+            return AddEntity(entity);
         }
 
         public string AddEquipments(List<Equipment> entities)
         {
-            using var tran = _context.Database.BeginTransaction(IsolationLevel.ReadCommitted);
-            try
-            {
-                entities.ForEach(e => { e.EnterDate = DateTime.Now; e.UpdateDate = DateTime.Now; });
-                _context.Equipments.AddRange(entities);
-                _context.SaveChanges();
-                entities.ForEach(e => _context.Entry(e));
-                tran.Commit();
-            }
-            catch (Exception ex)
-            {
-                tran.Rollback();
-
-                return "OtherError";
-            }
-            return "OK";
+            return AddEntitys(entities);
         }
 
         public string UpdateEquipment(Equipment entity)
         {
-            using var tran = _context.Database.BeginTransaction(IsolationLevel.ReadCommitted);
-            try
+            var equipment = _context.Equipments.FirstOrDefault(x => x.ID == entity.ID);
+            if (equipment != null)
             {
-                var equipment = _context.Equipments.FirstOrDefault(x => x.ID == entity.ID);
+                equipment.UpdateDate = DateTime.Now;
+                equipment.LineName = entity.LineName;
+                equipment.CompanyName = entity.CompanyName;
+                equipment.StationName = entity.StationName;
+                equipment.Category = entity.Category;
+                equipment.Manufacturer = entity.Manufacturer;
+                equipment.EquipmentModel = entity.EquipmentModel;
+                equipment.Customer = entity.Customer;
+                equipment.ProcessLocation = entity.ProcessLocation;
+                equipment.SerialNumber = entity.SerialNumber;
+                equipment.Caliber = entity.Caliber;
+                equipment.Range = entity.Range;
+                equipment.Accuracy = entity.Accuracy;
+                equipment.Uncertainty = entity.Uncertainty;
+                equipment.PressureLevel = entity.PressureLevel;
+                equipment.InsideDiameter = entity.InsideDiameter;
+                equipment.Length = entity.Length;
+                equipment.KFactor = entity.KFactor;
+                equipment.CommonFlow = entity.CommonFlow;
+                equipment.InstallationCondition = entity.InstallationCondition;
+                equipment.ProductionDate = entity.ProductionDate;
+                equipment.Status = entity.Status;
+                equipment.TradeProperty = entity.TradeProperty;
+                equipment.VerificationEndDate = entity.VerificationEndDate;
+                equipment.VerificationPeriod = entity.VerificationPeriod;
+                equipment.VerificationAgency = entity.VerificationAgency;
+                equipment.VerificationCertificateNumber = entity.VerificationCertificateNumber;
+                equipment.MaintenanceStatus = entity.MaintenanceStatus;
+                equipment.DesignDrawings = entity.DesignDrawings;
+                equipment.Note = entity.Note;
+                return UpdateEntity(equipment);
+            }
+            else
+            {
+                return "NotExistThisRecord";
+            }
+        }
+
+        public bool UpdateEquipments(List<Equipment> listEntity)
+        {
+            List<Equipment> equipments = new List<Equipment>();
+            listEntity.ForEach(e =>
+            {
+                var equipment = _context.Equipments.FirstOrDefault(x => x.ID == e.ID);
                 if (equipment != null)
                 {
                     equipment.UpdateDate = DateTime.Now;
-                    equipment.LineName = entity.LineName;
-                    equipment.CompanyName = entity.CompanyName;
-                    equipment.StationName = entity.StationName;
-                    equipment.Category = entity.Category;
-                    equipment.Manufacturer = entity.Manufacturer;
-                    equipment.EquipmentModel = entity.EquipmentModel;
-                    equipment.Customer = entity.Customer;
-                    equipment.ProcessLocation = entity.ProcessLocation;
-                    equipment.SerialNumber = entity.SerialNumber;
-                    equipment.Caliber = entity.Caliber;
-                    equipment.Range = entity.Range;
-                    equipment.Accuracy = entity.Accuracy;
-                    equipment.Uncertainty = entity.Uncertainty;
-                    equipment.PressureLevel = entity.PressureLevel;
-                    equipment.InsideDiameter = entity.InsideDiameter;
-                    equipment.Length = entity.Length;
-                    equipment.KFactor = entity.KFactor;
-                    equipment.CommonFlow = entity.CommonFlow;
-                    equipment.InstallationCondition = entity.InstallationCondition;
-                    equipment.ProductionDate = entity.ProductionDate;
-                    equipment.Status = entity.Status;
-                    equipment.TradeProperty = entity.TradeProperty;
-                    equipment.VerificationEndDate = entity.VerificationEndDate;
-                    equipment.VerificationPeriod = entity.VerificationPeriod;
-                    equipment.VerificationAgency = entity.VerificationAgency;
-                    equipment.VerificationCertificateNumber = entity.VerificationCertificateNumber;
-                    equipment.MaintenanceStatus = entity.MaintenanceStatus;
-                    equipment.DesignDrawings = entity.DesignDrawings;
-                    equipment.Note = entity.Note;
-                    _context.Equipments.Update(equipment);
-                    _context.SaveChanges();
-                    tran.Commit();
+                    equipment.LineName = e.LineName;
+                    equipment.CompanyName = e.CompanyName;
+                    equipment.StationName = e.StationName;
+                    equipment.Category = e.Category;
+                    equipment.Manufacturer = e.Manufacturer;
+                    equipment.EquipmentModel = e.EquipmentModel;
+                    equipment.Customer = e.Customer;
+                    equipment.ProcessLocation = e.ProcessLocation;
+                    equipment.SerialNumber = e.SerialNumber;
+                    equipment.Caliber = e.Caliber;
+                    equipment.Range = e.Range;
+                    equipment.Accuracy = e.Accuracy;
+                    equipment.Uncertainty = e.Uncertainty;
+                    equipment.PressureLevel = e.PressureLevel;
+                    equipment.InsideDiameter = e.InsideDiameter;
+                    equipment.Length = e.Length;
+                    equipment.KFactor = e.KFactor;
+                    equipment.CommonFlow = e.CommonFlow;
+                    equipment.InstallationCondition = e.InstallationCondition;
+                    equipment.ProductionDate = e.ProductionDate;
+                    equipment.Status = e.Status;
+                    equipment.TradeProperty = e.TradeProperty;
+                    equipment.VerificationEndDate = e.VerificationEndDate;
+                    equipment.VerificationPeriod = e.VerificationPeriod;
+                    equipment.VerificationAgency = e.VerificationAgency;
+                    equipment.VerificationCertificateNumber = e.VerificationCertificateNumber;
+                    equipment.MaintenanceStatus = e.MaintenanceStatus;
+                    equipment.DesignDrawings = e.DesignDrawings;
+                    equipment.Note = e.Note;
+                    equipments.Add(equipment);
                 }
-            }
-            catch (Exception)
-            {
-                tran.Rollback();
-                return "OtherError";
-            }
-            return "OK";
-        }
-
-        public bool UpdateEquipments<T>(List<Equipment> listEntity)
-        {
-            bool result = false;
-            using var tran = _context.Database.BeginTransaction(IsolationLevel.ReadCommitted);
-            try
-            {
-                listEntity.ForEach(e =>
-                {
-                    var equipment = _context.Equipments.FirstOrDefault(x => x.ID == e.ID);
-                    if (equipment != null)
-                    {
-                        equipment.UpdateDate = DateTime.Now;
-                        equipment.LineName = e.LineName;
-                        equipment.CompanyName = e.CompanyName;
-                        equipment.StationName = e.StationName;
-                        equipment.Category = e.Category;
-                        equipment.Manufacturer = e.Manufacturer;
-                        equipment.EquipmentModel = e.EquipmentModel;
-                        equipment.Customer = e.Customer;
-                        equipment.ProcessLocation = e.ProcessLocation;
-                        equipment.SerialNumber = e.SerialNumber;
-                        equipment.Caliber = e.Caliber;
-                        equipment.Range = e.Range;
-                        equipment.Accuracy = e.Accuracy;
-                        equipment.Uncertainty = e.Uncertainty;
-                        equipment.PressureLevel = e.PressureLevel;
-                        equipment.InsideDiameter = e.InsideDiameter;
-                        equipment.Length = e.Length;
-                        equipment.KFactor = e.KFactor;
-                        equipment.CommonFlow = e.CommonFlow;
-                        equipment.InstallationCondition = e.InstallationCondition;
-                        equipment.ProductionDate = e.ProductionDate;
-                        equipment.Status = e.Status;
-                        equipment.TradeProperty = e.TradeProperty;
-                        equipment.VerificationEndDate = e.VerificationEndDate;
-                        equipment.VerificationPeriod = e.VerificationPeriod;
-                        equipment.VerificationAgency = e.VerificationAgency;
-                        equipment.VerificationCertificateNumber = e.VerificationCertificateNumber;
-                        equipment.MaintenanceStatus = e.MaintenanceStatus;
-                        equipment.DesignDrawings = e.DesignDrawings;
-                        equipment.Note = e.Note;
-                        _context.Equipments.Update(equipment);
-                    }
-                });
-                result = _context.SaveChanges() > 0;
-                tran.Commit();
-            }
-            catch (Exception)
-            {
-                tran.Rollback();
-                return result;
-            }
-            return result;
+            });
+            return UpdateEntitys(equipments) == "OK";
         }
 
         public bool DeleteEquipment(int id)
         {
-            bool result = false;
-            using var tran = _context.Database.BeginTransaction(IsolationLevel.ReadCommitted);
-            try
-            {
-                List<Equipment> listDeleting = _context.Equipments.Where(x => x.ID == id).ToList();
-                listDeleting.ForEach(u =>
-                {
-                    _context.Equipments.Attach(u);
-                    _context.Equipments.Remove(u);
-                });
-                result = _context.SaveChanges() > 0;
-                tran.Commit();
-            }
-            catch (Exception)
-            {
-                tran.Rollback();
-                return result;
-            }
-            return result;
+            return DeleteEntityBy<Equipment>(x => x.ID == id);
         }
     }
 }

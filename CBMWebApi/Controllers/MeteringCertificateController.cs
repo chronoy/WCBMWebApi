@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Models;
 using Services;
 
 namespace CBMWebApi.Controllers
@@ -39,6 +40,67 @@ namespace CBMWebApi.Controllers
                 rtn["Code"] = "200";
             }
             rtn["Data"] = equipmentMeteringCertificates;
+            return rtn;
+        }
+
+        [HttpPost]
+        public async Task<Dictionary<string, object>> AddEquipmentMeteringCertificate([FromForm] EquipmentMeteringCertificate meteringCertificate)
+        {
+            Dictionary<string, object> rtn = new Dictionary<string, object>();
+
+            string resultString = await _equipmentMeteringCertificateService.AddEquipmentMeteringCertificate(meteringCertificate);
+            rtn["MSG"] = resultString;
+            switch (resultString)
+            {
+                case "OtherError":
+                    rtn["Code"] = "400";
+                    break;
+                case "OK":
+                    rtn["Code"] = "200";
+                    break;
+            }
+
+            return rtn;
+        }
+
+        [HttpPost]
+        public async Task<Dictionary<string, object>> UpdateEquipmentMeteringCertificate([FromForm] EquipmentMeteringCertificate meteringCertificate)
+        {
+            Dictionary<string, object> rtn = new Dictionary<string, object>();
+
+            string resultString = await _equipmentMeteringCertificateService.UpdateEquipmentMeteringCertificate(meteringCertificate);
+            rtn["MSG"] = resultString;
+            switch (resultString)
+            {
+                case "OtherError":
+                    rtn["Code"] = "400";
+                    break;
+                case "OK":
+                    rtn["Code"] = "200";
+                    break;
+                case "NotExistThisRecord":
+                    rtn["Code"] = "417";
+                    break;
+            }
+
+            return rtn;
+        }
+
+        [HttpPost]
+        public async Task<Dictionary<string, object>> DeleteEquipmentMeteringCertificates([FromForm] List<int> ids)
+        {
+            Dictionary<string, object> rtn = new Dictionary<string, object>();
+
+            if (await _equipmentMeteringCertificateService.DeleteEquipmentMeteringCertificate(ids))
+            {
+                rtn["MSG"] = "OK";
+                rtn["Code"] = "200";
+            }
+            else
+            {
+                rtn["MSG"] = "OtherError";
+                rtn["Code"] = "400";
+            }
             return rtn;
         }
     }

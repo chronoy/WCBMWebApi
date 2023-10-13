@@ -81,6 +81,9 @@ namespace CBMCenterApi.Controllers
                 case "OK":
                     rtn["Code"] = "200";
                     break;
+                case "NotExistThisRecord":
+                    rtn["Code"] = "417";
+                    break;
             }
 
             return rtn;
@@ -123,7 +126,7 @@ namespace CBMCenterApi.Controllers
         }
 
         [HttpPost]
-        public async Task<Dictionary<string, object>> ImporttEquipments([FromForm(Name = "file")] List<IFormFile> files)
+        public async Task<Dictionary<string, object>> ImportEquipments([FromForm(Name = "file")] List<IFormFile> files)
         {
             Dictionary<string, object> rtn = new Dictionary<string, object>();
             foreach (var file in files)
@@ -148,7 +151,7 @@ namespace CBMCenterApi.Controllers
                 else
                 {
                     rtn["MSG"] = "文件格式错误，只支持xlsx格式Excel导入";
-                    rtn["Code"] = "401";
+                    rtn["Code"] = "410";
                 }
             }
             return rtn;
@@ -178,7 +181,7 @@ namespace CBMCenterApi.Controllers
                 else
                 {
                     rtn["MSG"] = "文件格式错误，请选择pdf格式";
-                    rtn["Code"] = "401";
+                    rtn["Code"] = "410";
                 }
             }
             return rtn;
