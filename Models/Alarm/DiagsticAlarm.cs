@@ -14,7 +14,7 @@ namespace Models
         [Column("ALM_NATIVETIMEIN")]
         public DateTime StartTime { get; set; }
         [Column("ALM_NATIVETIMELAST")]
-        public string EndTime { get; set; }
+        public DateTime EndTime { get; set; }
         [Column("ALM_PHYSLNODE")]
         public string NodeName { get; set; }
         [Column("ALM_TAGNAME")]
