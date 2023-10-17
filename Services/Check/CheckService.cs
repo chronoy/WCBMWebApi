@@ -40,9 +40,9 @@ namespace Services
                 {
                     case "Daniel":
                         {
-                            var realtimeFRCheckData = _respository.GetRealtimeDanielFRCheckDatas(loopID).FirstOrDefault();
-                            var realtimeVOSCheckData = _respository.GetRealtimeDanielVOSCheckDatas(loopID).FirstOrDefault();
-                            var realtimeVOSCheckChartDatas = _respository.GetRealtimeCheckDataDanielVOSChartDatas(loopID);
+                            var realtimeFRCheckData = _respository.GetRealtimeCheckDatas<RealtimeDanielFRCheckData>(x => x.ID == loopID).FirstOrDefault();
+                            var realtimeVOSCheckData = _respository.GetRealtimeCheckDatas<RealtimeDanielVOSCheckData>(x => x.ID == loopID).FirstOrDefault();
+                            var realtimeVOSCheckChartDatas = _respository.GetRealtimeCheckDatas<RealtimeDanielCheckDataVOSChartData>(x => x.ID == loopID);
                             HistoricalDanielFRCheckData historicalFRCheckData = new HistoricalDanielFRCheckData();
                             HistoricalDanielVOSCheckData historicalDanielVOSCheckData = new HistoricalDanielVOSCheckData();
                             if (realtimeFRCheckData != null && realtimeVOSCheckData != null)
@@ -51,13 +51,15 @@ namespace Services
                                 historicalFRCheckData.DateTime = CurrentDate;
                                 historicalFRCheckData.ReportModeID = 1;
                                 historicalFRCheckData.LoopID = realtimeFRCheckData.ID;
-                                _respository.AddHistoricalDanielFRCheckData(historicalFRCheckData, ref FRHisID);
+                                _respository.AddHistoricalCheckData(historicalFRCheckData);
+                                FRHisID = historicalFRCheckData.HisID;
 
                                 EntityToEntity(realtimeVOSCheckData, historicalDanielVOSCheckData);
                                 historicalDanielVOSCheckData.DateTime = CurrentDate;
                                 historicalDanielVOSCheckData.ReportModeID = 1;
                                 historicalDanielVOSCheckData.LoopID = realtimeVOSCheckData.ID;
-                                _respository.AddHistoricalDanielVOSCheckData(historicalDanielVOSCheckData, ref VOSHisID);
+                                _respository.AddHistoricalCheckData(historicalDanielVOSCheckData);
+                                VOSHisID = historicalDanielVOSCheckData.HisID;
 
                                 if (historicalDanielVOSCheckData.CheckDataStatusID == 0 && VOSHisID != 0)
                                 {
@@ -73,7 +75,7 @@ namespace Services
                                         histchartdata.Add(historicalCheckDataDanielVOSChartData);
                                         number++;
                                     }
-                                    _respository.AddHistoricalCheckDataDanielVOSChartDatas(histchartdata);
+                                    _respository.AddHistoricalCheckDataChartDatas(histchartdata);
                                 }
 
                             }
@@ -93,14 +95,14 @@ namespace Services
                                 historicalFRCheckData.DateTime = CurrentDate;
                                 historicalFRCheckData.ReportModeID = 1;
                                 historicalFRCheckData.LoopID = realtimeFRCheckData.ID;
-                                _respository.AddHistoricalCheckData(ref historicalFRCheckData);
+                                _respository.AddHistoricalCheckData(historicalFRCheckData);
                                 FRHisID = historicalFRCheckData.HisID;
 
                                 EntityToEntity(realtimeVOSCheckData, historicalVOSCheckData);
                                 historicalVOSCheckData.DateTime = CurrentDate;
                                 historicalVOSCheckData.ReportModeID = 1;
                                 historicalVOSCheckData.LoopID = realtimeVOSCheckData.ID;
-                                _respository.AddHistoricalCheckData(ref historicalVOSCheckData);
+                                _respository.AddHistoricalCheckData(historicalVOSCheckData);
                                 VOSHisID = historicalVOSCheckData.HisID;
 
                                 if (historicalVOSCheckData.CheckDataStatusID == 0 && VOSHisID != 0)
@@ -136,14 +138,14 @@ namespace Services
                                 historicalFRCheckData.DateTime = CurrentDate;
                                 historicalFRCheckData.ReportModeID = 1;
                                 historicalFRCheckData.LoopID = realtimeFRCheckData.ID;
-                                _respository.AddHistoricalCheckData(ref historicalFRCheckData);
+                                _respository.AddHistoricalCheckData(historicalFRCheckData);
                                 FRHisID = historicalFRCheckData.HisID;
 
                                 EntityToEntity(realtimeVOSCheckData, historicalVOSCheckData);
                                 historicalVOSCheckData.DateTime = CurrentDate;
                                 historicalVOSCheckData.ReportModeID = 1;
                                 historicalVOSCheckData.LoopID = realtimeVOSCheckData.ID;
-                                _respository.AddHistoricalCheckData(ref historicalVOSCheckData);
+                                _respository.AddHistoricalCheckData(historicalVOSCheckData);
                                 VOSHisID = historicalVOSCheckData.HisID;
 
                                 if (historicalVOSCheckData.CheckDataStatusID == 0 && VOSHisID != 0)
@@ -179,14 +181,14 @@ namespace Services
                                 historicalFRCheckData.DateTime = CurrentDate;
                                 historicalFRCheckData.ReportModeID = 1;
                                 historicalFRCheckData.LoopID = realtimeFRCheckData.ID;
-                                _respository.AddHistoricalCheckData(ref historicalFRCheckData);
+                                _respository.AddHistoricalCheckData(historicalFRCheckData);
                                 FRHisID = historicalFRCheckData.HisID;
 
                                 EntityToEntity(realtimeVOSCheckData, historicalVOSCheckData);
                                 historicalVOSCheckData.DateTime = CurrentDate;
                                 historicalVOSCheckData.ReportModeID = 1;
                                 historicalVOSCheckData.LoopID = realtimeVOSCheckData.ID;
-                                _respository.AddHistoricalCheckData(ref historicalVOSCheckData);
+                                _respository.AddHistoricalCheckData(historicalVOSCheckData);
                                 VOSHisID = historicalVOSCheckData.HisID;
 
                                 if (historicalVOSCheckData.CheckDataStatusID == 0 && VOSHisID != 0)
@@ -222,14 +224,14 @@ namespace Services
                                 historicalFRCheckData.DateTime = CurrentDate;
                                 historicalFRCheckData.ReportModeID = 1;
                                 historicalFRCheckData.LoopID = realtimeFRCheckData.ID;
-                                _respository.AddHistoricalCheckData(ref historicalFRCheckData);
+                                _respository.AddHistoricalCheckData(historicalFRCheckData);
                                 FRHisID = historicalFRCheckData.HisID;
 
                                 EntityToEntity(realtimeVOSCheckData, historicalVOSCheckData);
                                 historicalVOSCheckData.DateTime = CurrentDate;
                                 historicalVOSCheckData.ReportModeID = 1;
                                 historicalVOSCheckData.LoopID = realtimeVOSCheckData.ID;
-                                _respository.AddHistoricalCheckData(ref historicalVOSCheckData);
+                                _respository.AddHistoricalCheckData(historicalVOSCheckData);
                                 VOSHisID = historicalVOSCheckData.HisID;
 
                                 if (historicalVOSCheckData.CheckDataStatusID == 0 && VOSHisID != 0)

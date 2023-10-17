@@ -46,6 +46,7 @@ namespace Models
         public string? KFactor { get; set; }
         [ExcelColumn("常用流量(m3/h)")]
         public string? CommonFlow { get; set; }
+        [ExcelColumn("安装条件")]
         public string? InstallationCondition { get; set; }
         [ExcelColumn("投产日期")]
         public DateTime? ProductionDate { get; set; }

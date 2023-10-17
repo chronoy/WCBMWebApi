@@ -11,10 +11,10 @@ using System.Threading.Tasks;
 
 namespace Respository
 {
-    public class CheckRespository :BaseClass, ICheckRespository
+    public class CheckRespository : BaseClass, ICheckRespository
     {
         private readonly SQLServerDBContext _context;
-        public CheckRespository(SQLServerDBContext context):base(context)
+        public CheckRespository(SQLServerDBContext context) : base(context)
         {
             _context = context;
         }
@@ -412,7 +412,7 @@ namespace Respository
                         if (danielFR != null)
                         {
                             foreach (string name in names)
-                            {                               
+                            {
                                 result[name] = Convert.ToDecimal(GetPropertyValue(danielFR, name)).ToString("f2");
                             }
                         }
@@ -467,96 +467,34 @@ namespace Respository
             }
         }
 
+        /// <summary>
+        /// 获取实时检定数据，根据传输的实体类获取不同的数据
+        /// </summary>
+        /// <param name="whereLambda">条件Lambda表达式</param>
+        /// <returns>数据实体列表</returns>
         public List<T> GetRealtimeCheckDatas<T>(Expression<Func<T, bool>> whereLambda) where T : class
         {
-            return _context.Set<T>().Where(whereLambda).AsNoTracking().ToList();
+            return GetEntitys(whereLambda);
         }
 
-        public string AddHistoricalCheckData<T>(ref T entity) where T : class
+        /// <summary>
+        /// 添加历史检定数据，根据传输的实体类往对应实体中添加数据并保存至数据库
+        /// </summary>
+        /// <param name="entity">历史检定数据实体类</param>
+        /// <returns>添加结果</returns>
+        public string AddHistoricalCheckData<T>(T entity) where T : class
         {
-            return AddEntity(ref entity);
+            return AddEntity(entity);
         }
 
+        /// <summary>
+        /// 添加历史检定数据图表数据，根据传输的实体类往对应实体中添加数据并保存至数据库
+        /// </summary>
+        /// <param name="entities">历史检定数据图表数据列表</param>
+        /// <returns>添加结果</returns>
         public string AddHistoricalCheckDataChartDatas<T>(List<T> entities) where T : class
         {
-
             return AddEntitys(entities);
-        }
-
-        public List<RealtimeDanielFRCheckData> GetRealtimeDanielFRCheckDatas(int loopID)
-        {
-            return _context.RealtimeDanielFRCheckDatas.Where(realtimecheck => realtimecheck.ID == loopID).ToList();
-        }
-
-        public string AddHistoricalDanielFRCheckData(HistoricalDanielFRCheckData historicalDanielFRCheckData, ref int hisID)
-        {
-            using (var tran = _context.Database.BeginTransaction(IsolationLevel.ReadCommitted))
-            {
-                try
-                {
-                    _context.HistoricalDanielFRCheckDatas.Add(historicalDanielFRCheckData);
-                    _context.SaveChanges();
-                    hisID = historicalDanielFRCheckData.HisID;
-                    tran.Commit();
-                }
-                catch (Exception ex)
-                {
-                    tran.Rollback();
-
-                    return "OtherError";
-                }
-                return "OK";
-            }
-        }
-
-
-        public List<RealtimeDanielVOSCheckData> GetRealtimeDanielVOSCheckDatas(int loopID)
-        {
-            return _context.RealtimeDanielVOSCheckDatas.Where(realtimecheck => realtimecheck.ID == loopID).ToList();
-        }
-
-        public List<RealtimeDanielCheckDataVOSChartData> GetRealtimeCheckDataDanielVOSChartDatas(int loopID)
-        {
-            return _context.RealtimeCheckDataDanielVOSChartDatas.Where(realtimeCheckChartData => realtimeCheckChartData.ID == loopID).ToList();
-        }
-
-        public string AddHistoricalDanielVOSCheckData(HistoricalDanielVOSCheckData historicalDanielVOSCheckData, ref int hisID)
-        {
-            using (var tran = _context.Database.BeginTransaction(IsolationLevel.ReadCommitted))
-            {
-                try
-                {
-                    _context.HistoricalDanielVOSCheckDatas.Add(historicalDanielVOSCheckData);
-                    _context.SaveChanges();
-                    hisID = historicalDanielVOSCheckData.HisID;
-                    tran.Commit();
-                }
-                catch (Exception ex)
-                {
-                    tran.Rollback();
-                    return "OtherError";
-                }
-                return "OK";
-            }
-        }
-
-        public string AddHistoricalCheckDataDanielVOSChartDatas(List<HistoricalDanielCheckDataVOSChartData> historicalCheckDataDanielVOSChartDatas)
-        {
-            using (var tran = _context.Database.BeginTransaction(IsolationLevel.ReadCommitted))
-            {
-                try
-                {
-                    _context.HistoricalCheckDataDanielVOSChartDatas.AddRange(historicalCheckDataDanielVOSChartDatas);
-                    _context.SaveChanges();
-                    tran.Commit();
-                }
-                catch (Exception ex)
-                {
-                    tran.Rollback();
-                    return "OtherError";
-                }
-                return "OK";
-            }
         }
 
         public string AddOnlineGCRepeatabilityCheck(List<GCRepeatabilityCheckData> entities)
@@ -569,7 +507,5 @@ namespace Respository
             System.Reflection.PropertyInfo propertyInfo = obj.GetType().GetProperty(property);
             return propertyInfo.GetValue(obj, null);
         }
-
-       
     }
 }

@@ -12,7 +12,7 @@ namespace Respository
 
         public string UpdateEquipment(Equipment entity);
 
-        public bool UpdateEquipments<T>(List<Equipment> listEntity);
+        public bool UpdateEquipments(List<Equipment> listEntity);
 
         public bool DeleteEquipment(int id);
     }

@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using Models;
 using Services;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace CBMCenterApi.Controllers
 {
@@ -24,6 +27,7 @@ namespace CBMCenterApi.Controllers
                 UserName = name,
                 DateTime = System.DateTime.Now
             };
+            pass = Base64UrlEncoder.Encode(SHA256.HashData(Encoding.ASCII.GetBytes(pass))) ?? pass;
             switch (_userService.Login(ref user, name, pass))
             {
                 case "DatabaseError":

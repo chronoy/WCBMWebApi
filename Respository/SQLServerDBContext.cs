@@ -172,7 +172,7 @@ namespace Respository
         public DbSet<EquipmentMeteringCertificate> EquipmentMeteringCertificates { get; set; }
         public DbSet<EquipmentMeteringCheckedData> EquipmentMeteringCheckedDatas { get; set; }
         public DbSet<EquipmentMeteringDetectingEquipment> EquipmentMeteringDetectingEquipment { get; set; }
-        public DbSet<EquipmentMeteringResultData> equipmentMeteringResultDatas { get; set; }
+        public DbSet<EquipmentMeteringResultData> EquipmentMeteringResultDatas { get; set; }
 
         // Reference Material Certificate
         public DbSet<ReferenceMaterialCertificate> ReferenceMaterialCertificates { get; set; }
