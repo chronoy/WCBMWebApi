@@ -74,7 +74,7 @@ namespace CBMWebApi.Controllers
                 rtn["MSG"] = ex.Message;
                 rtn["Code"] = 400;
             }
-          
+
             return rtn;
         }
 
@@ -84,55 +84,47 @@ namespace CBMWebApi.Controllers
             Dictionary<string, object> rtn = new Dictionary<string, object>();
             try
             {
-                List<Station> stationsData = new List<Station>();
                 List<Station> stations = await _stationService.GetStationsByStations(stationIDs);
                 List<StationLoopDiagnosticData> loopStatus = await _diagnosisService.GetLoopStatusByStations(stationIDs);
                 foreach (Station station in stations)
                 {
-                    //回路状态
+                    List<StationLoop> stationLoops = new List<StationLoop>();
+                    List<StationEquipment> stationEquipments = new List<StationEquipment>();
                     List<PDBTag> stationTags = await _PDBService.GetLoopTagsByStation(station);
-                    var stationLoopStatus = loopStatus.Where(looopStatus => looopStatus.StationName.Equals(station.Name)).ToList();
-                    station.StationStatistics["loopStatusDetail"] = stationLoopStatus;
-                    Dictionary<string, object> loopStatusCount = new Dictionary<string, object>();
-                    loopStatusCount["InUseLoopCount"] = loopStatus.Where(loopStatus => loopStatus.LoopStatus.Equals("在用")).Count();
-                    loopStatusCount["NotInUseLoopCount"] = loopStatus.Where(loopStatus => !loopStatus.LoopStatus.Equals("在用")).Count();
-                    station.StationStatistics["loopStatusStatistics"] = loopStatusCount;
-                    //参比条件
-                    List<Dictionary<string, object>> standardloopsParameter = new List<Dictionary<string, object>>();
-                    Dictionary<string, object> loopParameterStandard = new Dictionary<string, object>();
-                    Dictionary<string, object> standardloopsParameterStatistics = new Dictionary<string, object>();
+                    List<StationLoopDiagnosticData> loopDiagnosticDatas = await _diagnosisService.GetLoopDiagnosticDataByStation(station.ID);
+                    List<StationEquipmentDiagnosticData> equipmentDiagnosticDatas = await _diagnosisService.GetEquipmentDiagnosticDataByStation(station.ID);
+                    List<AlarmCount> alarmCounts = await _alarmService.GetAlarmCountByStation(station);
                     foreach (StationLoop loop in station.Loops)
-                    {  
+                    {
+                        loop.LoopTags = stationTags.Where(tag => tag.Name.Split('_')[1] == loop.AbbrName).ToList();
+                        loop.LoopStatus = loopDiagnosticDatas.FirstOrDefault(diagnosticdata => diagnosticdata.ID == loop.ID) == null ? "停用" : loopDiagnosticDatas.FirstOrDefault(diagnosticdata => diagnosticdata.ID == loop.ID).LoopStatus;
+                        loop.AlarmCount = alarmCounts.Where(count => count.Name == loop.AbbrName).Count();
                         PDBTag standardTemperature = stationTags.FirstOrDefault(tag => tag.Name.Contains(station.AbbrName + "_" + loop.AbbrName + "_Temperature"));
                         PDBTag standardPressure = stationTags.FirstOrDefault(tag => tag.Name.Contains(station.AbbrName + "_" + loop.AbbrName + "_Pressure"));
                         if (standardTemperature != null && standardPressure != null)
                         {
-                            
                             if (standardTemperature.Value.Contains("??") && standardPressure.Value.Contains("??"))
                             {
                                 standardTemperature.Value = "25"; standardPressure.Value = "101";
-                                loopParameterStandard["LoopAbbrName"] = loop.AbbrName;
-                                loopParameterStandard["StationAbbrName"] = station.AbbrName;
-                                loopParameterStandard["StandardTemperature"] = Convert.ToDouble(standardTemperature.Value) == 25 ? true : false;
-                                loopParameterStandard["StandardPressure"] = Convert.ToDouble(standardPressure.Value) == 101 ? true : false;
-                                standardloopsParameter.Add(loopParameterStandard);
+                                bool temParameterStatus = Convert.ToDouble(standardTemperature.Value) == 25 ? true : false;
+                                bool preParameterStatus = Convert.ToDouble(standardPressure.Value) == 101 ? true : false;
+                                loop.StandardParameterStatus = temParameterStatus && preParameterStatus;
                             }
                         }
+                        stationLoops.Add(loop);
                     }
-                    station.StationStatistics["StandardloopsParameterDetail"] = standardloopsParameter;
-
-                    //报警
-                    var realtimeAlarm = await _alarmService.GetRealtimeAlarmByArea(station.AbbrName + "Station", new List<string>() { "HIGH", "LOW", "CRITICAL" });
-                    Dictionary<string, object> alarmCount = new Dictionary<string, object>();
-                    alarmCount["CRITICAL"] = realtimeAlarm.Where(alarm => alarm.Priority.Contains("CRITICAL")).Count();
-                    alarmCount["HIGH"] = realtimeAlarm.Where(alarm => alarm.Priority.Contains("HIGH")).Count();
-                    alarmCount["LOW"] = realtimeAlarm.Where(alarm => alarm.Priority.Contains("LOW")).Count();
-                    station.StationStatistics["realtimeAlarmStatistics"] = alarmCount;
-                    station.StationStatistics["AlarmDetail"] = realtimeAlarm;
-                    station.Loops = new List<StationLoop>();
-                    stationsData.Add(station);
+                  
+                    foreach (StationEquipment stationEquipment in station.Equipments) 
+                    {
+                        stationEquipment.EquipmentTags = stationTags.Where(tag => tag.Name.Split('_')[1] == stationEquipment.AbbrName).ToList();
+                        stationEquipment.AlarmCount = alarmCounts.Where(x => x.Name == stationEquipment.AbbrName).Count();
+                        stationEquipment.EquipmentStatus = equipmentDiagnosticDatas.FirstOrDefault(diagnosticdata => diagnosticdata.ID == stationEquipment.ID) == null ? "停用" : equipmentDiagnosticDatas.FirstOrDefault(diagnosticdata => diagnosticdata.ID == stationEquipment.ID).Result;
+                        stationEquipments.Add(stationEquipment);
+                    }
+                    //station.Loops = stationLoops;
+                    //station.Equipments = stationEquipments;
                 }
-                rtn["Data"] = stationsData;
+                rtn["Data"] = stations;
                 rtn["MSG"] = "OK";
                 rtn["Code"] = 200;
             }
@@ -143,7 +135,7 @@ namespace CBMWebApi.Controllers
                 rtn["MSG"] = ex.Message;
                 rtn["Code"] = 400;
             }
-           
+
             return rtn;
         }
     }

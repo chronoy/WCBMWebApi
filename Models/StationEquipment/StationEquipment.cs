@@ -31,5 +31,14 @@ namespace Models
         public StationEquipmentDiagnosticData DiagnosticData { get; set; }
         [NotMapped]
         public string EquipmentCategoryName { get; set; }
+
+        [NotMapped]
+        public List<PDBTag> EquipmentTags { get; set; } = new List<PDBTag>();
+
+        [NotMapped]
+        public int AlarmCount { get; set; }
+
+        [NotMapped]
+        public string EquipmentStatus { get; set; }
     }
 }
