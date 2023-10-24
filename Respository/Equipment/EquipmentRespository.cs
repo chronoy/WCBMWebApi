@@ -120,11 +120,14 @@ namespace Respository
 
         public string AddEquipment(Equipment entity)
         {
+            entity.EnterDate = DateTime.Now;
+            entity.UpdateDate = DateTime.Now;
             return AddEntity(entity);
         }
 
         public string AddEquipments(List<Equipment> entities)
         {
+            entities.ForEach(e => { e.EnterDate = DateTime.Now; e.UpdateDate = DateTime.Now; });
             return AddEntitys(entities);
         }
 

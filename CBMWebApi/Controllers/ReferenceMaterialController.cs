@@ -8,7 +8,7 @@ namespace CBMWebApi.Controllers
     [ApiController]
     public class ReferenceMaterialController : ControllerBase
     {
-        private readonly IConfiguration _Configuration;
+        private readonly IConfiguration _configuration;
         private readonly IReferenceMaterialCertificateService _referenceMaterialCertificateService;
         private readonly IExcelExportHelper _excelExportHelper;
         private readonly IWebHostEnvironment _hostingEnvironment;
@@ -19,7 +19,7 @@ namespace CBMWebApi.Controllers
         {
             _referenceMaterialCertificateService = referenceMaterialCertificateService;
             _excelExportHelper = excelExportHelper;
-            _Configuration = configuration;
+            _configuration = configuration;
             _hostingEnvironment = hostingEnvironment;
         }
 
@@ -98,6 +98,52 @@ namespace CBMWebApi.Controllers
                 {
                     rtn["MSG"] = "OtherError";
                     rtn["Code"] = "400";
+                }
+            }
+            return rtn;
+        }
+
+        [HttpPost]
+        public async Task<Dictionary<string, object>> ExportReferenceMaterialCertificate([FromForm] DateTime beginSearchDate, [FromForm] DateTime endSearchDate)
+        {
+            Dictionary<string, object> rtn = new Dictionary<string, object>();
+
+            var referenceMaterialCertificates = await _referenceMaterialCertificateService.GetReferenceMaterialCertificates(beginSearchDate, endSearchDate);
+            string templatePath = Path.Combine(_hostingEnvironment.WebRootPath, @"ExcelTempate\标气证书.xlsx");
+            string[] columnNames = _configuration["ReferenceMaterialCertificateExportColumnNames"].ToString().Split(",");
+            byte[] filecontent = await _excelExportHelper.ExportExcel(referenceMaterialCertificates, columnNames, templatePath, 2, true);
+            rtn["Data"] = File(filecontent, _excelExportHelper.ExcelContentType, "标气证书.xlsx");
+            rtn["Code"] = "200";
+            return rtn;
+        }
+
+        [HttpPost]
+        public async Task<Dictionary<string, object>> ImportReferenceMaterialCertificate([FromForm(Name = "file")] List<IFormFile> files)
+        {
+            Dictionary<string, object> rtn = new Dictionary<string, object>();
+            foreach (var file in files)
+            {
+                if (Path.GetExtension(file.FileName).ToLower() == ".xlsx")
+                {
+                    var referenceMaterialCertificates = await _excelExportHelper.ImportExcel<ReferenceMaterialCertificate>(file);
+
+                    string result = await _referenceMaterialCertificateService.AddReferenceMaterialCertificates(referenceMaterialCertificates);
+                    rtn["MSG"] = result;
+                    switch (result)
+                    {
+                        case "OtherError":
+                            rtn["Code"] = "400";
+                            break;
+                        case "OK":
+                            rtn["Code"] = "200";
+                            break;
+                    }
+                    rtn["Data"] = referenceMaterialCertificates;
+                }
+                else
+                {
+                    rtn["MSG"] = "文件格式错误，只支持xlsx格式Excel导入";
+                    rtn["Code"] = "410";
                 }
             }
             return rtn;

@@ -20,7 +20,7 @@ namespace Respository
 
         public List<ReferenceMaterialCertificate> GetReferenceMaterialCertificates(DateTime beginSearchDate, DateTime endSearchDate)
         {
-            IEnumerable<ReferenceMaterialCertificate> result = _context.ReferenceMaterialCertificates.Where(x => x.CertificationDate >= beginSearchDate && x.CreatedDate <= endSearchDate);
+            IEnumerable<ReferenceMaterialCertificate> result = _context.ReferenceMaterialCertificates.Where(x => x.CertificationDate >= beginSearchDate && x.CertificationDate <= endSearchDate);
 
             return result.ToList();
         }
