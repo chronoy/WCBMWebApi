@@ -55,6 +55,10 @@ builder.Services.AddScoped<IReferenceMaterialCertificateService, ReferenceMateri
 builder.Services.AddScoped<IEquipmentMeteringCertificateRespository, EquipmentMeteringCertificateRespository>();
 builder.Services.AddScoped<IEquipmentMeteringCertificateService, EquipmentMeteringCertificateService>();
 builder.Services.AddScoped<IExcelExportHelper, ExcelExportHelper>();
+//hhj
+builder.Services.AddScoped<ILoopFlowContrastService, LoopFlowContrastService>();
+builder.Services.AddScoped<ILoopFlowContrastRespository, LoopFlowContrastRespository>();
+
 
 var app = builder.Build();
 

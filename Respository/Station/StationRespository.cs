@@ -39,7 +39,25 @@ namespace Respository
                         Description = station.Description,
                         AreaID = station.AreaID,
                         CollectorID = station.CollectorID,
-                        Loops =_context.StationLoops.Where(loop=>loop.StationID==station.ID).ToList(),
+                        Loops =(from loop in _context.StationLoops.Where(loop=>loop.StationID==station.ID)
+                                join collectdatatype in _context.StationDeviceCollectDataTypes
+                                on loop.CollectDataTypeID equals collectdatatype.ID
+                                join category in _context.EquipmentCategories
+                                on loop.EquipmentCategoryID equals category.ID
+                                select new StationLoop {
+                                ID = loop.ID,
+                                AbbrName= loop.AbbrName,
+                                Name = loop.Name,
+                                CollectDataTypeID = loop.CollectDataTypeID,
+                                EquipmentCategoryID = loop.EquipmentCategoryID,
+                                FlowComputerManufacturer=loop.FlowComputerManufacturer,
+                                FlowComputerModel=loop.FlowComputerModel,
+                                FlowmeterManufacturer=loop.FlowmeterManufacturer,
+                                FlowmeterModel=loop.FlowmeterModel,
+                                EquipmentCategoryName= category.Name.Contains("超声流量计")? collectdatatype.Manufacturer+"超声" : category.Name.Contains("质量流量计")? collectdatatype.Manufacturer + "质量": collectdatatype.Manufacturer + "涡轮"
+
+                                }).ToList(),
+                        Equipments=_context.StationEquipments.Where(equipment=> equipment.StationID==station.ID).ToList()
                     }).ToList();
         }
     }

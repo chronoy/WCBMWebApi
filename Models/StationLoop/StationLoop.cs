@@ -26,7 +26,20 @@ namespace Models
         public int OrderNumber { get; set; }
 
         [NotMapped]
-        public Dictionary<string,Tag> Tags { get; set; } 
+        public Dictionary<string,Tag> Tags { get; set; }
+        [NotMapped]
+        public string EquipmentCategoryName { get; set; }
 
+        [NotMapped]
+        public string LoopStatus { get; set; }
+
+        [NotMapped]
+        public int AlarmCount { get; set; }
+
+        [NotMapped]
+        public bool StandardParameterStatus { get; set;}
+
+        [NotMapped]
+        public List<PDBTag> LoopTags { get; set; }=new List<PDBTag>();
     }
 }

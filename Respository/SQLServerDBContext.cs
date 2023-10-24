@@ -176,6 +176,10 @@ namespace Respository
 
         // Reference Material Certificate
         public DbSet<ReferenceMaterialCertificate> ReferenceMaterialCertificates { get; set; }
+
+        //Loop Flow Contrast
+        public DbSet<LoopFlowContrastConfig> LoopFlowContrastConfigs { get; set; }
+
     }
 }
 
