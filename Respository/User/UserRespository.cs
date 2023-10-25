@@ -29,6 +29,8 @@ namespace Respository
                 var userStation = _context.UserStations.Where(x => x.UserID == userID).ToList();
                 user.Stations = (from u in userStation
                                  join s in _context.Stations on u.StationID equals s.ID
+                                 join a in _context.Areas on s.AreaID equals a.ID into tempa
+                                 from ta in tempa.DefaultIfEmpty()
                                  join c in _context.Collectors on s.CollectorID equals c.ID into tempc
                                  from tc in tempc.DefaultIfEmpty()
                                  select new Station
@@ -38,6 +40,7 @@ namespace Respository
                                      AbbrName = s.AbbrName,
                                      CollectorID = s.CollectorID,
                                      AreaID = s.AreaID,
+                                     CompanyID = ta != null ? ta.CompanyID : 0,
                                      IPAddress = tc != null ? tc.IPAddress : "",
                                      IPPort = tc != null ? tc.IPPort : ""
                                  }).ToList();

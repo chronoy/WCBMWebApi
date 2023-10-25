@@ -18,9 +18,9 @@ namespace Services
             _equipmentRespository = equipmentRespository;
         }
 
-        public Task<List<Equipment>> GetEquipments(string? company, string? line, string? station, string? category, string? model, string? accuracy, string? pressure, string? manufacturer)
+        public Task<List<Equipment>> GetEquipments(string? company, string? line, string? station, string? category, string? model, string? manufacturer)
         {
-            return Task.Run(() => _equipmentRespository.GetEquipments(company, line, station, category, model, accuracy, pressure, manufacturer));
+            return Task.Run(() => _equipmentRespository.GetEquipments(company, line, station, category, model, manufacturer));
         }
 
         public Task<string> AddEquipment(Equipment entity)
