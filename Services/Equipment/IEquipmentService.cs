@@ -4,7 +4,7 @@ namespace Services
 {
     public interface IEquipmentService
     {
-        public Task<List<Equipment>> GetEquipments(string? company, string? line, string? station, string? category, string? model, string? accuracy, string? pressure, string? manufacturer);
+        public Task<List<Equipment>> GetEquipments(string? company, string? line, string? station, string? category, string? model, string? manufacturer);
 
         public Task<string> AddEquipment(Equipment entity);
 

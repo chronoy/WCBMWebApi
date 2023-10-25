@@ -118,56 +118,6 @@ namespace Respository
                     select real).OrderByDescending(o => o.StartTime).ToList();
         }
 
-        public List<DiagnosticAlarm> GetRealtimeDiagnosticAlarm(int stationID, int loopID)
-        {
-            List<DiagnosticAlarm> diagnostics = new();
-            var data = (from d in _context.DiagnosticAlarms
-                        join loop in _context.StationLoops on d.LoopID equals loop.ID
-                        where d.Status != "OK"
-                        select new
-                        {
-                            d.StartTime,
-                            d.EndTime,
-                            Description = $"{loop.Name} {d.Description.Trim()}",
-                            d.DiagnosticResult,
-                            Value = Math.Round(d.Value, 2),
-                            d.Status,
-                            loop.StationID,
-                            d.LoopID
-                        }).ToList();
-
-            if (loopID == -1)
-            {
-                diagnostics = (from d in data
-                               where d.StationID == stationID
-                               select new DiagnosticAlarm
-                               {
-                                   StartTime = d.StartTime,
-                                   EndTime = d.EndTime,
-                                   Description = d.Description,
-                                   DiagnosticResult = d.DiagnosticResult,
-                                   Value = d.Value,
-                                   Status = d.Status
-                               }).ToList();
-            }
-            else
-            {
-                diagnostics = (from d in data
-                               where d.LoopID == loopID
-                               select new DiagnosticAlarm
-                               {
-                                   StartTime = d.StartTime,
-                                   EndTime = d.EndTime,
-                                   Description = d.Description,
-                                   DiagnosticResult = d.DiagnosticResult,
-                                   Value = d.Value,
-                                   Status = d.Status
-                               }).ToList();
-            }
-
-            return diagnostics;
-        }
-
         public List<HistoricalAlarm> GetHistoricalAlarm(DateTime startDateTime, DateTime endDateTime, List<string> alarmAreas, List<string> prioritys)
         {
 
@@ -263,37 +213,7 @@ namespace Respository
                                                                   }).ToList();
 
             return statisticalAlarms;
-        }
-        
-        public List<AlarmKPI> GetHistoricalAlarmKPI(int topNumber, string sortType, DateTime startDateTime, DateTime endDateTime, string alarmArea)
-        {
-            var historicalAlarmKPI = (from kpi in
-                                          (from his in _context.HistoricalAlarms.ToList()
-                                           where his.Status.Contains("OK") && his.StartTime >= startDateTime &&
-                                           his.EndTime <= endDateTime && his.Area.Contains(alarmArea)
-                                           group his by new { his.Description, his.Status } into g
-                                           select new
-                                           {
-                                               Description = g.Key.Description.TrimEnd(),
-                                               Duration = g.Sum(s => s.EndTime.Subtract(s.StartTime).TotalSeconds),
-                                               Status = g.Key.Status.TrimEnd(),
-                                               AlarmCount = g.Count()
-                                           }).ToList()
-                                      select new AlarmKPI
-                                      {
-                                          Description = kpi.Description,
-                                          Status = kpi.Status,
-                                          DurationValue = Convert.ToInt32(kpi.Duration),
-                                          Duration = $"{TimeSpan.FromSeconds(kpi.Duration).Days}天{TimeSpan.FromSeconds(kpi.Duration).Hours}时{TimeSpan.FromSeconds(kpi.Duration).Minutes}分{TimeSpan.FromSeconds(kpi.Duration).Seconds}秒",
-                                          AlarmCount = kpi.AlarmCount
-                                      }).OrderBy(o => GetPropertyValue(o, sortType)).Take(topNumber).ToList();
-            return historicalAlarmKPI;
-        }
-        private static object GetPropertyValue(object obj, string property)
-        {
-            System.Reflection.PropertyInfo propertyInfo = obj.GetType().GetProperty(property);
-            return propertyInfo.GetValue(obj, null);
-        }
+        } 
         
         public AlarmCount GetAlarmCountByStation(string name, string alarmName, string stationName, string loopName)
         {

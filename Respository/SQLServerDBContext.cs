@@ -81,8 +81,6 @@ namespace Respository
         public DbSet<Alarm> Alarms { get; set; }
         public DbSet<RealtimeAlarm> RealtimeAlarms { get; set; }
         public DbSet<HistoricalAlarm> HistoricalAlarms { get; set; }
-        public DbSet<DiagnosticAlarm> DiagnosticAlarms { get; set; }
-        public DbSet<AlarmKPI> AlarmKPIs { get; set; }
         
         //Loop Check Data
         public DbSet<HistoricalDanielVOSCheckData> HistoricalDanielVOSCheckDatas { get; set; }

@@ -29,10 +29,6 @@ namespace Services
         {
             return Task.Run(() => _alarmRespository.AckRealtimeAlarm(tagNames));
         }
-        public Task<List<DiagnosticAlarm>> GetRealtimeDiagnosticAlarm(int stationID, int loopID)
-        {
-            return Task.Run(() => _alarmRespository.GetRealtimeDiagnosticAlarm(stationID, loopID));
-        }
 
         public Task<List<HistoricalAlarm>> GetHistoricalAlarm(DateTime startDateTime, DateTime endDateTime, List<string> alarmAreas, List<string> prioritys)
         {
@@ -41,11 +37,6 @@ namespace Services
         public Task<List<HistoricalStatisticalAlarm>> GetHistoricalStatisticalAlarm(DateTime startDateTime, DateTime endDateTime, List<string> alarmAreas, List<string> prioritys)
         {
             return Task.Run(() => _alarmRespository.GetHistoricalStatisticalAlarm(startDateTime, endDateTime, alarmAreas, prioritys));
-        }
-
-        public Task<List<AlarmKPI>> GetHistoricalAlarmKPI(int topNumber, string sortType, DateTime startDateTime, DateTime endDateTime, string alarmArea)
-        {
-            return Task.Run(() => _alarmRespository.GetHistoricalAlarmKPI(topNumber, sortType, startDateTime, endDateTime, alarmArea));
         }
 
         public Task<List<AlarmCount>> GetAlarmCountByStation(Station station)

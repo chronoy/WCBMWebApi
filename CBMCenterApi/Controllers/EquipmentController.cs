@@ -26,12 +26,11 @@ namespace CBMCenterApi.Controllers
 
         [HttpPost]
         public async Task<Dictionary<string, object>> GetEquipments([FromForm] string? company, [FromForm] string? line, [FromForm] string? station,
-                                                              [FromForm] string? category, [FromForm] string? model, [FromForm] string? accuracy,
-                                                              [FromForm] string? pressure, [FromForm] string? manufacturer)
+                                                              [FromForm] string? category, [FromForm] string? model, [FromForm] string? manufacturer)
         {
             Dictionary<string, object> rtn = new Dictionary<string, object>();
 
-            var equipments = await _equipmentService.GetEquipments(company, line, station, category, model, accuracy, pressure, manufacturer);
+            var equipments = await _equipmentService.GetEquipments(company, line, station, category, model, manufacturer);
             if (equipments == null)
             {
                 rtn["MSG"] = "OtherError";
@@ -111,12 +110,11 @@ namespace CBMCenterApi.Controllers
 
         [HttpPost]
         public async Task<Dictionary<string, object>> ExportEquipments([FromForm] string? company, [FromForm] string? line, [FromForm] string? station,
-                                                              [FromForm] string? category, [FromForm] string? model, [FromForm] string? accuracy,
-                                                              [FromForm] string? pressure, [FromForm] string? manufacturer)
+                                                              [FromForm] string? category, [FromForm] string? model, [FromForm] string? manufacturer)
         {
             Dictionary<string, object> rtn = new Dictionary<string, object>();
 
-            var ProductionReportlist = await _equipmentService.GetEquipments(company, line, station, category, model, accuracy, pressure, manufacturer);
+            var ProductionReportlist = await _equipmentService.GetEquipments(company, line, station, category, model, manufacturer);
             string templatePath = Path.Combine(_hostingEnvironment.WebRootPath, @"ExcelTempate\计量设备信息表.xlsx");
             string[] columnNames = _configuration["EquipmentExportColumnNames"].ToString().Split(",");
             byte[] filecontent = await _excelExportHelper.ExportExcel(ProductionReportlist.ToList(), columnNames, templatePath, 3, true);

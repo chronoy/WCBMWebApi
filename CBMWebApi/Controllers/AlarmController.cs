@@ -74,39 +74,6 @@ namespace CBMWebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<Dictionary<string, object>> GetRealtimeDiagnosticAlarm([FromForm] int stationID, [FromForm] int loopID)
-        {
-            Dictionary<string, object> rtn = new Dictionary<string, object>();
-
-            var realtimeDiagnosticAlarm = await _alarmService.GetRealtimeDiagnosticAlarm(stationID, loopID);
-            if (realtimeDiagnosticAlarm == null)
-            {
-                rtn["MSG"] = "OtherError";
-                rtn["Code"] = "400";
-            }
-            else
-            {
-                rtn["MSG"] = "OK";
-                rtn["Code"] = "200";
-            }
-            rtn["Data"] = realtimeDiagnosticAlarm;
-            return rtn;
-        }
-
-        [HttpPost]
-        public async Task<Dictionary<string, object>> ExportExcelRealtimeDiagnosticAlarm([FromForm] int stationID, [FromForm] int loopID)
-        {
-            Dictionary<string, object> rtn = new Dictionary<string, object>();
-            var list = await _alarmService.GetRealtimeDiagnosticAlarm(stationID, loopID);
-            string templatePath = Path.Combine(_hostingEnvironment.WebRootPath, @"ExcelTempate\实时诊断报警统计表.xlsx");
-            string[] columnNames = _Configuration["RealtimeDiagnosticAlarmExportColumnNames"].ToString().Split(",");
-            byte[] filecontent = await _excelExportHelper.ExportExcel(list.ToList(), columnNames, templatePath, 2, true);
-            rtn["Data"] =  File(filecontent, _excelExportHelper.ExcelContentType, "实时诊断报警统计表.xlsx");
-            rtn["Code"] = "200";
-            return rtn;
-        }
-
-        [HttpPost]
         public async Task<Dictionary<string, object>> GetHistoricalAlarm([FromForm] DateTime startDateTime, [FromForm] DateTime endDateTime, [FromForm] List<string> alarmAreas, [FromForm] List<string> prioritys)
         {
             Dictionary<string, object> rtn = new Dictionary<string, object>();
@@ -154,25 +121,6 @@ namespace CBMWebApi.Controllers
                 rtn["Code"] = "200";
             }
             rtn["Data"] = statisticalAlarms;
-            return rtn;
-        }
-
-        [HttpPost]
-        public async Task<Dictionary<string, object>> GetHistoricalAlarmKPI([FromForm] int topNumber, [FromForm] string sortType, [FromForm] DateTime startDateTime, [FromForm] DateTime endDateTime, [FromForm] string alarmArea)
-        {
-            Dictionary<string, object> rtn = new Dictionary<string, object>();
-            var historicalAlarmKPI = await _alarmService.GetHistoricalAlarmKPI(topNumber, sortType, startDateTime, endDateTime, alarmArea);
-            if (historicalAlarmKPI == null)
-            {
-                rtn["MSG"] = "OtherError";
-                rtn["Code"] = "400";
-            }
-            else
-            {
-                rtn["MSG"] = "OK";
-                rtn["Code"] = "200";
-            }
-            rtn["Data"] = historicalAlarmKPI;
             return rtn;
         }
     }

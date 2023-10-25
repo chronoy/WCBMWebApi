@@ -17,7 +17,7 @@ namespace Respository
             _context = context;
         }
 
-        public List<Equipment> GetEquipments(string? company, string? line, string? station, string? category, string? model, string? accuracy, string? pressure, string? manufacturer)
+        public List<Equipment> GetEquipments(string? company, string? line, string? station, string? category, string? model, string? manufacturer)
         {
             IEnumerable<Equipment> result = from e in _context.Equipments select e;
 
@@ -91,28 +91,6 @@ namespace Respository
                 string[] manufacturers = _context.EquipmentManufacturers.Select(s => s.Name).ToArray();
                 string[] models = _context.EquipmentModels.Where(x => categoryIds.Contains(x.EquipmentCategoryID) && manufacturerIds.Contains(x.EquipmentManufacturerID)).Select(s => s.Name).ToArray();
                 result = result.Where(x => categories.Contains(x.Category) && manufacturers.Contains(x.Manufacturer) && models.Contains(x.EquipmentModel));
-            }
-
-            if (!string.IsNullOrEmpty(accuracy))
-            {
-                string[] accuracies = accuracy.Split(",");
-                result = result.Where(x => accuracies.Contains(x.Accuracy));
-            }
-            else
-            {
-                string[] accuracies = _context.EquipmentAccuracies.Select(s => s.Name).ToArray();
-                result = result.Where(x => accuracies.Contains(x.Accuracy));
-            }
-
-            if (!string.IsNullOrEmpty(pressure))
-            {
-                string[] pressures = pressure.Split(",");
-                result = result.Where(x => pressures.Contains(x.PressureLevel));
-            }
-            else
-            {
-                string[] pressures = _context.EquipmentPressureClasses.Select(s => s.Name).ToArray();
-                result = result.Where(x => pressures.Contains(x.PressureLevel));
             }
 
             return result.ToList();
