@@ -26,7 +26,7 @@ namespace CBMWebApi.Controllers
         public async Task<Dictionary<string, object>> GetRealtimeAlarm([FromForm] List<string> alarmAreas, [FromForm] List<string> manufacturers, [FromForm] List<string> prioritys)
         {
             Dictionary<string, object> rtn = new Dictionary<string, object>();
-            var realtimeAlarm = await _alarmService.GetRealtimeAlarm(alarmAreas, prioritys);
+            var realtimeAlarm = await _alarmService.GetRealtimeAlarm(alarmAreas, manufacturers, prioritys);
             if (realtimeAlarm == null)
             {
                 rtn["MSG"] = "OtherError";
