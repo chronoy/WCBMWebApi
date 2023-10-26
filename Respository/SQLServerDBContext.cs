@@ -134,14 +134,15 @@ namespace Respository
         public DbSet<HistoricalABBGCCheckData> HistoricalABBGCCheckDatas { get; set; }
         public DbSet<HistoricalDanielGCCheckData> HistoricalDanielGCCheckDatas { get; set; }
         public DbSet<HistoricalElsterGCCheckData> HistoricalElsterGCCheckDatas { get; set; }
-
         public DbSet<GCRepeatabilityCheckData> HistoricalGCRepeatabilityCheckDatas { get; set; }
-
-
         public DbSet<CheckDescriptionStatus> CheckDescriptionStatuses { get; set; }
         //public DbSet<VOSKeyCheckData> VOSKeyCheckDatas { get; set; }
         // public DbSet<LoopUncertain> LoopUncertains { get; set; }
         // public DbSet<DataItem> FlowrateData { get; set; }
+
+        //Parameter Change
+        public DbSet<KeyParameter> KeyParameters { get; set; }
+        public DbSet<KeyParametersChangeRecord> KeyParametersChangeRecords { get; set; }
 
         //User
         public DbSet<User> Users { get; set; }
