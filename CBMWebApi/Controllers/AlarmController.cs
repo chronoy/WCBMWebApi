@@ -21,8 +21,9 @@ namespace CBMWebApi.Controllers
             _hostingEnvironment = hostingEnvironment;
         }
 
-        [HttpPost]
-        public async Task<Dictionary<string, object>> GetRealtimeAlarm([FromForm] List<string> alarmAreas, [FromForm] List<string> prioritys)
+        
+        [HttpPost]//yantao
+        public async Task<Dictionary<string, object>> GetRealtimeAlarm([FromForm] List<string> alarmAreas, [FromForm] List<string> manufacturers, [FromForm] List<string> prioritys)
         {
             Dictionary<string, object> rtn = new Dictionary<string, object>();
             var realtimeAlarm = await _alarmService.GetRealtimeAlarm(alarmAreas, prioritys);
@@ -41,11 +42,11 @@ namespace CBMWebApi.Controllers
         }
 
 
-        [HttpPost]
-        public async Task<Dictionary<string, object>> ACKRealtimeAlarm([FromForm] List<string> tagNames)
+        [HttpPost]//yantao
+        public async Task<Dictionary<string, object>> ACKRealtimeAlarm([FromForm] List<string> tagNames, [FromForm] string userName)
         {
             Dictionary<string, object> rtn = new Dictionary<string, object>();
-            string msg = await _alarmService.AckRealtimeAlarm(tagNames);
+            string msg = await _alarmService.AckRealtimeAlarm(tagNames, userName);
             if (msg == "OtherError")
             {
                 rtn["MSG"] = "OtherError";
@@ -61,10 +62,10 @@ namespace CBMWebApi.Controllers
 
 
         [HttpPost]
-        public async Task<Dictionary<string, object>> ExportExcelRealtimeAlarm([FromForm] List<string> alarmAreas, [FromForm] List<string> prioritys)
+        public async Task<Dictionary<string, object>> ExportExcelRealtimeAlarm([FromForm] List<string> alarmAreas, [FromForm] List<string> manufacturers, [FromForm] List<string> prioritys)
         {
             Dictionary<string, object> rtn = new Dictionary<string, object>();
-            var list = await _alarmService.GetRealtimeAlarm(alarmAreas, prioritys);
+            var list = await _alarmService.GetRealtimeAlarm(alarmAreas, manufacturers ,prioritys);
             string templatePath = Path.Combine(_hostingEnvironment.WebRootPath, @"ExcelTempate\实时报警统计表.xlsx");
             string[] columnNames = _Configuration["RealtimeAlarmExportColumnNames"].ToString().Split(",");
             byte[] filecontent = await _excelExportHelper.ExportExcel(list.ToList(), columnNames, templatePath, 2, true);

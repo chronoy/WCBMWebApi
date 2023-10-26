@@ -35,7 +35,9 @@ namespace Respository
                                               Description = real.Description.TrimEnd(),
                                               Priority = real.Priority.TrimEnd(),
                                               Status = real.Status.TrimEnd(),
-                                              Area = String.Join("_", real.Area.Split(',', StringSplitOptions.None).ToList().GetRange(4, 3)),
+                                              Area = real.Area,
+                                              DeviceArea = String.Join("_", real.Area.Split(',', StringSplitOptions.None).ToList().GetRange(4, 3)),
+                                              //ManufacturerArea = String.Join("_", real.Area.Split(',', StringSplitOptions.None).ToList().GetRange(7, 1)),
                                               OperatorName = real.OperatorName.TrimEnd(),
                                               FullOperatorName = real.FullOperatorName.TrimEnd(),
                                               ACKED = real.ACKED
@@ -47,7 +49,36 @@ namespace Respository
                     select real).OrderByDescending(o => o.StartTime).ToList();
         }
 
-        public string AckRealtimeAlarm(List<string> tagNames)
+        public List<RealtimeAlarm> GetRealtimeAlarm(List<string> alarmAreas, List<string> manufacturers, List<string> prioritys)
+        {
+            List<RealtimeAlarm> alarms = (from real in _context.RealtimeAlarms
+                                          select new RealtimeAlarm
+                                          {
+                                              ID = real.ID,
+                                              StartTime = real.StartTime,
+                                              EndTime = real.EndTime,
+                                              NodeName = real.NodeName.TrimEnd(),
+                                              TagName = real.TagName.TrimEnd(),
+                                              Value = real.Value.TrimEnd(),
+                                              MessageType = real.MessageType.TrimEnd(),
+                                              Description = real.Description.TrimEnd(),
+                                              Priority = real.Priority.TrimEnd(),
+                                              Status = real.Status.TrimEnd(),
+                                              Area=real.Area,
+                                              DeviceArea = String.Join("_", real.Area.Split(',', StringSplitOptions.None).ToList().GetRange(4, 3)).TrimEnd(),
+                                              ManufacturerArea = String.Join("_", real.Area.Split(',', StringSplitOptions.None).ToList().GetRange(7, 1)).TrimEnd(),
+                                              OperatorName = real.OperatorName.TrimEnd(),
+                                              FullOperatorName = real.FullOperatorName.TrimEnd(),
+                                              ACKED = real.ACKED
+                                          }).ToList();
+
+
+            return (from real in alarms
+                    where alarmAreas.Contains(real.DeviceArea) && manufacturers.Contains(real.ManufacturerArea) && prioritys.Contains(real.Priority)
+                    select real).OrderByDescending(o => o.StartTime).ToList();
+        }
+
+        public string AckRealtimeAlarm(List<string> tagNames, string userName)
         {
             using (var tran = _context.Database.BeginTransaction(IsolationLevel.ReadCommitted))
             {
@@ -72,7 +103,7 @@ namespace Respository
                                                        Priority = alarm.Priority,
                                                        Status = alarm.Status,
                                                        Area = alarm.Area,
-                                                       OperatorName = alarm.OperatorName,
+                                                       OperatorName = userName,
                                                        FullOperatorName = alarm.FullOperatorName,
                                                        ACKED = "ACK"
                                                    }).ToList();
@@ -211,7 +242,6 @@ namespace Respository
                                                                       Duration = TimeSpan.FromSeconds(almGroup.Sum(grp => (grp.EndTime - grp.StartTime).TotalSeconds)),
                                                                       Count = almGroup.Count()
                                                                   }).ToList();
-
             return statisticalAlarms;
         } 
         
