@@ -25,9 +25,14 @@ namespace Services
             return Task.Run(() => _alarmRespository.GetRealtimeAlarm(alarmAreas, prioritys));
         }
 
-        public Task<string> AckRealtimeAlarm(List<string> tagNames)
+        public Task<List<RealtimeAlarm>> GetRealtimeAlarm(List<string> alarmAreas, List<string> manufacturers,List<string> prioritys)
         {
-            return Task.Run(() => _alarmRespository.AckRealtimeAlarm(tagNames));
+            return Task.Run(() => _alarmRespository.GetRealtimeAlarm(alarmAreas, manufacturers, prioritys));
+        }
+
+        public Task<string> AckRealtimeAlarm(List<string> tagNames,string userName)
+        {
+            return Task.Run(() => _alarmRespository.AckRealtimeAlarm(tagNames,userName));
         }
 
         public Task<List<HistoricalAlarm>> GetHistoricalAlarm(DateTime startDateTime, DateTime endDateTime, List<string> alarmAreas, List<string> prioritys)

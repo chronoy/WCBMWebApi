@@ -166,7 +166,7 @@ namespace Services
                     }
                     else
                     {
-                        //WriteLog("Tag Add OK:" + _OPCItems[i - 1].Address);
+                        WriteLog("Tag Add OK:" + _OPCItems[i - 1].Address);
                     }
                 }
                 _itemServerHandles = AddItemServerHandles;

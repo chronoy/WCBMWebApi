@@ -10,7 +10,8 @@ namespace Services
     public interface IAlarmService
     {
         public Task<List<RealtimeAlarm>> GetRealtimeAlarm(List<string> alarmAreas, List<string> prioritys);
-        public Task<string> AckRealtimeAlarm(List<string> tagNames);
+        public Task<List<RealtimeAlarm>> GetRealtimeAlarm(List<string> alarmAreas,List<string> manufacturers, List<string> prioritys);
+        public Task<string> AckRealtimeAlarm(List<string> tagNames, string userName);
         public Task<List<HistoricalAlarm>> GetHistoricalAlarm(DateTime startDateTime, DateTime endDateTime, List<string> alarmAreas, List<string> prioritys);
         public Task<List<HistoricalStatisticalAlarm>> GetHistoricalStatisticalAlarm(DateTime startDateTime, DateTime endDateTime, List<string> alarmAreas, List<string> prioritys);
 
