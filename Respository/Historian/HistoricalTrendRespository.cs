@@ -21,7 +21,7 @@ namespace Respository
         {
             var historicalTrend = (from trendTag in _context.TrendTags
                                    where trendTags.Contains(trendTag.Address)
-                                   orderby trendTag.ID
+                                   orderby trendTag.DeviceID
                                    select new Trend
                                    {
                                        Name = trendTag.Name.Replace("", "_"),
@@ -33,9 +33,9 @@ namespace Respository
             return historicalTrend;
         }
 
-        public List<TrendTag> GetTrendTags(List<int> loopIds)
+        public List<TrendTag> GetTrendTags(List<int> deviceIds, List<string> deviceTypes)
         {
-            return _context.TrendTags.Where(x => loopIds.Contains(x.LoopID)).ToList();
+            return _context.TrendTags.Where(x => deviceIds.Contains(x.DeviceID) && deviceTypes.Contains(x.DeviceType)).OrderBy(t => t.DeviceID).ToList();
         }
     }
 }
