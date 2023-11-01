@@ -138,7 +138,7 @@ namespace Models
         public string? RsIndicatingValueErrorVerifiedResult { get; set; }
         [ExcelColumn("回差技术要求")]
         public string? RSReturnDifferenceTechicalRequirement { get; set; }
-        [ExcelColumn("回查检定结果")]
+        [ExcelColumn("回差检定结果")]
         public string? RSReturnDifferenceVerifiedResult { get; set; }
         public string? RSAppearance { get; set; }
         public string? RSInsulationResistance { get; set; }

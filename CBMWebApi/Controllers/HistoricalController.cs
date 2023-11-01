@@ -65,16 +65,22 @@ namespace CBMCenterApi.Controllers
         }
 
         [HttpPost]
-        public async Task<Dictionary<string, object>> GetHistoricalTrendFilterItems()
+        public async Task<Dictionary<string, object>> GetHistoricalTrendTags([FromForm] List<int> loopIds)
         {
             Dictionary<string, object> rtn = new Dictionary<string, object>();
-            List<Station> stations = await _stationService.GetStations();
-            List<StationLoop> loops = await _stationLoopService.GetStationLoops();
-            List<TrendTag> trendTags = await _historicalTrendService.GetTrendTags();
+            List<TrendTag> trendTags = await _historicalTrendService.GetTrendTags(loopIds);
 
-            rtn["stations"] = stations.Select(s => new { s.ID, s.Name, s.AbbrName });
-            rtn["Loops"] = loops.Select(s => new { s.ID, s.Name, s.AbbrName, s.StationID }); 
-            rtn["TrendTags"] = trendTags.Select(s => new { s.Address, s.Description, s.LoopID });
+            if (trendTags == null)
+            {
+                rtn["MSG"] = "OtherError";
+                rtn["Code"] = "400";
+            }
+            else
+            {
+                rtn["MSG"] = "OK";
+                rtn["Code"] = "200";
+                rtn["Data"] = trendTags.Select(s => new { s.Address, s.Description, s.LoopID });
+            }
             return rtn;
         }
     }
