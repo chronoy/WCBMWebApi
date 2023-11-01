@@ -71,7 +71,10 @@ namespace Respository
                     equipment.VerificationAgency = entity.Agency;
                     equipment.VerificationCertificateNumber = entity.CertificateNumber;
                     _context.Equipments.Update(equipment);
-                    AddEntity(entity);
+                    _context.EquipmentMeteringCertificates.Add(entity);
+                    _context.SaveChanges();
+                    _context.Entry(entity);
+
                     if (entity.MeteringCheckedDatas != null)
                     {
                         entity.MeteringCheckedDatas.ForEach(x => x.MeteringCertificateID = entity.ID);
@@ -117,11 +120,12 @@ namespace Respository
                     equipment.VerificationPeriod = (time.Year - 1) * 12 + time.Month - 1;
                     equipment.VerificationAgency = entity.Agency;
                     equipment.VerificationCertificateNumber = entity.CertificateNumber;
-                    UpdateEntity(equipment);
-                    UpdateEntity(entity);
+                    _context.Equipments.Update(equipment);
+                    _context.EquipmentMeteringCertificates.Update(entity);
+
                     if (entity.MeteringCheckedDatas != null)
                     {
-                        UpdateEquipmentMeteringCheckedData(entity.MeteringCheckedDatas);
+                        _context.EquipmentMeteringCheckedDatas.UpdateRange(entity.MeteringCheckedDatas);
                     }
                     //if (entity.MeteringDetectingEquipment != null)
                     //{
@@ -129,8 +133,11 @@ namespace Respository
                     //}
                     if (entity.MeteringResultDatas != null)
                     {
-                        UpdateEquipmentMeteringResultData(entity.MeteringResultDatas);
+                        _context.EquipmentMeteringResultDatas.UpdateRange(entity.MeteringResultDatas);
                     }
+
+                    _context.SaveChanges();
+                    tran.Commit();
                 }
                 else
                 {

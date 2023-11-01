@@ -33,9 +33,9 @@ namespace Respository
             return historicalTrend;
         }
 
-        public List<TrendTag> GetTrendTags()
+        public List<TrendTag> GetTrendTags(List<int> loopIds)
         {
-            return _context.TrendTags.ToList();
+            return _context.TrendTags.Where(x => loopIds.Contains(x.LoopID)).ToList();
         }
     }
 }

@@ -25,6 +25,6 @@ namespace Services
                                             string duration,
                                             string templatePath);
 
-        public Task<List<TrendTag>> GetTrendTags();
+        public Task<List<TrendTag>> GetTrendTags(List<int> loopIds);
     }
 }
