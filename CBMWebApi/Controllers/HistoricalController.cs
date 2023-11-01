@@ -65,10 +65,10 @@ namespace CBMCenterApi.Controllers
         }
 
         [HttpPost]
-        public async Task<Dictionary<string, object>> GetHistoricalTrendTags([FromForm] List<int> loopIds)
+        public async Task<Dictionary<string, object>> GetHistoricalTrendTags([FromForm] List<int> deviceIds, [FromForm] List<string> deviceTypes)
         {
             Dictionary<string, object> rtn = new Dictionary<string, object>();
-            List<TrendTag> trendTags = await _historicalTrendService.GetTrendTags(loopIds);
+            List<TrendTag> trendTags = await _historicalTrendService.GetTrendTags(deviceIds, deviceTypes);
 
             if (trendTags == null)
             {
@@ -79,7 +79,7 @@ namespace CBMCenterApi.Controllers
             {
                 rtn["MSG"] = "OK";
                 rtn["Code"] = "200";
-                rtn["Data"] = trendTags.Select(s => new { s.Address, s.Description, s.LoopID });
+                rtn["Data"] = trendTags.Select(s => new { s.Address, s.Description, s.DeviceType, s.DeviceID, s.DeviceName, s.StationName });
             }
             return rtn;
         }
