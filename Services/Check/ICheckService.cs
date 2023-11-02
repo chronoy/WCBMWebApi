@@ -15,9 +15,9 @@ namespace Services
         public Task<Dictionary<string, object>> GetOfflineCheck(OfflineCheck offlineCheck);
 
         public Task<List<GCRepeatabilityCheckData>> GetOnlineGCRepeatabilityCheck(int ID, List<Data> firstDatas, List<Data> secondDatas);
-        public Task<UnnormalizedComponentsCheckData> GetGCUnnormalizedComponentsCheck(string tagName,
-                                                                                     DateTime startDateTime,
-                                                                                     string interval,
-                                                                                     string duration);
+        public Task<List<UnnormalizedComponentsCheckData>> GetGCUnnormalizedComponentsCheck(string tagName,
+                                                                                            DateTime startDateTime,
+                                                                                            string interval,
+                                                                                            string duration);
     }
 }
