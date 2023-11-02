@@ -35,7 +35,14 @@ namespace Respository
 
         public List<TrendTag> GetTrendTags(List<int> deviceIds, List<string> deviceTypes)
         {
-            return _context.TrendTags.Where(x => deviceIds.Contains(x.DeviceID) && deviceTypes.Contains(x.DeviceType)).OrderBy(t => t.DeviceID).ToList();
+            var result = new List<TrendTag>();
+            var trendTags = _context.TrendTags.ToList();
+            foreach ((int id, int i) in deviceIds.Select((id, i) => (id, i)))
+            {
+                var type = deviceTypes.Count >= i + 1 ? deviceTypes[i].ToLower() : "";
+                result.AddRange(trendTags.Where(x => x.DeviceID == id && x.DeviceType.ToLower() == type));
+            }
+            return result.OrderBy(o => Array.IndexOf(new[] { "Loop", "Equipment" }, o.DeviceType)).ThenBy(t => t.DeviceID).ToList();
         }
     }
 }
