@@ -158,6 +158,7 @@ namespace Respository
 
         //Equipment
         public DbSet<Equipment> Equipments { get; set; }
+        public DbSet<EquipmentCaliber> EquipmentCalibers { get; set; }
         public DbSet<EquipmentCategory> EquipmentCategories { get; set; }
         public DbSet<EquipmentCompany> EquipmentCompanies { get; set; }
         public DbSet<EquipmentLine> EquipmentLines { get; set; }
@@ -166,6 +167,8 @@ namespace Respository
         public DbSet<EquipmentAccuracy> EquipmentAccuracies { get; set; }
         public DbSet<EquipmentPressureClass> EquipmentPressureClasses { get; set; }
         public DbSet<EquipmentManufacturer> EquipmentManufacturers { get; set; }
+        public DbSet<EquipmentStatus> EquipmentStatuses { get; set; }
+        public DbSet<EquipmentTradeProperty> EquipmentTradeProperties { get; set; }
 
         // Equipment Metering Certificate
         public DbSet<EquipmentMeteringCertificate> EquipmentMeteringCertificates { get; set; }
