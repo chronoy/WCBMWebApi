@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace Models
 {
-    [Table("tEquipmentCategory")]
+    [Table("tEquipmentCaliber")]
     public class EquipmentCaliber
     {
         [Key]
         public int ID { get; set; }
         public string Name { get; set; }
-        public string? Descritption { get; set; }
+        public string? Description { get; set; }
     }
 }

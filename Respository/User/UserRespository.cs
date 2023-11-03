@@ -27,7 +27,7 @@ namespace Respository
             {
                 int userID = user.ID;
                 var userStation = _context.UserStations.Where(x => x.UserID == userID).ToList();
-                user.Stations = (from u in userStation
+                var stations = (from u in userStation
                                  join s in _context.Stations on u.StationID equals s.ID
                                  join a in _context.Areas on s.AreaID equals a.ID into tempa
                                  from ta in tempa.DefaultIfEmpty()
@@ -44,6 +44,7 @@ namespace Respository
                                      IPAddress = tc != null ? tc.IPAddress : "",
                                      IPPort = tc != null ? tc.IPPort : ""
                                  }).ToList();
+                user.Stations = stations;
                 user.Loops = (from u in userStation
                               join l in _context.StationLoops on u.StationID equals l.StationID
                               select l).ToList();
@@ -63,28 +64,12 @@ namespace Respository
                                        Manufacturer = e.Manufacturer,
                                        Model = e.Model
                                    }).ToList();
-                user.Companies = (from u in userStation
-                                  join s in _context.Stations on u.StationID equals s.ID
-                                  join a in _context.Areas on s.AreaID equals a.ID
-                                  join c in _context.companies on a.CompanyID equals c.ID
-                                  select new Company
-                                  {
-                                      ID = u.StationID,
-                                      Name = c.Name,
-                                      AbbrName = c.AbbrName,
-                                      FullName = c.FullName
-                                  }).ToList();
-                user.Areas = (from u in userStation
-                              join s in _context.Stations on u.StationID equals s.ID
-                              join a in _context.Areas on s.AreaID equals a.ID
-                              select new Area
-                              {
-                                  ID = a.ID,
-                                  Name = a.Name,
-                                  FullName = a.FullName,
-                                  AbbrName = a.AbbrName,
-                                  CompanyID = a.CompanyID
-                              }).ToList();
+                user.Areas = (from a in _context.Areas
+                              where stations.Select(s => s.AreaID).Contains(a.ID)
+                              select a).ToList();
+                user.Companies = (from c in _context.companies where stations.Select(s=>s.CompanyID).Contains(c.ID)
+                                  select c).ToList();
+                
                 return "OK";
             }
             catch (Exception ex)
