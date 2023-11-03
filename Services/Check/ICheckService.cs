@@ -16,8 +16,8 @@ namespace Services
 
         public Task<List<GCRepeatabilityCheckData>> GetOnlineGCRepeatabilityCheck(int ID, List<Data> firstDatas, List<Data> secondDatas);
         public Task<List<UnnormalizedComponentsCheckData>> GetGCUnnormalizedComponentsCheck(string tagName,
-                                                                                            DateTime startDateTime,
-                                                                                            string interval,
-                                                                                            string duration);
+                                                                                     DateTime startDateTime,
+                                                                                     string interval,
+                                                                                     string duration);
     }
 }

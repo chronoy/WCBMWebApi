@@ -263,9 +263,9 @@ namespace Services
             return result;
         }
 
-        public Task<List<TrendTag>> GetTrendTags()
+        public Task<List<TrendTag>> GetTrendTags(List<int> deviceIds, List<string> deviceTypes)
         {
-            return Task.Run(() => _historicalTrendRespository.GetTrendTags());
+            return Task.Run(() => _historicalTrendRespository.GetTrendTags(deviceIds, deviceTypes));
         }
     }
 }
