@@ -17,6 +17,5 @@ namespace Services
 
         public Task<List<AlarmCount>> GetAlarmCountByStation(Station station);
 
-        public Task<List<RealtimeAlarm>> GetRealtimeAlarmByArea(string alarmAreas, List<string> prioritys);
     }
 }
