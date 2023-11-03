@@ -22,6 +22,10 @@ namespace Respository
 
         public List<RealtimeAlarm> GetRealtimeAlarm(List<string> alarmAreas, List<string> prioritys)
         {
+            Dictionary<string, string> mapping = new Dictionary<string, string>();
+            mapping["CRITCAL"] = "A类";
+            mapping["HIGH"] = "B类";
+            mapping["LOW"] = "C类";
             List<RealtimeAlarm> alarms = (from real in _context.RealtimeAlarms
                                           select new RealtimeAlarm
                                           {
@@ -37,10 +41,11 @@ namespace Respository
                                               Status = real.Status.TrimEnd(),
                                               Area = real.Area,
                                               DeviceArea = String.Join("_", real.Area.Split(',', StringSplitOptions.None).ToList().GetRange(4, 3)),
-                                              //ManufacturerArea = String.Join("_", real.Area.Split(',', StringSplitOptions.None).ToList().GetRange(7, 1)),
+                                              ManufacturerArea = String.Join("_", real.Area.Split(',', StringSplitOptions.None).ToList().GetRange(7, 1)),
                                               OperatorName = real.OperatorName.TrimEnd(),
                                               FullOperatorName = real.FullOperatorName.TrimEnd(),
-                                              ACKED = real.ACKED
+                                              ACKED = real.ACKED,
+                                              Grade = mapping[real.Priority.TrimEnd()]
                                           }).ToList();
 
 
@@ -51,6 +56,10 @@ namespace Respository
 
         public List<RealtimeAlarm> GetRealtimeAlarm(List<string> alarmAreas, List<string> manufacturers, List<string> prioritys)
         {
+            Dictionary<string, string> mapping = new Dictionary<string, string>();
+            mapping["CRITCAL"] = "A类";
+            mapping["HIGH"] = "B类";
+            mapping["LOW"] = "C类";
             List<RealtimeAlarm> alarms = (from real in _context.RealtimeAlarms
                                           select new RealtimeAlarm
                                           {
@@ -64,12 +73,13 @@ namespace Respository
                                               Description = real.Description.TrimEnd(),
                                               Priority = real.Priority.TrimEnd(),
                                               Status = real.Status.TrimEnd(),
-                                              Area=real.Area,
+                                              Area = real.Area,
                                               DeviceArea = String.Join("_", real.Area.Split(',', StringSplitOptions.None).ToList().GetRange(4, 3)).TrimEnd(),
                                               ManufacturerArea = String.Join("_", real.Area.Split(',', StringSplitOptions.None).ToList().GetRange(7, 1)).TrimEnd(),
                                               OperatorName = real.OperatorName.TrimEnd(),
                                               FullOperatorName = real.FullOperatorName.TrimEnd(),
-                                              ACKED = real.ACKED
+                                              ACKED = real.ACKED,
+                                              Grade = mapping[real.Priority.TrimEnd()]
                                           }).ToList();
 
 
@@ -122,36 +132,14 @@ namespace Respository
             }
         }
 
-        public List<RealtimeAlarm> GetRealtimeAlarmByArea(string alarmAreas, List<string> prioritys)
-        {
-            List<RealtimeAlarm> alarms = (from real in _context.RealtimeAlarms
-                                          select new RealtimeAlarm
-                                          {
-                                              ID = real.ID,
-                                              StartTime = real.StartTime,
-                                              EndTime = real.EndTime,
-                                              NodeName = real.NodeName.TrimEnd(),
-                                              TagName = real.TagName.TrimEnd(),
-                                              Value = real.Value.TrimEnd(),
-                                              MessageType = real.MessageType.TrimEnd(),
-                                              Description = real.Description.TrimEnd(),
-                                              Priority = real.Priority.TrimEnd(),
-                                              Status = real.Status.TrimEnd(),
-                                              Area = real.Area.TrimEnd(),
-                                              OperatorName = real.OperatorName.TrimEnd(),
-                                              FullOperatorName = real.FullOperatorName.TrimEnd(),
-                                              ACKED = real.ACKED
-                                          }).ToList();
-
-
-            return (from real in alarms
-                    where real.Area.Contains(alarmAreas) && prioritys.Contains(real.Priority)
-                    select real).OrderByDescending(o => o.StartTime).ToList();
-        }
 
         public List<HistoricalAlarm> GetHistoricalAlarm(DateTime startDateTime, DateTime endDateTime, List<string> alarmAreas, List<string> prioritys)
         {
 
+            Dictionary<string, string> mapping = new Dictionary<string, string>();
+            mapping["CRITCAL"] = "A类";
+            mapping["HIGH"] = "B类";
+            mapping["LOW"] = "C类";
             List<HistoricalAlarm> alarms = (from alm in _context.HistoricalAlarms
                                             where alm.StartTime >= startDateTime &&
                                                   alm.EndTime <= endDateTime &&
@@ -191,6 +179,7 @@ namespace Respository
                                         Area = alm.Area.TrimEnd(),
                                         OperatorName = alm.OperatorName.TrimEnd(),
                                         FullOperatorName = alm.FullOperatorName.TrimEnd(),
+                                        Grade= mapping[alm.Priority.TrimEnd()] 
                                     }).OrderByDescending(o => o.StartTime).ThenByDescending(t => t.EndTime).ToList();
             return historicalAlarms;
         }
