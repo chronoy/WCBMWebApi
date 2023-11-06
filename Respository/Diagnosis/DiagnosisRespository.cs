@@ -268,7 +268,7 @@ namespace Respository
                             }
                             break;
                         case "VOS":
-                            using (DanielVOSDiagnosticDataDetail detail = _context.DanielVOSDiagnosticDataDetails.FirstOrDefault(obj => obj.ID == loopID))
+                            using (ElsterVOSDiagnosticDataDetail detail = _context.ElsterVOSDiagnosticDataDetails.FirstOrDefault(obj => obj.ID == loopID))
                             {
                                 details.Add(new DiagnosticDataDetail() { Name = "FC声速偏差(<0.20%)", Result = _context.DiagnosticVOSResultDescriptions.First(obj => obj.ID == detail.P0).DescriptionCN, Value = detail.v0.ToString("F4") });
                                 details.Add(new DiagnosticDataDetail() { Name = "FM声速偏差(<0.20%)", Result = _context.DiagnosticVOSResultDescriptions.First(obj => obj.ID == detail.P1).DescriptionCN, Value = detail.v1.ToString("F4") });
@@ -447,7 +447,7 @@ namespace Respository
                             }
                             break;
                         case "FM":
-                            using (WeiseFMDiagnosticDataDetail detail = _context.WeiseFMDiagnosticDataDetails.FirstOrDefault(obj => obj.ID == loopID))
+                            using (RMGFMDiagnosticDataDetail detail = _context.RMGFMDiagnosticDataDetails.FirstOrDefault(obj => obj.ID == loopID))
                             {
                                 int[] NotAvailable = new int[] { 1, 17, 20, 21, 22, 33, 36, 255 };
                                 details.Add(new DiagnosticDataDetail() { Name = "通讯状态", Result = _context.DiagnosticFMResultDescriptions.First(obj => obj.ID == detail.P0).DescriptionCN, Value = NotAvailable.Contains(detail.P0) ? "N/A" : detail.v0.ToString("F4") });
