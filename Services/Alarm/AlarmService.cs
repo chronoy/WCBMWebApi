@@ -25,13 +25,14 @@ namespace Services
             return Task.Run(() => _alarmRespository.GetRealtimeAlarm(alarmAreas, prioritys));
         }
 
-        public Task<string> AckRealtimeAlarm(List<string> tagNames)
+        public Task<List<RealtimeAlarm>> GetRealtimeAlarm(List<string> alarmAreas, List<string> manufacturers,List<string> prioritys)
         {
-            return Task.Run(() => _alarmRespository.AckRealtimeAlarm(tagNames));
+            return Task.Run(() => _alarmRespository.GetRealtimeAlarm(alarmAreas, manufacturers, prioritys));
         }
-        public Task<List<DiagnosticAlarm>> GetRealtimeDiagnosticAlarm(int stationID, int loopID)
+
+        public Task<string> AckRealtimeAlarm(List<string> tagNames,string userName)
         {
-            return Task.Run(() => _alarmRespository.GetRealtimeDiagnosticAlarm(stationID, loopID));
+            return Task.Run(() => _alarmRespository.AckRealtimeAlarm(tagNames,userName));
         }
 
         public Task<List<HistoricalAlarm>> GetHistoricalAlarm(DateTime startDateTime, DateTime endDateTime, List<string> alarmAreas, List<string> prioritys)
@@ -41,11 +42,6 @@ namespace Services
         public Task<List<HistoricalStatisticalAlarm>> GetHistoricalStatisticalAlarm(DateTime startDateTime, DateTime endDateTime, List<string> alarmAreas, List<string> prioritys)
         {
             return Task.Run(() => _alarmRespository.GetHistoricalStatisticalAlarm(startDateTime, endDateTime, alarmAreas, prioritys));
-        }
-
-        public Task<List<AlarmKPI>> GetHistoricalAlarmKPI(int topNumber, string sortType, DateTime startDateTime, DateTime endDateTime, string alarmArea)
-        {
-            return Task.Run(() => _alarmRespository.GetHistoricalAlarmKPI(topNumber, sortType, startDateTime, endDateTime, alarmArea));
         }
 
         public Task<List<AlarmCount>> GetAlarmCountByStation(Station station)
@@ -72,9 +68,5 @@ namespace Services
 
         }
 
-        public Task<List<RealtimeAlarm>> GetRealtimeAlarmByArea(string alarmAreas, List<string> prioritys)
-        {
-            return Task.Run(() => _alarmRespository.GetRealtimeAlarmByArea(alarmAreas, prioritys));
-        }
     }
 }

@@ -40,6 +40,8 @@ builder.Services.AddScoped<IStationLoopRespository, StationLoopRespository>();
 builder.Services.AddScoped<IStationLoopService, StationLoopService>();
 builder.Services.AddScoped<IStationEquipmentRespository, StationEquipmentRespository>();
 builder.Services.AddScoped<IStationEquipmentService, StationEquipmentService>();
+builder.Services.AddScoped<IKeyParameterRespository, KeyParameterRespository>();
+builder.Services.AddScoped<IKeyParameterService, KeyParameterService>();
 
 //by luoyuankan
 builder.Services.AddScoped<IAlarmRespository, AlarmRespository>();

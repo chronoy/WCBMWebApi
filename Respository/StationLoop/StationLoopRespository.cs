@@ -22,7 +22,28 @@ namespace Respository
 
         public List<StationLoop> GetStationLoopsByStation(int stationID)
         {
-            return _context.StationLoops.Where(obj => obj.StationID == stationID).OrderBy(obj => obj.OrderNumber).ToList();
+            return  (from loop in _context.StationLoops.Where(obj => obj.StationID == stationID)
+                    join category in _context.EquipmentCategories
+                    on loop.EquipmentCategoryID equals  category.ID
+                    select new StationLoop
+                    {
+                        ID = loop.ID,
+                        Name = loop.Name,
+                        AbbrName=loop.AbbrName,
+                        CollectDataTypeID=loop.CollectDataTypeID,
+                        EquipmentCategoryID=loop.EquipmentCategoryID,
+                        StationID=loop.StationID,
+                        LineID=loop.LineID,
+                        Caliber=loop.Caliber,
+                        Customer=loop.Customer,
+                        FlowmeterManufacturer=loop.FlowmeterManufacturer,
+                        FlowmeterModel=loop.FlowmeterModel,
+                        FlowComputerManufacturer=loop.FlowmeterManufacturer,
+                        FlowComputerModel = loop.FlowComputerModel,
+                        OrderNumber=loop.OrderNumber,
+                        EquipmentCategoryName=category.Name
+                    }).ToList()
+                    .OrderBy(obj => obj.OrderNumber).ToList();
         }
     }
 }

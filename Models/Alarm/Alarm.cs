@@ -69,6 +69,12 @@ namespace Models
         public string FullOperatorName { get; set; }
         [Column("ALM_ACKED")]
         public string ACKED { get; set; }
+        [NotMapped]
+        public string DeviceArea { get; set; }
+        [NotMapped]
+        public string ManufacturerArea { get; set; }
+        [NotMapped]
+        public string Grade { get; set; }   
     }
 
     [Table("tHistoricalAlarm")]
@@ -101,6 +107,8 @@ namespace Models
         public string OperatorName { get; set; }
         [Column("ALM_OPFULLNAME")]
         public string FullOperatorName { get; set; }
+        [NotMapped]
+        public string Grade { get; set; }
     }
 
     public class HistoricalStatisticalAlarm

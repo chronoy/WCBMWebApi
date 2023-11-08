@@ -10,13 +10,10 @@ namespace Respository
     public interface IAlarmRespository
     {
         public List<RealtimeAlarm> GetRealtimeAlarm(List<string> alarmAreas, List<string> prioritys);
-        public string AckRealtimeAlarm(List<string> tagNames);
-        public List<DiagnosticAlarm> GetRealtimeDiagnosticAlarm(int stationID, int loopID);
+        public List<RealtimeAlarm> GetRealtimeAlarm(List<string> alarmAreas, List<string> manufacturers,List<string> prioritys);
+        public string AckRealtimeAlarm(List<string> tagNames, string userName);
         public List<HistoricalAlarm> GetHistoricalAlarm(DateTime startDateTime, DateTime endDateTime, List<string> alarmAreas, List<string> prioritys);
         public List<HistoricalStatisticalAlarm> GetHistoricalStatisticalAlarm(DateTime startDateTime, DateTime endDateTime, List<string> alarmAreas, List<string> prioritys);
-        public List<AlarmKPI> GetHistoricalAlarmKPI(int topNumber, string sortType, DateTime startDateTime, DateTime endDateTime, string alarmArea);
         public AlarmCount GetAlarmCountByStation(string name, string alarmName, string stationName, string loopName);
-        public List<RealtimeAlarm> GetRealtimeAlarmByArea(string alarmAreas, List<string> prioritys);
-
     }
 }

@@ -54,7 +54,7 @@ namespace Respository
                                 FlowComputerModel=loop.FlowComputerModel,
                                 FlowmeterManufacturer=loop.FlowmeterManufacturer,
                                 FlowmeterModel=loop.FlowmeterModel,
-                                EquipmentCategoryName= category.Name.Contains("超声流量计")? collectdatatype.Manufacturer+"超声" : category.Name.Contains("质量流量计")? collectdatatype.Manufacturer + "质量": collectdatatype.Manufacturer + "涡轮"
+                                EquipmentCategoryName = category.Name
 
                                 }).ToList(),
                         Equipments=_context.StationEquipments.Where(equipment=> equipment.StationID==station.ID).ToList()

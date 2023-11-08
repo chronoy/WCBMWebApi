@@ -81,8 +81,6 @@ namespace Respository
         public DbSet<Alarm> Alarms { get; set; }
         public DbSet<RealtimeAlarm> RealtimeAlarms { get; set; }
         public DbSet<HistoricalAlarm> HistoricalAlarms { get; set; }
-        public DbSet<DiagnosticAlarm> DiagnosticAlarms { get; set; }
-        public DbSet<AlarmKPI> AlarmKPIs { get; set; }
         
         //Loop Check Data
         public DbSet<HistoricalDanielVOSCheckData> HistoricalDanielVOSCheckDatas { get; set; }
@@ -136,14 +134,15 @@ namespace Respository
         public DbSet<HistoricalABBGCCheckData> HistoricalABBGCCheckDatas { get; set; }
         public DbSet<HistoricalDanielGCCheckData> HistoricalDanielGCCheckDatas { get; set; }
         public DbSet<HistoricalElsterGCCheckData> HistoricalElsterGCCheckDatas { get; set; }
-
         public DbSet<GCRepeatabilityCheckData> HistoricalGCRepeatabilityCheckDatas { get; set; }
-
-
         public DbSet<CheckDescriptionStatus> CheckDescriptionStatuses { get; set; }
         //public DbSet<VOSKeyCheckData> VOSKeyCheckDatas { get; set; }
         // public DbSet<LoopUncertain> LoopUncertains { get; set; }
         // public DbSet<DataItem> FlowrateData { get; set; }
+
+        //Parameter Change
+        public DbSet<KeyParameter> KeyParameters { get; set; }
+        public DbSet<KeyParametersChangeRecord> KeyParametersChangeRecords { get; set; }
 
         //User
         public DbSet<User> Users { get; set; }
@@ -159,6 +158,7 @@ namespace Respository
 
         //Equipment
         public DbSet<Equipment> Equipments { get; set; }
+        public DbSet<EquipmentCaliber> EquipmentCalibers { get; set; }
         public DbSet<EquipmentCategory> EquipmentCategories { get; set; }
         public DbSet<EquipmentCompany> EquipmentCompanies { get; set; }
         public DbSet<EquipmentLine> EquipmentLines { get; set; }
@@ -167,6 +167,8 @@ namespace Respository
         public DbSet<EquipmentAccuracy> EquipmentAccuracies { get; set; }
         public DbSet<EquipmentPressureClass> EquipmentPressureClasses { get; set; }
         public DbSet<EquipmentManufacturer> EquipmentManufacturers { get; set; }
+        public DbSet<EquipmentStatus> EquipmentStatuses { get; set; }
+        public DbSet<EquipmentTradeProperty> EquipmentTradeProperties { get; set; }
 
         // Equipment Metering Certificate
         public DbSet<EquipmentMeteringCertificate> EquipmentMeteringCertificates { get; set; }

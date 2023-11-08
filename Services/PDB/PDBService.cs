@@ -103,7 +103,7 @@ namespace Services
         //}
         public void Run()
         {
-            _tmrUpdate = new System.Timers.Timer(30000);
+            _tmrUpdate = new System.Timers.Timer(5000);
             //Globe.writeLog("Watch Dog Start");
             _tmrUpdate.Elapsed += new ElapsedEventHandler(Update_Elapsed);
             _tmrUpdate.Enabled = true;

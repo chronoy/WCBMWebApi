@@ -670,5 +670,251 @@ namespace CBMCenterApi.Controllers
             rtn["Data"] = id;
             return rtn;
         }
+
+        [HttpPost]
+        public async Task<Dictionary<string, object>> GetEquipmentCaliber()
+        {
+            Dictionary<string, object> rtn = new();
+
+            var equipmentCalibers = await _equipmentParameterService.GetEquipmentParameters<EquipmentCaliber>(x => true);
+            if (equipmentCalibers == null)
+            {
+                rtn["MSG"] = "OtherError";
+                rtn["Code"] = "400";
+            }
+            else
+            {
+                rtn["MSG"] = "OK";
+                rtn["Code"] = "200";
+            }
+            rtn["Data"] = equipmentCalibers;
+            return rtn;
+        }
+
+        [HttpPost]
+        public async Task<Dictionary<string, object>> AddEquipmentCaliber([FromForm] EquipmentCaliber caliber)
+        {
+            Dictionary<string, object> rtn = new();
+
+            var result = await _equipmentParameterService.AddEquipmentParameter(caliber);
+            switch (result)
+            {
+                case "OtherError":
+                    rtn["MSG"] = result;
+                    rtn["Code"] = "400";
+                    break;
+
+                case "OK":
+                    rtn["MSG"] = result;
+                    rtn["Code"] = "200";
+                    break;
+            }
+            rtn["Data"] = caliber;
+            return rtn;
+        }
+
+        [HttpPost]
+        public async Task<Dictionary<string, object>> UpdateEquipmentCaliber([FromForm] EquipmentCaliber caliber)
+        {
+            Dictionary<string, object> rtn = new();
+
+            var result = await _equipmentParameterService.UpdateEquipmentParameter(caliber);
+            if (!result)
+            {
+                rtn["MSG"] = "OtherError";
+                rtn["Code"] = "400";
+            }
+            else
+            {
+                rtn["MSG"] = "OK";
+                rtn["Code"] = "200";
+            }
+            rtn["Data"] = caliber;
+            return rtn;
+        }
+
+        [HttpPost]
+        public async Task<Dictionary<string, object>> DeleteEquipmentCaliber([FromForm] int id)
+        {
+            Dictionary<string, object> rtn = new();
+
+            var result = await _equipmentParameterService.DeleteEquipmentParameterBy<EquipmentCaliber>(x => x.ID == id);
+            if (!result)
+            {
+                rtn["MSG"] = "OtherError";
+                rtn["Code"] = "400";
+            }
+            else
+            {
+                rtn["MSG"] = "OK";
+                rtn["Code"] = "200";
+            }
+            rtn["Data"] = id;
+            return rtn;
+        }
+
+        [HttpPost]
+        public async Task<Dictionary<string, object>> GetEquipmentStatus()
+        {
+            Dictionary<string, object> rtn = new();
+
+            var equipmentStatuses = await _equipmentParameterService.GetEquipmentParameters<EquipmentStatus>(x => true);
+            if (equipmentStatuses == null)
+            {
+                rtn["MSG"] = "OtherError";
+                rtn["Code"] = "400";
+            }
+            else
+            {
+                rtn["MSG"] = "OK";
+                rtn["Code"] = "200";
+            }
+            rtn["Data"] = equipmentStatuses;
+            return rtn;
+        }
+
+        [HttpPost]
+        public async Task<Dictionary<string, object>> AddEquipmentStatus([FromForm] EquipmentStatus status)
+        {
+            Dictionary<string, object> rtn = new();
+
+            var result = await _equipmentParameterService.AddEquipmentParameter(status);
+            switch (result)
+            {
+                case "OtherError":
+                    rtn["MSG"] = result;
+                    rtn["Code"] = "400";
+                    break;
+
+                case "OK":
+                    rtn["MSG"] = result;
+                    rtn["Code"] = "200";
+                    break;
+            }
+            rtn["Data"] = status;
+            return rtn;
+        }
+
+        [HttpPost]
+        public async Task<Dictionary<string, object>> UpdateEquipmentStatus([FromForm] EquipmentStatus status)
+        {
+            Dictionary<string, object> rtn = new();
+
+            var result = await _equipmentParameterService.UpdateEquipmentParameter(status);
+            if (!result)
+            {
+                rtn["MSG"] = "OtherError";
+                rtn["Code"] = "400";
+            }
+            else
+            {
+                rtn["MSG"] = "OK";
+                rtn["Code"] = "200";
+            }
+            rtn["Data"] = status;
+            return rtn;
+        }
+
+        [HttpPost]
+        public async Task<Dictionary<string, object>> DeleteEquipmentStatus([FromForm] int id)
+        {
+            Dictionary<string, object> rtn = new();
+
+            var result = await _equipmentParameterService.DeleteEquipmentParameterBy<EquipmentStatus>(x => x.ID == id);
+            if (!result)
+            {
+                rtn["MSG"] = "OtherError";
+                rtn["Code"] = "400";
+            }
+            else
+            {
+                rtn["MSG"] = "OK";
+                rtn["Code"] = "200";
+            }
+            rtn["Data"] = id;
+            return rtn;
+        }
+
+        [HttpPost]
+        public async Task<Dictionary<string, object>> GetEquipmentTradeProperty()
+        {
+            Dictionary<string, object> rtn = new();
+
+            var equipmentTradeProperties = await _equipmentParameterService.GetEquipmentParameters<EquipmentTradeProperty>(x => true);
+            if (equipmentTradeProperties == null)
+            {
+                rtn["MSG"] = "OtherError";
+                rtn["Code"] = "400";
+            }
+            else
+            {
+                rtn["MSG"] = "OK";
+                rtn["Code"] = "200";
+            }
+            rtn["Data"] = equipmentTradeProperties;
+            return rtn;
+        }
+
+        [HttpPost]
+        public async Task<Dictionary<string, object>> AddEquipmentTradeProperty([FromForm] EquipmentTradeProperty tradeProperty)
+        {
+            Dictionary<string, object> rtn = new();
+
+            var result = await _equipmentParameterService.AddEquipmentParameter(tradeProperty);
+            switch (result)
+            {
+                case "OtherError":
+                    rtn["MSG"] = result;
+                    rtn["Code"] = "400";
+                    break;
+
+                case "OK":
+                    rtn["MSG"] = result;
+                    rtn["Code"] = "200";
+                    break;
+            }
+            rtn["Data"] = tradeProperty;
+            return rtn;
+        }
+
+        [HttpPost]
+        public async Task<Dictionary<string, object>> UpdateEquipmentTradeProperty([FromForm] EquipmentTradeProperty tradeProperty)
+        {
+            Dictionary<string, object> rtn = new();
+
+            var result = await _equipmentParameterService.UpdateEquipmentParameter(tradeProperty);
+            if (!result)
+            {
+                rtn["MSG"] = "OtherError";
+                rtn["Code"] = "400";
+            }
+            else
+            {
+                rtn["MSG"] = "OK";
+                rtn["Code"] = "200";
+            }
+            rtn["Data"] = tradeProperty;
+            return rtn;
+        }
+
+        [HttpPost]
+        public async Task<Dictionary<string, object>> DeleteEquipmentTradeProperty([FromForm] int id)
+        {
+            Dictionary<string, object> rtn = new();
+
+            var result = await _equipmentParameterService.DeleteEquipmentParameterBy<EquipmentTradeProperty>(x => x.ID == id);
+            if (!result)
+            {
+                rtn["MSG"] = "OtherError";
+                rtn["Code"] = "400";
+            }
+            else
+            {
+                rtn["MSG"] = "OK";
+                rtn["Code"] = "200";
+            }
+            rtn["Data"] = id;
+            return rtn;
+        }
     }
 }

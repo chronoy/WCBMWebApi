@@ -15,9 +15,11 @@ namespace Services
     public class CheckService : ICheckService
     {
         private readonly ICheckRespository _respository;
-        public CheckService(IConfiguration configuration, ICheckRespository checkRespository)
+        private readonly IHistoricalTrendService _historicalTrendService;
+        public CheckService(IConfiguration configuration, ICheckRespository checkRespository, IHistoricalTrendService historicalTrendService)
         {
             _respository = checkRespository;
+            _historicalTrendService = historicalTrendService;
         }
 
         public Task<List<HistoricalStationEquipmentCheckData>> GetStationEquipmentCheckReport(string reportCategory, string manufacturer, int equipmentID, DateTime startDateTime, DateTime endDateTime)
@@ -368,6 +370,31 @@ namespace Services
             });
         }
 
+        public Task<List<UnnormalizedComponentsCheckData>> GetGCUnnormalizedComponentsCheck(string tagName, DateTime startDateTime, string interval, string duration)
+        {
+            return Task.Run(async () =>
+            {
+                List<string> tags =new List<string>();
+                tags.Add(tagName);
+                Dictionary<string, object> dic = await _historicalTrendService.GetHistoricalTrendsData(tags, startDateTime, interval, duration);
+                List<string> times = dic["Times"] as List<string>;
+                List<Dictionary<string, object>> trends = dic["Trends"] as List<Dictionary<string, object>>;
+                List<float?> datas = trends[0]["TrendDatas"] as List<float?>;
+                List<UnnormalizedComponentsCheckData> checkDatas = new List<UnnormalizedComponentsCheckData>() ;
+                for (int i=0;i< times.Count;i++)
+                {
+                    UnnormalizedComponentsCheckData checkData = new UnnormalizedComponentsCheckData  { DateTime = times[i],
+                                                                                                       Value= datas[i],
+                                                                                                       Condition="98%-102%",
+                                                                                                       Result= CheckUnnormalizedComponent(datas[i])
+                                                                                                     };
+
+                    checkDatas.Add(checkData);
+                }
+                return checkDatas;
+            });
+        }
+
 
         /// <summary>
         /// 将一个实体的值赋值到另外一个实体
@@ -415,7 +442,24 @@ namespace Services
             else
                 return 0.20;
         }
-
+        private string CheckUnnormalizedComponent(float? value)
+        {
+            if(value == null)
+            {
+                return "N/A";
+            }                
+            else
+            {
+                if(value>102 || value<98)
+                {
+                    return "Error";
+                }
+                else
+                {
+                    return "OK";
+                }
+            }
+        }
 
     }
 }

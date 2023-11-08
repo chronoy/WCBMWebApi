@@ -43,6 +43,8 @@ namespace Services
                     trend["Address"] = trendInfo.Address;
                     trend["HighLimit"] = trendInfo.HighLimit;
                     trend["LowLimit"] = trendInfo.LowLimit;
+                    trend["Unit"] = trendInfo.Unit;
+                    trend["Precision"] = trendInfo.Precision;
                     trend["Description"] = trendInfo.Description;
                     trends.Add(trend);
                 }
@@ -263,9 +265,9 @@ namespace Services
             return result;
         }
 
-        public Task<List<TrendTag>> GetTrendTags()
+        public Task<List<TrendTag>> GetTrendTags(List<int> deviceIds, List<string> deviceTypes)
         {
-            return Task.Run(() => _historicalTrendRespository.GetTrendTags());
+            return Task.Run(() => _historicalTrendRespository.GetTrendTags(deviceIds, deviceTypes));
         }
 
         public List<Dictionary<string, object>> GetHistoricalData(
