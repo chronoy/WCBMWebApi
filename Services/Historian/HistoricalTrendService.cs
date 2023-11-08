@@ -267,5 +267,142 @@ namespace Services
         {
             return Task.Run(() => _historicalTrendRespository.GetTrendTags());
         }
+
+        public List<Dictionary<string, object>> GetHistoricalData(
+                                      DateTime startDateTime,
+                                      string interval,
+                                      string duration,
+                                      List<string> tagsAddress
+                                      )
+        {
+
+                List<Dictionary<string, object>> trends = new List<Dictionary<string, object>>();
+                //List<string> times = new List<string>();
+                foreach (string tagAddress in tagsAddress)
+                {
+                    Dictionary<string, object> tags = new Dictionary<string, object>();
+                    tags["Address"] = tagAddress;
+                    trends.Add(tags);
+                }
+                int[] intervalTimes = null;
+                int count = 0;
+                int groupNumber = trends.Count / 8;
+                if (trends.Count % 8 > 0)
+                {
+                    groupNumber = groupNumber + 1;
+                }
+                for (int num = 0; num < groupNumber; num++)
+                {
+                    int err = 0;
+                    int groupHandle = 0;
+                    int[] tagsHandle = null;
+                    string[] tags = null;
+                    if (num == groupNumber - 1)
+                    {
+                        tagsHandle = new int[trends.Count - 8 * num];
+                        tags = new string[trends.Count - 8 * num];
+                        count = trends.Count - 8 * num;
+
+                    }
+                    else
+                    {
+                        tagsHandle = new int[8];
+                        tags = new string[8];
+                        count = 8;
+                    }
+                    for (int i = 0; i < count; i++)
+                    {
+                        tags[i] = trends[8 * num + i]["Address"].ToString();
+                    }
+                    int[] samplesNum = new int[count];
+                    #region "Setting"
+                    if ((err = Hda.DefineGroup(out groupHandle)) != FixError.FTK_OK)
+                    {
+                        //return string.Format("Error defining group,Error = {0}", err);
+                        return new List<Dictionary<string, object>>();
+                    }
+
+                    for (int i = 0; i < count; i++)
+                    {
+                        err = Hda.AddNtf(groupHandle, out tagsHandle[i], tags[i]);
+                        if (err != FixError.FTK_OK)
+                        {
+                            Hda.DeleteGroup(groupHandle);
+                            //return "Error adding an NTF";
+                            return new List<Dictionary<string, object>>();
+                        }
+                    }
+
+                    if ((err = Hda.SetStart(groupHandle, startDateTime.ToString("yyyy/MM/dd"), startDateTime.ToString("HH:mm:ss"))) != FixError.FTK_OK)
+                    {
+                        Hda.DeleteGroup(groupHandle);
+                        //return "Error setting start date and time";
+                        return new List<Dictionary<string, object>>();
+                    }
+
+                    if ((err = Hda.SetInterval(groupHandle, interval)) != FixError.FTK_OK)
+                    {
+                        Hda.DeleteGroup(groupHandle);
+                        //return "Error setting interval time";
+                        return new List<Dictionary<string, object>>();
+                    }
+
+                    if ((err = Hda.SetDuration(groupHandle, duration)) != FixError.FTK_OK)
+                    {
+                        Hda.DeleteGroup(groupHandle);
+                        //return "Error setting duration time";
+                        return new List<Dictionary<string, object>>();
+                    }
+
+
+                    if ((err = Hda.Read(groupHandle, 0)) != FixError.FTK_OK)
+                    {
+                        Hda.DeleteGroup(groupHandle);
+                        //return "Error reading data";
+                        return new List<Dictionary<string, object>>();
+                    }
+                    #endregion
+
+                    for (int i = 0; i < count; i++)
+                    {
+                        if ((err = Hda.GetNumSamples(groupHandle, tagsHandle[i], out samplesNum[i])) != FixError.FTK_OK)
+                        {
+                            Hda.DeleteGroup(groupHandle);
+                            //return "Error getting number of samples";
+                            return new List<Dictionary<string, object>>();
+                        }
+                    }
+
+                    for (int i = 0; i < count; i++)
+                    {
+                        float[] values = new float[samplesNum[i]];
+                        intervalTimes = new int[samplesNum[i]];
+                        int[] statuses = new int[samplesNum[i]];
+                        int[] alarms = new int[samplesNum[i]];
+                        // Read data into arrays 
+                        if ((err = Hda.GetData(groupHandle, tagsHandle[i], 0, samplesNum[i], values, intervalTimes, statuses, alarms)) != FixError.FTK_OK)
+                        {
+                            Hda.DeleteGroup(groupHandle);
+                            //return string.Format("Error getting data for tag: {0}", tags[i]);
+                            return new List<Dictionary<string, object>>();
+                        }
+                        List<float?> datas = new List<float?>();
+                        for (int j = 0; j < statuses.Count(); j++)
+                        {
+                            if (statuses[j] == 0)
+                            {
+                                datas.Add(values[j]);
+                            }
+                            else
+                            {
+                                datas.Add(null);
+                            }
+                        }
+                        trends[8 * num + i]["TrendDatas"] = datas;
+                    }
+                    Hda.DeleteGroup(groupHandle);
+                }
+                return trends;
+        }
     }
 }

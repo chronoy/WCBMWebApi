@@ -179,6 +179,8 @@ namespace Respository
 
         //Loop Flow Contrast
         public DbSet<LoopFlowContrastConfig> LoopFlowContrastConfigs { get; set; }
+        public DbSet<LoopFlowContrastRecord> LoopFlowContrastRecords { get; set;}
+        public DbSet<LoopFlowContrastTag> LoopFlowContrastTags { get; set; }
 
     }
 }

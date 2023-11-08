@@ -26,5 +26,12 @@ namespace Services
                                             string templatePath);
 
         public Task<List<TrendTag>> GetTrendTags();
+
+        public List<Dictionary<string, object>> GetHistoricalData(
+                                   DateTime startDateTime,
+                                   string interval,
+                                   string duration,
+                                   List<string> tagsAddress
+                                   );
     }
 }

@@ -31,8 +31,9 @@ namespace CBMWebApi.Controllers
             {
                 rtn["MSG"] = "OK";
                 rtn["Code"] = "200";
+                rtn["Data"] = configs;
             }
-            rtn["Data"] = configs;
+
             return rtn;
         }
 
@@ -91,6 +92,40 @@ namespace CBMWebApi.Controllers
             {
                 rtn["MSG"] = "OtherError";
                 rtn["Code"] = "400";
+            }
+            return rtn;
+        }
+        [HttpPost]
+        public async Task<Dictionary<string, object>> FinishLoopFlowContrastConfig([FromForm] int id)
+        {
+            Dictionary<string, object> rtn = new Dictionary<string, object>();
+            if (await _loopFlowContrastService.FinishLoopFlowContrastConfig(id) == "OK")
+            {
+                rtn["MSG"] = "OK";
+                rtn["Code"] = "200";
+            }
+            else
+            {
+                rtn["MSG"] = "OtherError";
+                rtn["Code"] = "400";
+            }
+            return rtn;
+        }
+        [HttpPost]
+        public async Task<Dictionary<string, object>> GetLoopFlowContrastRecord([FromForm] int configID)
+        {
+            Dictionary<string, object> rtn = new Dictionary<string, object>();
+            var record = await _loopFlowContrastService.GetLoopFlowContrastRecord(configID);
+            if (record == null)
+            {
+                rtn["MSG"] = "OtherError";
+                rtn["Code"] = "400";
+            }
+            else
+            {
+                rtn["MSG"] = "OK";
+                rtn["Code"] = "200";
+                rtn["Data"] = record;
             }
             return rtn;
         }
