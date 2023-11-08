@@ -79,50 +79,47 @@ namespace CBMWebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<Dictionary<string, object>> SecondaryInterface([FromForm] List<int> stationIDs)
+        public async Task<Dictionary<string, object>> SecondaryInterface([FromForm] List<int> companyIDs, [FromForm] List<int> lineIDs)
         {
             Dictionary<string, object> rtn = new Dictionary<string, object>();
             try
             {
-                List<Station> stations = await _stationService.GetStationsByStations(stationIDs);
-                List<StationLoopDiagnosticData> loopStatus = await _diagnosisService.GetLoopStatusByStations(stationIDs);
+                List<Station> stations = await _stationService.GetStationsByCompanyLine(companyIDs, lineIDs);
                 foreach (Station station in stations)
                 {
-                    List<StationLoop> stationLoops = new List<StationLoop>();
-                    List<StationEquipment> stationEquipments = new List<StationEquipment>();
-                    List<PDBTag> stationTags = await _PDBService.GetLoopTagsByStation(station);
+                    station.StationStatistics["LoopNumber"] = station.Loops.Count;
+                    station.StationStatistics["GCNumber"] = station.Equipments.Count;
+                    var loopIDs = station.Loops.Select(loop => loop.ID);
                     List<StationLoopDiagnosticData> loopDiagnosticDatas = await _diagnosisService.GetLoopDiagnosticDataByStation(station.ID);
-                    List<StationEquipmentDiagnosticData> equipmentDiagnosticDatas = await _diagnosisService.GetEquipmentDiagnosticDataByStation(station.ID);
-                    List<AlarmCount> alarmCounts = await _alarmService.GetAlarmCountByStation(station);
+                    List<string> LoopTemperatureInuseTagsNames = station.Loops.Select(loop => station.AbbrName + "_" + loop.AbbrName + "_TemperatureInuse").ToList();
+                    List<string> GCC1TagsNames = station.Equipments.Select(quuipment => station.AbbrName + "_" + quuipment.AbbrName + "_C1").ToList();
+                    List<PDBTag> stationTags = await _PDBService.GetLoopTagsByStation(station);
+
+                    var CommunicateBadLoopNumber = stationTags.Where(tag => LoopTemperatureInuseTagsNames.Contains(tag.Name) && tag.Value.Contains("?")).Count();
+                    var CommunicateBadGCNumber = stationTags.Where(tag => GCC1TagsNames.Contains(tag.Name) && tag.Value.Contains("?")).Count();
+                    station.StationStatistics["CommunicateBadLoopNumber"] = CommunicateBadLoopNumber;
+                    station.StationStatistics["CommunicateBadGCNumber"] = CommunicateBadGCNumber;
+                    station.StationStatistics["CommunicateGoodLoopNumber"] = station.Loops.Count - CommunicateBadLoopNumber;
+                    station.StationStatistics["CommunicateGoodGCNumber"] = station.Equipments.Count - CommunicateBadGCNumber;
+                    station.StationStatistics["CommunicationGoodRate"] = ((station.Loops.Count - CommunicateBadLoopNumber) + (station.Loops.Count - CommunicateBadGCNumber)) / (station.Loops.Count + station.Equipments.Count);
+                    station.StationStatistics["InUseLoopNumber"] = loopDiagnosticDatas.Where(data => loopIDs.Contains(data.ID) && data.LoopStatus.Contains("在用")).Count();
+                    List<string> LoopGrossFlowrateTagsNames = station.Loops.Select(loop => station.AbbrName + "_" + loop.AbbrName + "_GrossFlowrate").ToList();
+                    List<string> LoopForwordPreDayGrossCumulativeTagsNames = station.Loops.Select(loop => station.AbbrName + "_" + loop.AbbrName + "_ForwordPreDayGrossCumulative").ToList();
+                    station.StationStatistics["TotalLoopGrossFlowrate"] = (stationTags.Where(tag => LoopGrossFlowrateTagsNames.Contains(tag.Name) && !tag.Value.Contains("?")).ToList().Select(data => data.Value)).ToList().ConvertAll(s => Convert.ToDouble(s)).Sum();
+                    station.StationStatistics["TotalLoopForwordPreDayGrossCumulative"] = (stationTags.Where(tag => LoopForwordPreDayGrossCumulativeTagsNames.Contains(tag.Name) && !tag.Value.Contains("?")).ToList().Select(data => data.Value)).ToList().ConvertAll(s => Convert.ToDouble(s)).Sum();
+                    //实时报警
+                    List<string> alarmAreas = new List<string>();
                     foreach (StationLoop loop in station.Loops)
                     {
-                        loop.LoopTags = stationTags.Where(tag => tag.Name.Split('_')[1] == loop.AbbrName).ToList();
-                        loop.LoopStatus = loopDiagnosticDatas.FirstOrDefault(diagnosticdata => diagnosticdata.ID == loop.ID) == null ? "停用" : loopDiagnosticDatas.FirstOrDefault(diagnosticdata => diagnosticdata.ID == loop.ID).LoopStatus;
-                        loop.AlarmCount = alarmCounts.Where(count => count.Name == loop.AbbrName).Count();
-                        PDBTag standardTemperature = stationTags.FirstOrDefault(tag => tag.Name.Contains(station.AbbrName + "_" + loop.AbbrName + "_Temperature"));
-                        PDBTag standardPressure = stationTags.FirstOrDefault(tag => tag.Name.Contains(station.AbbrName + "_" + loop.AbbrName + "_Pressure"));
-                        if (standardTemperature != null && standardPressure != null)
-                        {
-                            if (standardTemperature.Value.Contains("??") && standardPressure.Value.Contains("??"))
-                            {
-                                standardTemperature.Value = "25"; standardPressure.Value = "101";
-                                bool temParameterStatus = Convert.ToDouble(standardTemperature.Value) == 25 ? true : false;
-                                bool preParameterStatus = Convert.ToDouble(standardPressure.Value) == 101 ? true : false;
-                                loop.StandardParameterStatus = temParameterStatus && preParameterStatus;
-                            }
-                        }
-                        stationLoops.Add(loop);
+                        alarmAreas.Add(station.AbbrName + "Station_" + loop.AbbrName + "_FM");
+                        alarmAreas.Add(station.AbbrName + "Station_" + loop.AbbrName + "_FC");
+                        alarmAreas.Add(station.AbbrName + "Station_" + loop.AbbrName + "_PT");
+                        alarmAreas.Add(station.AbbrName + "Station_" + loop.AbbrName + "_TT");
                     }
-                  
-                    foreach (StationEquipment stationEquipment in station.Equipments) 
-                    {
-                        stationEquipment.EquipmentTags = stationTags.Where(tag => tag.Name.Split('_')[1] == stationEquipment.AbbrName).ToList();
-                        stationEquipment.AlarmCount = alarmCounts.Where(x => x.Name == stationEquipment.AbbrName).Count();
-                        stationEquipment.EquipmentStatus = equipmentDiagnosticDatas.FirstOrDefault(diagnosticdata => diagnosticdata.ID == stationEquipment.ID) == null ? "停用" : equipmentDiagnosticDatas.FirstOrDefault(diagnosticdata => diagnosticdata.ID == stationEquipment.ID).Result;
-                        stationEquipments.Add(stationEquipment);
-                    }
-                    //station.Loops = stationLoops;
-                    //station.Equipments = stationEquipments;
+                    station.StationStatistics["HIGHRealtimeAlarm"] = (await _alarmService.GetRealtimeAlarm(alarmAreas, new List<string>() { "HIGH" })).Count();
+                    station.StationStatistics["LOWRealtimeAlarm"] = (await _alarmService.GetRealtimeAlarm(alarmAreas, new List<string>() { "LOW" })).Count();
+                    station.StationStatistics["CRITICALRealtimeAlarm"] = (await _alarmService.GetRealtimeAlarm(alarmAreas, new List<string>() { "CRITICAL" })).Count();
+
                 }
                 rtn["Data"] = stations;
                 rtn["MSG"] = "OK";

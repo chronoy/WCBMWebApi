@@ -19,16 +19,23 @@ namespace Models
         public string? Description { get; set; }
         public int AreaID { get; set; }
         public int CollectorID { get; set; }
+        public List<StationLoop> Loops { get; set; } = new List<StationLoop>();
+        public List<StationEquipment> Equipments { get; set; } = new List<StationEquipment>();
         [NotMapped]
         public string IPAddress { get; set; }
         [NotMapped]
         public string IPPort { get; set; }
+        [NotMapped]
+        public string CompanyName { get; set; }
         [NotMapped]
         public int CompanyID {  get; set; }
         public List<StationLoop> Loops { get; set; } = new List<StationLoop>();
         public List<StationEquipment> Equipments { get; set; } = new List<StationEquipment>();
         [NotMapped]
         public Dictionary<string, object> StationStatistics { get; set; } = new Dictionary<string, object>();
+
+    
+
     }
 }
 

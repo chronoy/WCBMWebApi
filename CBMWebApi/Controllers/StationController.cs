@@ -163,5 +163,12 @@ namespace CBMWebApi.Controllers
             rtn["Data"] = details;
             return rtn;
         }
+
+        [HttpGet]
+        public List<PDBTag> PDB()
+        {
+            return _PDBService.GetAllPDBTags();
+        }
+
     }
 }
