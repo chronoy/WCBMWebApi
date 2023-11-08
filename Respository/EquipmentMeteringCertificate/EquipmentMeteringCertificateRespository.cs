@@ -65,12 +65,15 @@ namespace Respository
                 var equipment = _context.Equipments.FirstOrDefault(x => x.SerialNumber == entity.EquipmentSerialNumber);
                 if (equipment != null)
                 {
-                    equipment.VerificationEndDate = entity.VerificationDate;
-                    DateTime time = DateTime.MinValue + (entity.ValidityDate - entity.VerificationDate);
-                    equipment.VerificationPeriod = (time.Year - 1) * 12 + time.Month - 1;
-                    equipment.VerificationAgency = entity.Agency;
-                    equipment.VerificationCertificateNumber = entity.CertificateNumber;
-                    _context.Equipments.Update(equipment);
+                    if (equipment.VerificationEndDate != null && equipment.VerificationEndDate < entity.VerificationDate)
+                    {
+                        equipment.VerificationEndDate = entity.VerificationDate;
+                        DateTime time = DateTime.MinValue + (entity.ValidityDate - entity.VerificationDate);
+                        equipment.VerificationPeriod = (time.Year - 1) * 12 + time.Month - 1;
+                        equipment.VerificationAgency = entity.Agency;
+                        equipment.VerificationCertificateNumber = entity.CertificateNumber;
+                        _context.Equipments.Update(equipment);
+                    }
                     _context.EquipmentMeteringCertificates.Add(entity);
                     _context.SaveChanges();
                     _context.Entry(entity);
@@ -115,12 +118,15 @@ namespace Respository
                 var equipment = _context.Equipments.FirstOrDefault(x => x.SerialNumber == entity.EquipmentSerialNumber);
                 if (equipment != null)
                 {
-                    equipment.VerificationEndDate = entity.VerificationDate;
-                    DateTime time = DateTime.MinValue + (entity.ValidityDate - entity.VerificationDate);
-                    equipment.VerificationPeriod = (time.Year - 1) * 12 + time.Month - 1;
-                    equipment.VerificationAgency = entity.Agency;
-                    equipment.VerificationCertificateNumber = entity.CertificateNumber;
-                    _context.Equipments.Update(equipment);
+                    if (equipment.VerificationEndDate != null && equipment.VerificationEndDate < entity.VerificationDate)
+                    {
+                        equipment.VerificationEndDate = entity.VerificationDate;
+                        DateTime time = DateTime.MinValue + (entity.ValidityDate - entity.VerificationDate);
+                        equipment.VerificationPeriod = (time.Year - 1) * 12 + time.Month - 1;
+                        equipment.VerificationAgency = entity.Agency;
+                        equipment.VerificationCertificateNumber = entity.CertificateNumber;
+                        _context.Equipments.Update(equipment);
+                    }
                     _context.EquipmentMeteringCertificates.Update(entity);
 
                     if (entity.MeteringCheckedDatas != null)
