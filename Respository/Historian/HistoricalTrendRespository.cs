@@ -28,6 +28,8 @@ namespace Respository
                                        Address = $"{IFIXNodeName}:{trendTag.Address}",
                                        HighLimit = trendTag.HighLimit,
                                        LowLimit = trendTag.LowLimit,
+                                       Unit = trendTag.Unit,
+                                       Precision = trendTag.Precision,
                                        Description = trendTag.Description,
                                    }).ToList();
             return historicalTrend;

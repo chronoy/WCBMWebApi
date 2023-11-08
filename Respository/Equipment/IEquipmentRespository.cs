@@ -4,7 +4,7 @@ namespace Respository
 {
     public interface IEquipmentRespository
     {
-        public List<Equipment> GetEquipments(string? company, string? line, string? station, string? category, string? model, string? manufacturer);
+        public List<Equipment> GetEquipments(string? companyId, string? lineId, string? stationId, string? categoryId, string? modelId, string? manufacturerId);
 
         public string AddEquipment(Equipment entity);
 
