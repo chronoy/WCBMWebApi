@@ -17,37 +17,43 @@ namespace Respository
             _context = context;
         }
 
-        public List<Equipment> GetEquipments(string? company, string? line, string? station, string? category, string? model, string? manufacturer)
+        public List<Equipment> GetEquipments(string? companyId, string? lineId, string? stationId, string? categoryId, string? modelId, string? manufacturerId)
         {
             IEnumerable<Equipment> result = from e in _context.Equipments select e;
 
-            if (!string.IsNullOrEmpty(company))
+            if (!string.IsNullOrEmpty(companyId))
             {
-                string[] companies = company.Split(",");
-                result = result.Where(x => companies.Contains(x.CompanyName));
-                if (!string.IsNullOrEmpty(station))
+                int[] companyIds = Array.ConvertAll(companyId.Split(','), int.Parse);
+                if (!string.IsNullOrEmpty(stationId))
                 {
-                    string[] stations = station.Split(",");
-                    result = result.Where(x => stations.Contains(x.StationName));
+                    int[] stationIds = Array.ConvertAll(stationId.Split(","), int.Parse);
+                    string[] stations = (from c in _context.companies
+                                         where companyIds.Contains(c.ID)
+                                         join a in _context.Areas on c.ID equals a.CompanyID
+                                         join s in _context.Stations on a.ID equals s.AreaID
+                                         where stationIds.Contains(s.ID)
+                                         select $"{c.Name}_{s.Name}").ToArray();
+                    result = result.Where(x => stations.Contains($"{x.CompanyName}_{x.StationName}"));
                 }
                 else
                 {
-                    int[] companyIds = _context.EquipmentCompanies.Where(x => companies.Contains(x.Name)).Select(s => s.ID).ToArray();
-                    string[] stations = _context.EquipmentStations.Where(x => companyIds.Contains(x.EquipmentCompanyID)).Select(s => s.Name).ToArray();
-                    result = result.Where(x => stations.Contains(x.StationName));
+                    string[] stations = (from c in _context.companies
+                                         where companyIds.Contains(c.ID)
+                                         join a in _context.Areas on c.ID equals a.CompanyID
+                                         join s in _context.Stations on a.ID equals s.AreaID
+                                         select $"{c.Name}_{s.Name}").ToArray();
+                    result = result.Where(x => stations.Contains($"{x.CompanyName}_{x.StationName}"));
                 }
             }
             else
             {
-                int[] companyIds = _context.EquipmentCompanies.Select(s => s.ID).ToArray();
-                string[] companies = _context.EquipmentCompanies.Select(s => s.Name).ToArray();
-                string[] stations = _context.EquipmentStations.Where(x => companyIds.Contains(x.EquipmentCompanyID)).Select(s => s.Name).ToArray();
-                result = result.Where(x => companies.Contains(x.CompanyName) && stations.Contains(x.StationName));
+                return new List<Equipment>();
             }
 
-            if (!string.IsNullOrEmpty(line))
+            if (!string.IsNullOrEmpty(lineId))
             {
-                string[] lines = line.Split(",");
+                int[] lineIds = Array.ConvertAll(lineId.Split(','), int.Parse);
+                string[] lines = _context.EquipmentLines.Where(x => lineIds.Contains(x.ID)).Select(s => s.Name).ToArray();
                 result = result.Where(x => lines.Contains(x.LineName));
             }
             else
@@ -56,9 +62,10 @@ namespace Respository
                 result = result.Where(x => lines.Contains(x.LineName));
             }
 
-            if (!string.IsNullOrEmpty(category))
+            if (!string.IsNullOrEmpty(categoryId))
             {
-                string[] categories = category.Split(",");
+                int[] categoryIds = Array.ConvertAll(categoryId.Split(','), int.Parse);
+                string[] categories = _context.EquipmentCategories.Where(x => categoryIds.Contains(x.ID)).Select(x => x.Name).ToArray();
                 result = result.Where(x => categories.Contains(x.Category));
             }
             else
@@ -67,9 +74,10 @@ namespace Respository
                 result = result.Where(x => categories.Contains(x.Category));
             }
 
-            if (!string.IsNullOrEmpty(manufacturer))
+            if (!string.IsNullOrEmpty(manufacturerId))
             {
-                string[] manufacturers = manufacturer.Split(",");
+                int[] manufacturerIds = Array.ConvertAll(manufacturerId.Split(','), int.Parse);
+                string[] manufacturers = _context.EquipmentManufacturers.Where(x => manufacturerIds.Contains(x.ID)).Select(s => s.Name).ToArray();
                 result = result.Where(x => manufacturers.Contains(x.Manufacturer));
             }
             else
@@ -78,19 +86,27 @@ namespace Respository
                 result = result.Where(x => manufacturers.Contains(x.Manufacturer));
             }
 
-            if (!string.IsNullOrEmpty(manufacturer) && !string.IsNullOrEmpty(category) && !string.IsNullOrEmpty(model))
+            if (!string.IsNullOrEmpty(modelId))
             {
-                string[] models = model.Split(",");
-                result = result.Where(x => models.Contains(x.EquipmentModel));
+                int[] modelIds = Array.ConvertAll(modelId.Split(','), int.Parse);
+                string[] models = (from model in _context.EquipmentModels
+                                   where modelIds.Contains(model.ID)
+                                   join m in _context.EquipmentManufacturers on model.EquipmentManufacturerID equals m.ID
+                                   join c in _context.EquipmentCategories on model.EquipmentCategoryID equals c.ID
+                                   select $"{c.Name}_{m.Name}_{model.Name}").ToArray();
+                result = result.Where(x => models.Contains($"{x.Category}_{x.Manufacturer}_{x.EquipmentModel}"));
             }
             else
             {
                 int[] categoryIds = _context.EquipmentCategories.Select(s => s.ID).ToArray();
                 int[] manufacturerIds = _context.EquipmentManufacturers.Select(s => s.ID).ToArray();
-                string[] categories = _context.EquipmentCategories.Select(x => x.Name).ToArray();
-                string[] manufacturers = _context.EquipmentManufacturers.Select(s => s.Name).ToArray();
-                string[] models = _context.EquipmentModels.Where(x => categoryIds.Contains(x.EquipmentCategoryID) && manufacturerIds.Contains(x.EquipmentManufacturerID)).Select(s => s.Name).ToArray();
-                result = result.Where(x => categories.Contains(x.Category) && manufacturers.Contains(x.Manufacturer) && models.Contains(x.EquipmentModel));
+                int[] modelIds = _context.EquipmentModels.Where(x => categoryIds.Contains(x.EquipmentCategoryID) && manufacturerIds.Contains(x.EquipmentManufacturerID)).Select(s => s.ID).ToArray();
+                string[] models = (from model in _context.EquipmentModels
+                                   where modelIds.Contains(model.ID)
+                                   join m in _context.EquipmentManufacturers on model.EquipmentManufacturerID equals m.ID
+                                   join c in _context.EquipmentCategories on model.EquipmentCategoryID equals c.ID
+                                   select $"{c.Name}_{m.Name}_{model.Name}").ToArray();
+                result = result.Where(x => models.Contains($"{x.Category}_{x.Manufacturer}_{x.EquipmentModel}"));
             }
 
             return result.ToList();

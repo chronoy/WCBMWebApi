@@ -43,6 +43,8 @@ namespace Services
                     trend["Address"] = trendInfo.Address;
                     trend["HighLimit"] = trendInfo.HighLimit;
                     trend["LowLimit"] = trendInfo.LowLimit;
+                    trend["Unit"] = trendInfo.Unit;
+                    trend["Precision"] = trendInfo.Precision;
                     trend["Description"] = trendInfo.Description;
                     trends.Add(trend);
                 }

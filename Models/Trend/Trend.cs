@@ -12,6 +12,8 @@ namespace Models
         public string Address { get; set; }
         public double HighLimit { get; set; }
         public double LowLimit { get; set; }
+        public string Unit { get; set; }
+        public int Precision { get; set; }
         public string Description { get; set; }
     }
 }
