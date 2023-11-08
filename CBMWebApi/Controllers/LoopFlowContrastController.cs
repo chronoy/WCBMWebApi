@@ -99,14 +99,15 @@ namespace CBMWebApi.Controllers
         public async Task<Dictionary<string, object>> FinishLoopFlowContrastConfig([FromForm] int id)
         {
             Dictionary<string, object> rtn = new Dictionary<string, object>();
-            if (await _loopFlowContrastService.FinishLoopFlowContrastConfig(id) == "OK")
+            var result = await _loopFlowContrastService.FinishLoopFlowContrastConfig(id);
+            if (result == "OK")
             {
                 rtn["MSG"] = "OK";
                 rtn["Code"] = "200";
             }
             else
             {
-                rtn["MSG"] = "OtherError";
+                rtn["MSG"] = result;
                 rtn["Code"] = "400";
             }
             return rtn;
