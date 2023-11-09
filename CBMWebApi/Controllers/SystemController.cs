@@ -101,7 +101,12 @@ namespace CBMWebApi.Controllers
                     station.StationStatistics["CommunicateBadGCNumber"] = CommunicateBadGCNumber;
                     station.StationStatistics["CommunicateGoodLoopNumber"] = station.Loops.Count - CommunicateBadLoopNumber;
                     station.StationStatistics["CommunicateGoodGCNumber"] = station.Equipments.Count - CommunicateBadGCNumber;
-                    station.StationStatistics["CommunicationGoodRate"] = ((station.Loops.Count - CommunicateBadLoopNumber) + (station.Loops.Count - CommunicateBadGCNumber)) / (station.Loops.Count + station.Equipments.Count);
+                    if ((station.Loops.Count + station.Equipments.Count) != 0)
+                        station.StationStatistics["CommunicationGoodRate"] = (((station.Loops.Count - CommunicateBadLoopNumber) + (station.Equipments.Count - CommunicateBadGCNumber)) * 100) / (station.Loops.Count + station.Equipments.Count);
+                    else
+                    {
+                        station.StationStatistics["CommunicationGoodRate"] = 0;
+                    }    
                     station.StationStatistics["InUseLoopNumber"] = loopDiagnosticDatas.Where(data => loopIDs.Contains(data.ID) && data.LoopStatus.Contains("在用")).Count();
                     List<string> LoopGrossFlowrateTagsNames = station.Loops.Select(loop => station.AbbrName + "_" + loop.AbbrName + "_GrossFlowrate").ToList();
                     List<string> LoopForwordPreDayGrossCumulativeTagsNames = station.Loops.Select(loop => station.AbbrName + "_" + loop.AbbrName + "_ForwordPreDayGrossCumulative").ToList();
