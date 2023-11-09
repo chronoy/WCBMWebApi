@@ -9,6 +9,7 @@ namespace Respository
 {
     public interface IStationLoopRespository
     {
+        public StationLoop GetStationLoopByID(int ID);
         public List<StationLoop> GetStationLoops();
         public List<StationLoop> GetStationLoopsByStation(int ID);
     }

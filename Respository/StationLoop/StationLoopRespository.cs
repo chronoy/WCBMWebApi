@@ -15,6 +15,11 @@ namespace Respository
             _context = context;
         }
 
+        public StationLoop GetStationLoopByID(int ID)
+        {
+            return _context.StationLoops.FirstOrDefault(obj => obj.ID == ID);
+        }
+
         public List<StationLoop> GetStationLoops()
         {
             return _context.StationLoops.ToList();  
