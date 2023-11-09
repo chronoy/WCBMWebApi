@@ -15,5 +15,6 @@ namespace Services
         public Task<bool> DeleteLoopFlowContrastConfig(int configID);
         public Task<string> FinishLoopFlowContrastConfig(int configID);
         public Task<LoopFlowContrastRecord> GetLoopFlowContrastRecord(int configID);
+        public Task<byte[]> ExportLoopFlowContrastReport(int configID, string templatePath);
     }
 }

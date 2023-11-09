@@ -67,7 +67,7 @@ namespace CBMWebApi.Controllers
                     float temperrature = 0;
                     if (float.TryParse(temp, out temperrature))
                     {
-                        if (temperrature == 20)
+                        if (temperrature == 20f)
                         {
                             loopConditon["TemperatureConditon"] = false;
                         }
@@ -84,7 +84,7 @@ namespace CBMWebApi.Controllers
                     float pressure = 0;
                     if (float.TryParse(pres, out pressure))
                     {
-                        if (pressure == 101.325)
+                        if (pressure == 101.325f)
                         {
                             loopConditon["PressureConditon"] = false;
                         }
