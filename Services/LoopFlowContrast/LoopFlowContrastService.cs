@@ -1,8 +1,11 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Models;
+using OfficeOpenXml;
+using OfficeOpenXml.Style;
 using Respository;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,11 +18,19 @@ namespace Services
         private readonly ILoopFlowContrastRespository _respository;
         private IConfiguration _configuration;
         private readonly IHistoricalTrendService _historicalTrendService;
-        public LoopFlowContrastService(ILoopFlowContrastRespository respository, IConfiguration configuration, IHistoricalTrendService historicalTrendService)
+        private readonly IStationRespository _stationRespository;
+        private readonly IStationLoopRespository _loopRespository;
+        public LoopFlowContrastService(ILoopFlowContrastRespository respository, 
+                                        IConfiguration configuration, 
+                                        IHistoricalTrendService historicalTrendService, 
+                                        IStationRespository stationRespository,
+                                        IStationLoopRespository loopRespository)
         {
             _respository = respository;
             _configuration = configuration;
             _historicalTrendService = historicalTrendService;
+            _stationRespository = stationRespository;
+            _loopRespository = loopRespository;
         }
 
         public Task<List<LoopFlowContrastConfig>> GetLoopFlowContrastConfigs(int stationID, List<int> contrastStates, DateTime beginDateTime, DateTime endDateTime)
@@ -141,6 +152,217 @@ namespace Services
         {
             TimeSpan duration = endTime.Subtract(startTime);
             return duration.Days.ToString() + ":" + duration.Hours.ToString() + ":" + duration.Minutes.ToString() + ":" + duration.Seconds.ToString();
+        }
+
+        public async Task<byte[]> ExportLoopFlowContrastReport(int configID, string templatePath)
+        {
+            LoopFlowContrastRecord record = await GetLoopFlowContrastRecord(configID);
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+
+            FileInfo existingFile = new(templatePath);
+            using ExcelPackage package = new(existingFile);
+            ExcelWorksheet workSheet = package.Workbook.Worksheets[0];
+            #region 写入数据
+            if (record != null)
+            {
+                var station = _stationRespository.GetStationByID(record.StationID);
+                var inUseLoop = _loopRespository.GetStationLoopByID(record.InUseLoopID);
+                var contrastLoop = _loopRespository.GetStationLoopByID(record.ContrastLoopID);
+
+                // 站名          
+                workSheet.Cells[1, 1].Value = $"{station.Name}计量支路流量比对报告";
+
+                // 设备厂家
+                workSheet.Cells[2, 2].Value = inUseLoop.FlowmeterManufacturer;
+                workSheet.Cells[2, 2].Style.Font.Color.SetColor(Color.Black);//字体颜色
+                workSheet.Cells[2, 2].Style.Font.Name = "宋体";//字体
+                workSheet.Cells[2, 2].Style.Font.Size = 10;//字体大小
+                workSheet.Cells[2, 2].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;//水平
+
+                // 型号
+                workSheet.Cells[3, 2].Value = inUseLoop.FlowmeterModel;
+                workSheet.Cells[3, 2].Style.Font.Color.SetColor(Color.Black);//字体颜色
+                workSheet.Cells[3, 2].Style.Font.Name = "宋体";//字体
+                workSheet.Cells[3, 2].Style.Font.Size = 10;//字体大小
+                workSheet.Cells[3, 2].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;//水平
+
+                // 日期
+                workSheet.Cells[2, 4].Value = DateTime.Now.ToString("yyyy/MM/dd");
+                workSheet.Cells[2, 4].Style.Font.Color.SetColor(Color.Black);//字体颜色
+                workSheet.Cells[2, 4].Style.Font.Name = "宋体";//字体
+                workSheet.Cells[2, 4].Style.Font.Size = 10;//字体大小
+                workSheet.Cells[2, 4].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;//水平
+
+                // 在用支路\比对支路位号
+                workSheet.Cells[3, 4].Value = $"{inUseLoop.Name}\\{contrastLoop.Name}";
+                workSheet.Cells[3, 4].Style.Font.Color.SetColor(Color.Black);//字体颜色
+                workSheet.Cells[3, 4].Style.Font.Name = "宋体";//字体
+                workSheet.Cells[3, 4].Style.Font.Size = 10;//字体大小
+                workSheet.Cells[3, 4].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;//水平
+
+                // 比对支路开始标况
+                workSheet.Cells[7, 2].Value = record.ContrastLoopStartForwordStandardCumulative;
+                workSheet.Cells[7, 2].Style.Font.Color.SetColor(Color.Black);//字体颜色
+                workSheet.Cells[7, 2].Style.Font.Name = "宋体";//字体
+                workSheet.Cells[7, 2].Style.Font.Size = 10;//字体大小
+                workSheet.Cells[7, 2].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;//水平
+
+                // 比对支路开始工况
+                workSheet.Cells[7, 3].Value = record.ContrastLoopStartForwordGrossCumulative;
+                workSheet.Cells[7, 3].Style.Font.Color.SetColor(Color.Black);//字体颜色
+                workSheet.Cells[7, 3].Style.Font.Name = "宋体";//字体
+                workSheet.Cells[7, 3].Style.Font.Size = 10;//字体大小
+                workSheet.Cells[7, 3].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;//水平
+
+                // 比对支路开始压力
+                workSheet.Cells[8, 2].Value = record.ContrastLoopStartPressure;
+                workSheet.Cells[8, 2].Style.Font.Color.SetColor(Color.Black);//字体颜色
+                workSheet.Cells[8, 2].Style.Font.Name = "宋体";//字体
+                workSheet.Cells[8, 2].Style.Font.Size = 10;//字体大小
+                workSheet.Cells[8, 2].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;//水平
+
+                // 比对支路开始温度
+                workSheet.Cells[9, 2].Value = record.ContrastLoopStartTemperature;
+                workSheet.Cells[9, 2].Style.Font.Color.SetColor(Color.Black);//字体颜色
+                workSheet.Cells[9, 2].Style.Font.Name = "宋体";//字体
+                workSheet.Cells[9, 2].Style.Font.Size = 10;//字体大小
+                workSheet.Cells[9, 2].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;//水平
+
+                // 在用支路开始标况
+                workSheet.Cells[7, 5].Value = record.InUseLoopStartForwordStandardCumulative;
+                workSheet.Cells[7, 5].Style.Font.Color.SetColor(Color.Black);//字体颜色
+                workSheet.Cells[7, 5].Style.Font.Name = "宋体";//字体
+                workSheet.Cells[7, 5].Style.Font.Size = 10;//字体大小
+                workSheet.Cells[7, 5].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;//水平
+
+                // 在用支路开始工况
+                workSheet.Cells[7, 6].Value = record.InUseLoopStartForwordGrossCumulative;
+                workSheet.Cells[7, 6].Style.Font.Color.SetColor(Color.Black);//字体颜色
+                workSheet.Cells[7, 6].Style.Font.Name = "宋体";//字体
+                workSheet.Cells[7, 6].Style.Font.Size = 10;//字体大小
+                workSheet.Cells[7, 6].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;//水平
+
+                // 在用支路开始压力
+                workSheet.Cells[8, 5].Value = record.InUseLoopStartPressure;
+                workSheet.Cells[8, 5].Style.Font.Color.SetColor(Color.Black);//字体颜色
+                workSheet.Cells[8, 5].Style.Font.Name = "宋体";//字体
+                workSheet.Cells[8, 5].Style.Font.Size = 10;//字体大小
+                workSheet.Cells[8, 5].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;//水平
+
+                // 在用支路开始温度
+                workSheet.Cells[9, 5].Value = record.InUseLoopStartTemperature;
+                workSheet.Cells[9, 5].Style.Font.Color.SetColor(Color.Black);//字体颜色
+                workSheet.Cells[9, 5].Style.Font.Name = "宋体";//字体
+                workSheet.Cells[9, 5].Style.Font.Size = 10;//字体大小
+                workSheet.Cells[9, 5].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;//水平
+
+                // 比对时长
+                workSheet.Cells[11, 1].Value += record.StartDateTime.ToString("yyyy/MM/dd HH:mm:ss");
+                workSheet.Cells[11, 3].Value += record.EndDateTime.ToString("yyyy/MM/dd HH:mm:ss");
+                workSheet.Cells[11, 5].Value += $"{Math.Abs(record.EndDateTime.Subtract(record.StartDateTime).TotalHours)} 小时";
+
+                // 比对支路结束标况
+                workSheet.Cells[15, 2].Value = record.ContrastLoopEndForwordStandardCumulative;
+                workSheet.Cells[15, 2].Style.Font.Color.SetColor(Color.Black);//字体颜色
+                workSheet.Cells[15, 2].Style.Font.Name = "宋体";//字体
+                workSheet.Cells[15, 2].Style.Font.Size = 10;//字体大小
+                workSheet.Cells[15, 2].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;//水平
+
+                // 比对支路结束工况
+                workSheet.Cells[15, 3].Value = record.ContrastLoopEndForwordGrossCumulative;
+                workSheet.Cells[15, 3].Style.Font.Color.SetColor(Color.Black);//字体颜色
+                workSheet.Cells[15, 3].Style.Font.Name = "宋体";//字体
+                workSheet.Cells[15, 3].Style.Font.Size = 10;//字体大小
+                workSheet.Cells[15, 3].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;//水平
+
+                // 比对支路结束压力
+                workSheet.Cells[16, 2].Value = record.ContrastLoopEndPressure;
+                workSheet.Cells[16, 2].Style.Font.Color.SetColor(Color.Black);//字体颜色
+                workSheet.Cells[16, 2].Style.Font.Name = "宋体";//字体
+                workSheet.Cells[16, 2].Style.Font.Size = 10;//字体大小
+                workSheet.Cells[16, 2].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;//水平
+
+                // 比对支路结束温度
+                workSheet.Cells[17, 2].Value = record.ContrastLoopEndTemperature;
+                workSheet.Cells[17, 2].Style.Font.Color.SetColor(Color.Black);//字体颜色
+                workSheet.Cells[17, 2].Style.Font.Name = "宋体";//字体
+                workSheet.Cells[17, 2].Style.Font.Size = 10;//字体大小
+                workSheet.Cells[17, 2].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;//水平
+
+                // 在用支路结束标况
+                workSheet.Cells[15, 5].Value = record.InUseLoopEndForwordStandardCumulative;
+                workSheet.Cells[15, 5].Style.Font.Color.SetColor(Color.Black);//字体颜色
+                workSheet.Cells[15, 5].Style.Font.Name = "宋体";//字体
+                workSheet.Cells[15, 5].Style.Font.Size = 10;//字体大小
+                workSheet.Cells[15, 5].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;//水平
+
+                // 在用支路结束工况
+                workSheet.Cells[15, 6].Value = record.InUseLoopEndForwordGrossCumulative;
+                workSheet.Cells[15, 6].Style.Font.Color.SetColor(Color.Black);//字体颜色
+                workSheet.Cells[15, 6].Style.Font.Name = "宋体";//字体
+                workSheet.Cells[15, 6].Style.Font.Size = 10;//字体大小
+                workSheet.Cells[15, 6].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;//水平
+
+                // 在用支路结束压力
+                workSheet.Cells[16, 5].Value = record.InUseLoopEndPressure;
+                workSheet.Cells[16, 5].Style.Font.Color.SetColor(Color.Black);//字体颜色
+                workSheet.Cells[16, 5].Style.Font.Name = "宋体";//字体
+                workSheet.Cells[16, 5].Style.Font.Size = 10;//字体大小
+                workSheet.Cells[16, 5].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;//水平
+
+                // 在用支路结束温度
+                workSheet.Cells[17, 5].Value = record.InUseLoopEndTemperature;
+                workSheet.Cells[17, 5].Style.Font.Color.SetColor(Color.Black);//字体颜色
+                workSheet.Cells[17, 5].Style.Font.Name = "宋体";//字体
+                workSheet.Cells[17, 5].Style.Font.Size = 10;//字体大小
+                workSheet.Cells[17, 5].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;//水平
+
+                // 在用支路声速核查结果
+                workSheet.Cells[20, 4].Value = record.InUseLoopFCCalculatedVOSDeviationRate;
+                workSheet.Cells[20, 4].Style.Font.Color.SetColor(Color.Black);//字体颜色
+                workSheet.Cells[20, 4].Style.Font.Name = "宋体";//字体
+                workSheet.Cells[20, 4].Style.Font.Size = 10;//字体大小
+                workSheet.Cells[20, 4].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;//水平
+
+                // 比对支路声速核查结果
+                workSheet.Cells[20, 6].Value = record.ContrastLoopFCCalculatedVOSDeviationRate;
+                workSheet.Cells[20, 6].Style.Font.Color.SetColor(Color.Black);//字体颜色
+                workSheet.Cells[20, 6].Style.Font.Name = "宋体";//字体
+                workSheet.Cells[20, 6].Style.Font.Size = 10;//字体大小
+                workSheet.Cells[20, 6].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;//水平
+
+                // 在用支路最大声速偏差
+                workSheet.Cells[21, 4].Value = record.InUseLoopVOSMaxDeviation;
+                workSheet.Cells[21, 4].Style.Font.Color.SetColor(Color.Black);//字体颜色
+                workSheet.Cells[21, 4].Style.Font.Name = "宋体";//字体
+                workSheet.Cells[21, 4].Style.Font.Size = 10;//字体大小
+                workSheet.Cells[21, 4].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;//水平
+
+                // 比对支路最大声速偏差
+                workSheet.Cells[21, 6].Value = record.ContrastLoopVOSMaxDeviation;
+                workSheet.Cells[21, 6].Style.Font.Color.SetColor(Color.Black);//字体颜色
+                workSheet.Cells[21, 6].Style.Font.Name = "宋体";//字体
+                workSheet.Cells[21, 6].Style.Font.Size = 10;//字体大小
+                workSheet.Cells[21, 6].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;//水平
+
+                // 工况比对结果
+                workSheet.Cells[22, 3].Value = record.ForwordGrossContrastResult;
+                workSheet.Cells[22, 3].Style.Font.Color.SetColor(Color.Black);//字体颜色
+                workSheet.Cells[22, 3].Style.Font.Name = "宋体";//字体
+                workSheet.Cells[22, 3].Style.Font.Size = 10;//字体大小
+                workSheet.Cells[22, 3].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;//水平
+
+                // 标况比对结果
+                workSheet.Cells[23, 3].Value = record.ForwordStandardContrastResult;
+                workSheet.Cells[23, 3].Style.Font.Color.SetColor(Color.Black);//字体颜色
+                workSheet.Cells[23, 3].Style.Font.Name = "宋体";//字体
+                workSheet.Cells[23, 3].Style.Font.Size = 10;//字体大小
+                workSheet.Cells[23, 3].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;//水平
+            }
+            #endregion
+
+            byte[] result = package.GetAsByteArray();
+            return result;
         }
     }
 }
