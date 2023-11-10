@@ -180,11 +180,11 @@ namespace CBMCenterApi.Controllers
         }
 
         [HttpPost]
-        public async Task<Dictionary<string, object>> GetEquipmentStation([FromForm] int companyID)
+        public async Task<Dictionary<string, object>> GetEquipmentStation([FromForm] List<int> companyIds)
         {
             Dictionary<string, object> rtn = new Dictionary<string, object>();
 
-            var equipmentStations = await _equipmentParameterService.GetEquipmentParameters<EquipmentStation>(x => x.EquipmentCompanyID == companyID);
+            var equipmentStations = await _equipmentParameterService.GetEquipmentParameters<EquipmentStation>(x => companyIds.Contains(x.EquipmentCompanyID));
             if (equipmentStations == null)
             {
                 rtn["MSG"] = "OtherError";
@@ -344,11 +344,11 @@ namespace CBMCenterApi.Controllers
         }
 
         [HttpPost]
-        public async Task<Dictionary<string, object>> GetEquipmentModel([FromForm] int categoryID, [FromForm] int manufacturerID)
+        public async Task<Dictionary<string, object>> GetEquipmentModel([FromForm] List<int> categoryIds, [FromForm] List<int> manufacturerIds)
         {
             Dictionary<string, object> rtn = new Dictionary<string, object>();
 
-            var equipmentModels = await _equipmentParameterService.GetEquipmentParameters<EquipmentModel>(x => x.EquipmentCategoryID == categoryID && x.EquipmentManufacturerID == manufacturerID);
+            var equipmentModels = await _equipmentParameterService.GetEquipmentParameters<EquipmentModel>(x => categoryIds.Contains(x.EquipmentCategoryID) && manufacturerIds.Contains(x.EquipmentManufacturerID));
             if (equipmentModels == null)
             {
                 rtn["MSG"] = "OtherError";
