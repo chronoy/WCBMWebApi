@@ -187,18 +187,18 @@ namespace Services
                 workSheet.Cells[3, 2].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;//水平
 
                 // 日期
-                workSheet.Cells[2, 4].Value = DateTime.Now.ToString("yyyy/MM/dd");
-                workSheet.Cells[2, 4].Style.Font.Color.SetColor(Color.Black);//字体颜色
-                workSheet.Cells[2, 4].Style.Font.Name = "宋体";//字体
-                workSheet.Cells[2, 4].Style.Font.Size = 10;//字体大小
-                workSheet.Cells[2, 4].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;//水平
+                workSheet.Cells[2, 5].Value = DateTime.Now.ToString("yyyy/MM/dd");
+                workSheet.Cells[2, 5].Style.Font.Color.SetColor(Color.Black);//字体颜色
+                workSheet.Cells[2, 5].Style.Font.Name = "宋体";//字体
+                workSheet.Cells[2, 5].Style.Font.Size = 10;//字体大小
+                workSheet.Cells[2, 5].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;//水平
 
                 // 在用支路\比对支路位号
-                workSheet.Cells[3, 4].Value = $"{inUseLoop.Name}\\{contrastLoop.Name}";
-                workSheet.Cells[3, 4].Style.Font.Color.SetColor(Color.Black);//字体颜色
-                workSheet.Cells[3, 4].Style.Font.Name = "宋体";//字体
-                workSheet.Cells[3, 4].Style.Font.Size = 10;//字体大小
-                workSheet.Cells[3, 4].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;//水平
+                workSheet.Cells[3, 5].Value = $"{inUseLoop.Name}\\{contrastLoop.Name}";
+                workSheet.Cells[3, 5].Style.Font.Color.SetColor(Color.Black);//字体颜色
+                workSheet.Cells[3, 5].Style.Font.Name = "宋体";//字体
+                workSheet.Cells[3, 5].Style.Font.Size = 10;//字体大小
+                workSheet.Cells[3, 5].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;//水平
 
                 // 比对支路开始标况
                 workSheet.Cells[7, 2].Value = record.ContrastLoopStartForwordStandardCumulative;
@@ -257,9 +257,9 @@ namespace Services
                 workSheet.Cells[9, 5].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;//水平
 
                 // 比对时长
-                workSheet.Cells[11, 1].Value += record.StartDateTime.ToString("yyyy/MM/dd HH:mm:ss");
-                workSheet.Cells[11, 3].Value += record.EndDateTime.ToString("yyyy/MM/dd HH:mm:ss");
-                workSheet.Cells[11, 5].Value += $"{Math.Abs(record.EndDateTime.Subtract(record.StartDateTime).TotalHours)} 小时";
+                workSheet.Cells[11, 1].Value += $" {record.StartDateTime.ToString("yyyy/MM/dd HH:mm:ss")}";
+                workSheet.Cells[11, 3].Value += $" {record.EndDateTime.ToString("yyyy/MM/dd HH:mm:ss")}";
+                workSheet.Cells[11, 5].Value += $" {Math.Abs(record.EndDateTime.Subtract(record.StartDateTime).TotalHours)} 小时";
 
                 // 比对支路结束标况
                 workSheet.Cells[15, 2].Value = record.ContrastLoopEndForwordStandardCumulative;

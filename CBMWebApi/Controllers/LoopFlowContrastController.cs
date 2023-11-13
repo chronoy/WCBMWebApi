@@ -12,9 +12,11 @@ namespace CBMWebApi.Controllers
     {
 
         private readonly ILoopFlowContrastService _loopFlowContrastService;
-        public LoopFlowContrastController(ILoopFlowContrastService loopFlowContrastService)
+        private readonly IWebHostEnvironment _hostingEnvironment;
+        public LoopFlowContrastController(ILoopFlowContrastService loopFlowContrastService, IWebHostEnvironment hostingEnvironment)
         {
             _loopFlowContrastService = loopFlowContrastService;
+            _hostingEnvironment = hostingEnvironment;
         }
 
         [HttpPost]
@@ -128,6 +130,18 @@ namespace CBMWebApi.Controllers
                 rtn["Code"] = "200";
                 rtn["Data"] = record;
             }
+            return rtn;
+        }
+
+        [HttpPost]
+        public async Task<Dictionary<string, object>> ExportLoopFlowContrastReport([FromForm] int configID)
+        {
+            Dictionary<string, object> rtn = new Dictionary<string, object>();
+
+            string templatePath = Path.Combine(_hostingEnvironment.WebRootPath, @"ExcelTempate\计量支路流量对比报告.xlsx");
+            byte[] filecontent = await _loopFlowContrastService.ExportLoopFlowContrastReport(configID, templatePath);
+            rtn["Data"] = File(filecontent, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "计量支路流量对比报告.xlsx");
+            rtn["Code"] = "200";
             return rtn;
         }
     }
