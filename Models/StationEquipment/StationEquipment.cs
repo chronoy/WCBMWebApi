@@ -18,7 +18,8 @@ namespace Models
         public int CollectDataTypeID { get; set; }
         public int EquipmentCategoryID { get;set; }
         public int StationID { get; set; }
-        public string? Manufacturer { get; set; }
+        public int LineID { get; set; }
+    public string? Manufacturer { get; set; }
         public string? Model { get; set; }
         public int OrderNumber { get; set; }
         [NotMapped]
