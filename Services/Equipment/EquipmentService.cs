@@ -23,6 +23,21 @@ namespace Services
             return Task.Run(() => _equipmentRespository.GetEquipments(company, line, station, category, model, manufacturer));
         }
 
+        public Task<List<string>> GetEquipmentSerialNumbers()
+        {
+            return Task.Run(() => _equipmentRespository.GetEquipmentSerialNumbers());
+        }
+
+        public Task<List<Equipment>> GetEquipmentInfo(List<string> serialNumbers)
+        {
+            return Task.Run(() => _equipmentRespository.GetEquipmentInfo(serialNumbers));
+        }
+
+        public Task<bool> ValidSerialNumber(string serialNumber)
+        {
+            return Task.Run(() => _equipmentRespository.ValidSerialNumber(serialNumber));
+        }
+
         public Task<string> AddEquipment(Equipment entity)
         {
             return Task.Run(() => _equipmentRespository.AddEquipment(entity));

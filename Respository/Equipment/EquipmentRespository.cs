@@ -112,6 +112,27 @@ namespace Respository
             return result.ToList();
         }
 
+        public List<string> GetEquipmentSerialNumbers()
+        {
+            IEnumerable<Equipment> result = from e in _context.Equipments select e;
+
+            return result.GroupBy(g => g.SerialNumber).Select(s => s.Key).ToList();
+        }
+
+        public List<Equipment> GetEquipmentInfo(List<string> serialNumbers)
+        {
+            IEnumerable<Equipment> result = from e in _context.Equipments
+                                            where serialNumbers.Contains(e.SerialNumber)
+                                            select e;
+
+            return result.ToList();
+        }
+
+        public bool ValidSerialNumber(string serialNumber)
+        {
+            return !_context.Equipments.Where(s => s.SerialNumber == serialNumber).Any();
+        }
+
         public string AddEquipment(Equipment entity)
         {
             entity.EnterDate = DateTime.Now;

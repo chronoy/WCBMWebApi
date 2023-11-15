@@ -16,7 +16,7 @@ namespace Models
         public int MeteringCertificateID { get; set; }
         [NotMapped]
         [ExcelColumn("证书编号")]
-        public string CertificateNumber { get; set; }
+        public string? CertificateNumber { get; set; }
         [ExcelColumn("检定/校准数据1")]
         public string? V1 { get; set; }
         [ExcelColumn("检定/校准数据2")]
