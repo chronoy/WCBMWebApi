@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using iText.Kernel.Geom;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting.Internal;
 using Models;
@@ -42,6 +43,67 @@ namespace CBMCenterApi.Controllers
                 rtn["Code"] = "200";
             }
             rtn["Data"] = equipments;
+            return rtn;
+        }
+
+        [HttpPost]
+        public async Task<Dictionary<string, object>> GetEquipmentSerialNumbers()
+        {
+            Dictionary<string, object> rtn = new Dictionary<string, object>();
+
+            var serialNumbers = await _equipmentService.GetEquipmentSerialNumbers();
+            if (serialNumbers == null)
+            {
+                rtn["MSG"] = "OtherError";
+                rtn["Code"] = "400";
+            }
+            else
+            {
+                rtn["MSG"] = "OK";
+                rtn["Code"] = "200";
+            }
+            rtn["Data"] = serialNumbers;
+            return rtn;
+        }
+
+        [HttpPost]
+        public async Task<Dictionary<string, object>> ValidSerialNumber([FromForm] string serialNumber)
+        {
+            Dictionary<string, object> rtn = new Dictionary<string, object>();
+
+            var valid = await _equipmentService.ValidSerialNumber(serialNumber);
+            if (valid == null)
+            {
+                rtn["MSG"] = "OtherError";
+                rtn["Code"] = "400";
+            }
+            else
+            {
+                rtn["MSG"] = "OK";
+                rtn["Code"] = "200";
+            }
+            rtn["Data"] = valid;
+            return rtn;
+        }
+
+        [HttpPost]
+        public async Task<Dictionary<string, object>> GetEquipmentInfo([FromForm] List<string> serialNumbers)
+        {
+            Dictionary<string, object> rtn = new Dictionary<string, object>();
+
+            var equipmentInfo = await _equipmentService.GetEquipmentInfo(serialNumbers);
+            if (equipmentInfo == null)
+            {
+                rtn["MSG"] = "OtherError";
+                rtn["Code"] = "400";
+            }
+            else
+            {
+                rtn["MSG"] = "OK";
+                rtn["Code"] = "200";
+                rtn["Data"] = equipmentInfo.Select(s => new { s.SerialNumber, s.Category, s.Manufacturer, s.EquipmentModel, s.Accuracy });
+            }
+
             return rtn;
         }
 
@@ -115,7 +177,7 @@ namespace CBMCenterApi.Controllers
             Dictionary<string, object> rtn = new Dictionary<string, object>();
 
             var ProductionReportlist = await _equipmentService.GetEquipments(company, line, station, category, model, manufacturer);
-            string templatePath = Path.Combine(_hostingEnvironment.WebRootPath, @"ExcelTempate\计量设备信息表.xlsx");
+            string templatePath = System.IO.Path.Combine(_hostingEnvironment.WebRootPath, @"ExcelTempate\计量设备信息表.xlsx");
             string[] columnNames = _configuration["EquipmentExportColumnNames"].ToString().Split(",");
             byte[] filecontent = await _excelExportHelper.ExportExcel(ProductionReportlist.ToList(), columnNames, templatePath, 3, true);
             rtn["Data"] = File(filecontent, _excelExportHelper.ExcelContentType, "计量设备信息表.xlsx");
@@ -129,7 +191,7 @@ namespace CBMCenterApi.Controllers
             Dictionary<string, object> rtn = new Dictionary<string, object>();
             foreach (var file in files)
             {
-                if (Path.GetExtension(file.FileName).ToLower() == ".xlsx")
+                if (System.IO.Path.GetExtension(file.FileName).ToLower() == ".xlsx")
                 {
                     var equipments = await _excelExportHelper.ImportExcel<Equipment>(file, 2, "2:2");
 
@@ -161,7 +223,7 @@ namespace CBMCenterApi.Controllers
             Dictionary<string, object> rtn = new Dictionary<string, object>();
             foreach (var file in files)
             {
-                if (Path.GetExtension(file.FileName).ToLower() == ".pdf")
+                if (System.IO.Path.GetExtension(file.FileName).ToLower() == ".pdf")
                 {
                     var text = await _excelExportHelper.GetPDFText(file);
                     if (text == null)

@@ -358,8 +358,23 @@ namespace CBMCenterApi.Controllers
             {
                 rtn["MSG"] = "OK";
                 rtn["Code"] = "200";
+                var equipmentCategories = await _equipmentParameterService.GetEquipmentParameters<EquipmentCategory>(x => true);
+                var equipmentManufacturers = await _equipmentParameterService.GetEquipmentParameters<EquipmentManufacturer>(x => true);
+                var result = (from model in equipmentModels
+                              join category in equipmentCategories on model.EquipmentCategoryID equals category.ID
+                              join manufacturer in equipmentManufacturers on model.EquipmentManufacturerID equals manufacturer.ID
+                              select new
+                              {
+                                  model.ID,
+                                  model.Name,
+                                  model.Description,
+                                  model.EquipmentCategoryID,
+                                  EquipmentCategoryName = category.Name,
+                                  model.EquipmentManufacturerID,
+                                  EquipmentManufacturerName = manufacturer.Name
+                              }).ToList();
+                rtn["Data"] = result;
             }
-            rtn["Data"] = equipmentModels;
             return rtn;
         }
 
