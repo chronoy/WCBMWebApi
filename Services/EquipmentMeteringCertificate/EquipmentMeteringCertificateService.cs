@@ -177,7 +177,7 @@ namespace Services
                 certificate.Cells[i + 3, 18].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
 
                 //有效期至                                                                            
-                certificate.Cells[i + 3, 19].Value = equipmentMeteringCertificates[i].ValidityDate.ToString("yyyy/MM/dd") ?? "";
+                certificate.Cells[i + 3, 19].Value = equipmentMeteringCertificates[i].ValidityDate?.ToString("yyyy/MM/dd") ?? "";
                 certificate.Cells[i + 3, 19].Style.Font.Color.SetColor(Color.Black);//字体颜色
                 certificate.Cells[i + 3, 19].Style.Font.Name = "SimSun";//字体
                 certificate.Cells[i + 3, 19].Style.Font.Size = 10;//字体大小
