@@ -68,8 +68,11 @@ namespace Respository
                     if (equipment.VerificationEndDate != null && equipment.VerificationEndDate < entity.VerificationDate)
                     {
                         equipment.VerificationEndDate = entity.VerificationDate;
-                        DateTime time = DateTime.MinValue + (entity.ValidityDate - entity.VerificationDate);
-                        equipment.VerificationPeriod = (time.Year - 1) * 12 + time.Month - 1;
+                        if (entity.ValidityDate != null)
+                        {
+                            DateTime time = DateTime.MinValue + ((DateTime)entity.ValidityDate - entity.VerificationDate);
+                            equipment.VerificationPeriod = (time.Year - 1) * 12 + time.Month - 1;
+                        }
                         equipment.VerificationAgency = entity.Agency;
                         equipment.VerificationCertificateNumber = entity.CertificateNumber;
                         _context.Equipments.Update(equipment);
@@ -121,8 +124,11 @@ namespace Respository
                     if (equipment.VerificationEndDate != null && equipment.VerificationEndDate < entity.VerificationDate)
                     {
                         equipment.VerificationEndDate = entity.VerificationDate;
-                        DateTime time = DateTime.MinValue + (entity.ValidityDate - entity.VerificationDate);
-                        equipment.VerificationPeriod = (time.Year - 1) * 12 + time.Month - 1;
+                        if (entity.ValidityDate != null)
+                        {
+                            DateTime time = DateTime.MinValue + ((DateTime)entity.ValidityDate - entity.VerificationDate);
+                            equipment.VerificationPeriod = (time.Year - 1) * 12 + time.Month - 1;
+                        }
                         equipment.VerificationAgency = entity.Agency;
                         equipment.VerificationCertificateNumber = entity.CertificateNumber;
                         _context.Equipments.Update(equipment);

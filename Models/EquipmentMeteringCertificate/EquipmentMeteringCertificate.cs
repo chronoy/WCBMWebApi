@@ -15,6 +15,7 @@ namespace Models
         public int ID { get; set; }
         [ExcelColumn("机构")]
         public string Agency { get; set; }
+        public int CertificateType { get; set; }
         [ExcelColumn("证书编号")]
         public string CertificateNumber { get; set; }
         [ExcelColumn("客户名称")]
@@ -49,7 +50,7 @@ namespace Models
         [ExcelColumn("检定/校准日期")]
         public DateTime VerificationDate { get; set; }
         [ExcelColumn("有效期至")]
-        public DateTime ValidityDate { get; set; }
+        public DateTime? ValidityDate { get; set; }
         [ExcelColumn("签发/批准日期")]
         public DateTime? AuthorizationDate { get; set; }
         public DateTime? CelibrationDate { get; set; }
