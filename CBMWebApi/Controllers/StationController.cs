@@ -46,7 +46,7 @@ namespace CBMWebApi.Controllers
             Dictionary<string, object> rtn = new();
             Station station = await _stationService.GetStationByID(stationID);
             List<PDBTag> stationTags = await _PDBService.GetLoopTagsByStation(station);
-            List<StationLoop> loops = await _stationLoopService.GetStationLoopsByStation(stationID);            
+            List<StationLoop> loops = await _stationLoopService.GetStationLoopsByStation(stationID);
             List<StationEquipment> equipments = await _stationEquipmentService.GetStationEquipmentsByStation(stationID);
             List<AlarmCount> alarmCounts = await _alarmService.GetAlarmCountByStation(station);
             List<StationLoopDiagnosticData> loopDiagnosticDatas = await _diagnosisService.GetLoopDiagnosticDataByStation(station.ID);
@@ -101,7 +101,7 @@ namespace CBMWebApi.Controllers
                 }
                 else
                 {
-                    Dictionary<string, bool> loopConditon= new Dictionary<string, bool>();
+                    Dictionary<string, bool> loopConditon = new Dictionary<string, bool>();
                     loopConditon["TemperatureConditon"] = false;
                     loopConditon["PressureConditon"] = false;
                     loopConditions.Add(loopConditon);
@@ -117,7 +117,7 @@ namespace CBMWebApi.Controllers
             rtn["Loops"] = loops;
             rtn["Equipments"] = equipments;
             rtn["LoopTags"] = loopTags;
-            rtn["LoopCondition"]= loopConditions;
+            rtn["LoopCondition"] = loopConditions;
             rtn["EquipmentTags"] = EquipmentTags;
             rtn["LoopDiagnostic"] = loopDiagnosticDatas;
             rtn["EquipmentDiagnostic"] = equipmentDiagnosticDatas;
@@ -161,6 +161,25 @@ namespace CBMWebApi.Controllers
                 rtn["Code"] = "200";
             }
             rtn["Data"] = details;
+            return rtn;
+        }
+
+        [HttpPost]
+        public async Task<Dictionary<string, object>> GetStations()
+        {
+            Dictionary<string, object> rtn = new();
+            var stations = await _stationService.GetStations();
+            if (stations == null)
+            {
+                rtn["MSG"] = "OtherError";
+                rtn["Code"] = "400";
+            }
+            else
+            {
+                rtn["MSG"] = "OK";
+                rtn["Code"] = "200";
+                rtn["Data"] = stations.Select(s => new { s.ID, s.Name, s.AbbrName });
+            }
             return rtn;
         }
 
