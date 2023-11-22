@@ -164,25 +164,6 @@ namespace CBMWebApi.Controllers
             return rtn;
         }
 
-        [HttpPost]
-        public async Task<Dictionary<string, object>> GetStations()
-        {
-            Dictionary<string, object> rtn = new();
-            var stations = await _stationService.GetStations();
-            if (stations == null)
-            {
-                rtn["MSG"] = "OtherError";
-                rtn["Code"] = "400";
-            }
-            else
-            {
-                rtn["MSG"] = "OK";
-                rtn["Code"] = "200";
-                rtn["Data"] = stations.Select(s => new { s.ID, s.Name, s.AbbrName });
-            }
-            return rtn;
-        }
-
         [HttpGet]
         public List<PDBTag> PDB()
         {
