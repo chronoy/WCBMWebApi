@@ -12,11 +12,13 @@ namespace CBMCenterApi.Controllers
     {
         private readonly IUserService _userService;
         private readonly IRoleService _roleService;
+        private readonly IStationService _stationService;
 
-        public UserController(IUserService userService, IRoleService roleService)
+        public UserController(IUserService userService, IRoleService roleService, IStationService stationService)
         {
             _userService = userService;
             _roleService = roleService;
+            _stationService = stationService;
         }
 
         [HttpPost]
@@ -254,6 +256,25 @@ namespace CBMCenterApi.Controllers
                 }
             }
 
+            return rtn;
+        }
+
+        [HttpPost]
+        public async Task<Dictionary<string, object>> GetStations()
+        {
+            Dictionary<string, object> rtn = new();
+            var stations = await _stationService.GetStations();
+            if (stations == null)
+            {
+                rtn["MSG"] = "OtherError";
+                rtn["Code"] = "400";
+            }
+            else
+            {
+                rtn["MSG"] = "OK";
+                rtn["Code"] = "200";
+                rtn["Data"] = stations.Select(s => new { s.ID, s.Name, s.AbbrName });
+            }
             return rtn;
         }
     }

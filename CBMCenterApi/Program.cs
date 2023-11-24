@@ -28,6 +28,8 @@ builder.Services.AddScoped<IUserRespository, UserRespository>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IRoleRespository, RoleRespository>();
 builder.Services.AddScoped<IRoleService, RoleService>();
+builder.Services.AddScoped<IStationRespository, StationRespository>();
+builder.Services.AddScoped<IStationService, StationService>();
 builder.Services.AddScoped<IEquipmentRespository, EquipmentRespository>();
 builder.Services.AddScoped<IEquipmentService, EquipmentService>();
 builder.Services.AddScoped<IEquipmentParameterRespository, EquipmentParameterRespository>();
