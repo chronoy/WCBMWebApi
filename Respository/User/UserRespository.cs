@@ -28,22 +28,22 @@ namespace Respository
                 int userID = user.ID;
                 var userStation = _context.UserStations.Where(x => x.UserID == userID).ToList();
                 var stations = (from u in userStation
-                                 join s in _context.Stations on u.StationID equals s.ID
-                                 join a in _context.Areas on s.AreaID equals a.ID into tempa
-                                 from ta in tempa.DefaultIfEmpty()
-                                 join c in _context.Collectors on s.CollectorID equals c.ID into tempc
-                                 from tc in tempc.DefaultIfEmpty()
-                                 select new Station
-                                 {
-                                     ID = s.ID,
-                                     Name = s.Name,
-                                     AbbrName = s.AbbrName,
-                                     CollectorID = s.CollectorID,
-                                     AreaID = s.AreaID,
-                                     CompanyID = ta != null ? ta.CompanyID : 0,
-                                     IPAddress = tc != null ? tc.IPAddress : "",
-                                     IPPort = tc != null ? tc.IPPort : ""
-                                 }).ToList();
+                                join s in _context.Stations on u.StationID equals s.ID
+                                join a in _context.Areas on s.AreaID equals a.ID into tempa
+                                from ta in tempa.DefaultIfEmpty()
+                                join c in _context.Collectors on s.CollectorID equals c.ID into tempc
+                                from tc in tempc.DefaultIfEmpty()
+                                select new Station
+                                {
+                                    ID = s.ID,
+                                    Name = s.Name,
+                                    AbbrName = s.AbbrName,
+                                    CollectorID = s.CollectorID,
+                                    AreaID = s.AreaID,
+                                    CompanyID = ta != null ? ta.CompanyID : 0,
+                                    IPAddress = tc != null ? tc.IPAddress : "",
+                                    IPPort = tc != null ? tc.IPPort : ""
+                                }).ToList();
                 user.Stations = stations;
                 user.Loops = (from u in userStation
                               join l in _context.StationLoops on u.StationID equals l.StationID
@@ -67,9 +67,10 @@ namespace Respository
                 user.Areas = (from a in _context.Areas
                               where stations.Select(s => s.AreaID).Contains(a.ID)
                               select a).ToList();
-                user.Companies = (from c in _context.companies where stations.Select(s=>s.CompanyID).Contains(c.ID)
+                user.Companies = (from c in _context.companies
+                                  where stations.Select(s => s.CompanyID).Contains(c.ID)
                                   select c).ToList();
-                
+
                 return "OK";
             }
             catch (Exception ex)
@@ -162,7 +163,25 @@ namespace Respository
                                        PersonName = u.PersonName,
                                        ContactNumber = u.ContactNumber,
                                        RoleID = u.RoleID,
-                                       RoleName = t != null ? t.Name : ""
+                                       RoleName = t != null ? t.Name : "",
+                                       Stations = (from us in _context.UserStations
+                                                   where us.UserID == u.ID
+                                                   join s in _context.Stations on us.StationID equals s.ID
+                                                   join a in _context.Areas on s.AreaID equals a.ID into tempa
+                                                   from ta in tempa.DefaultIfEmpty()
+                                                   join c in _context.Collectors on s.CollectorID equals c.ID into tempc
+                                                   from tc in tempc.DefaultIfEmpty()
+                                                   select new Station
+                                                   {
+                                                       ID = s.ID,
+                                                       Name = s.Name,
+                                                       AbbrName = s.AbbrName,
+                                                       CollectorID = s.CollectorID,
+                                                       AreaID = s.AreaID,
+                                                       CompanyID = ta != null ? ta.CompanyID : 0,
+                                                       IPAddress = tc != null ? tc.IPAddress : "",
+                                                       IPPort = tc != null ? tc.IPPort : ""
+                                                   }).ToList()
                                    }).ToList();
             return userList;
         }
