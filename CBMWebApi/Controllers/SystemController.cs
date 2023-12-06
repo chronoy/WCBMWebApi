@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Razor.TagHelpers;
 using Models;
 using Services;
 using static System.Collections.Specialized.BitVector32;
@@ -95,8 +96,10 @@ namespace CBMWebApi.Controllers
                     List<string> GCC1TagsNames = station.Equipments.Select(quuipment => station.AbbrName + "_" + quuipment.AbbrName + "_C1").ToList();
                     List<PDBTag> stationTags = await _PDBService.GetLoopTagsByStation(station);
 
-                    var CommunicateBadLoopNumber = stationTags.Where(tag => LoopTemperatureInuseTagsNames.Contains(tag.Name) && tag.Value.Contains("?")).Count();
-                    var CommunicateBadGCNumber = stationTags.Where(tag => GCC1TagsNames.Contains(tag.Name) && tag.Value.Contains("?")).Count();
+                    var CommunicateBadLoop = stationTags.Where(tag => LoopTemperatureInuseTagsNames.Contains(tag.Name) && tag.Value.Contains('?')).ToList();
+                    var CommunicateBadGC = stationTags.Where(tag => GCC1TagsNames.Contains(tag.Name) && tag.Value.Contains('?')).ToList();
+                    var CommunicateBadLoopNumber = CommunicateBadLoop.Count;
+                    var CommunicateBadGCNumber = CommunicateBadGC.Count;
                     station.StationStatistics["CommunicateBadLoopNumber"] = CommunicateBadLoopNumber;
                     station.StationStatistics["CommunicateBadGCNumber"] = CommunicateBadGCNumber;
                     station.StationStatistics["CommunicateGoodLoopNumber"] = station.Loops.Count - CommunicateBadLoopNumber;
@@ -106,7 +109,7 @@ namespace CBMWebApi.Controllers
                     else
                     {
                         station.StationStatistics["CommunicationGoodRate"] = 0;
-                    }    
+                    }
                     station.StationStatistics["InUseLoopNumber"] = loopDiagnosticDatas.Where(data => loopIDs.Contains(data.ID) && data.LoopStatus.Contains("在用")).Count();
                     List<string> LoopGrossFlowrateTagsNames = station.Loops.Select(loop => station.AbbrName + "_" + loop.AbbrName + "_GrossFlowrate").ToList();
                     List<string> LoopForwordPreDayGrossCumulativeTagsNames = station.Loops.Select(loop => station.AbbrName + "_" + loop.AbbrName + "_ForwordPreDayGrossCumulative").ToList();
@@ -125,6 +128,28 @@ namespace CBMWebApi.Controllers
                     station.StationStatistics["LOWRealtimeAlarm"] = (await _alarmService.GetRealtimeAlarm(alarmAreas, new List<string>() { "LOW" })).Count();
                     station.StationStatistics["CRITICALRealtimeAlarm"] = (await _alarmService.GetRealtimeAlarm(alarmAreas, new List<string>() { "CRITICAL" })).Count();
 
+                    foreach (var loop in station.Loops)
+                    {
+                        string tagHeader = $"{station.AbbrName}_{loop.AbbrName}";
+                        loop.LoopStatistics["CommunicateStatus"] = Convert.ToInt32(!CommunicateBadLoop.Where(x => x.Name == $"{tagHeader}_TemperatureInuse").Any());
+                        loop.LoopStatistics["GrossFlowrate"] = stationTags.Where(tag => tag.Name == $"{tagHeader}_GrossFlowrate" && !tag.Value.Contains('?')).ToList().Select(data => Convert.ToDouble(data.Value)).Sum();
+                        loop.LoopStatistics["ForwordPreDayGrossCumulative"] = stationTags.Where(tag => tag.Name == $"{tagHeader}_ForwordPreDayGrossCumulative" && !tag.Value.Contains('?')).ToList().Select(data => Convert.ToDouble(data.Value)).Sum();
+
+                        tagHeader = $"{station.AbbrName}Station_{loop.AbbrName}";
+                        List<string> loopAlarmAreas = alarmAreas.Where(x => x.Contains(tagHeader)).ToList();
+                        loop.LoopStatistics["HIGHRealtimeAlarm"] = (await _alarmService.GetRealtimeAlarm(loopAlarmAreas, new List<string>() { "HIGH" })).Count;
+                        loop.LoopStatistics["LOWRealtimeAlarm"] = (await _alarmService.GetRealtimeAlarm(loopAlarmAreas, new List<string>() { "LOW" })).Count;
+                        loop.LoopStatistics["CRITICALRealtimeAlarm"] = (await _alarmService.GetRealtimeAlarm(loopAlarmAreas, new List<string>() { "CRITICAL" })).Count;
+                    }
+                    foreach (var equipment in station.Equipments)
+                    {
+                        equipment.EquipmentStatistics["CommunicateStatus"] = Convert.ToInt32(!CommunicateBadGC.Where(x => x.Name == $"{station.AbbrName}_{equipment.AbbrName}_C1").Any());
+                        
+                        List<string> equipmentAlarmAreas = new() { $"{station.AbbrName}Station_{equipment.AbbrName}_GC" };
+                        equipment.EquipmentStatistics["HIGHRealtimeAlarm"] = (await _alarmService.GetRealtimeAlarm(equipmentAlarmAreas, new List<string>() { "HIGH" })).Count;
+                        equipment.EquipmentStatistics["LOWRealtimeAlarm"] = (await _alarmService.GetRealtimeAlarm(equipmentAlarmAreas, new List<string>() { "LOW" })).Count;
+                        equipment.EquipmentStatistics["CRITICALRealtimeAlarm"] = (await _alarmService.GetRealtimeAlarm(equipmentAlarmAreas, new List<string>() { "CRITICAL" })).Count;
+                    }
                 }
                 rtn["Data"] = stations;
                 rtn["MSG"] = "OK";

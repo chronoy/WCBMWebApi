@@ -41,5 +41,7 @@ namespace Models
 
         [NotMapped]
         public string EquipmentStatus { get; set; }
+        [NotMapped]
+        public Dictionary<string, object> EquipmentStatistics { get; set; } = new Dictionary<string, object>();
     }
 }
