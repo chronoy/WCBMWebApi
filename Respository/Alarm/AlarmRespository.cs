@@ -50,7 +50,7 @@ namespace Respository
 
 
             return (from real in alarms
-                    where alarmAreas.Contains(real.Area) && prioritys.Contains(real.Priority)
+                    where alarmAreas.Contains(real.DeviceArea) && prioritys.Contains(real.Priority)
                     select real).OrderByDescending(o => o.StartTime).ToList();
         }
 

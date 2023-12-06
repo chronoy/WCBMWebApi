@@ -41,5 +41,7 @@ namespace Models
 
         [NotMapped]
         public List<PDBTag> LoopTags { get; set; }=new List<PDBTag>();
+        [NotMapped]
+        public Dictionary<string, object> LoopStatistics { get; set; } = new Dictionary<string, object>();
     }
 }
