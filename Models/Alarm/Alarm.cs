@@ -48,27 +48,27 @@ namespace Models
         [Column("ALM_NATIVETIMELAST")]
         public DateTime EndTime { get; set; }
         [Column("ALM_PHYSLNODE")]
-        public string NodeName { get; set; }
+        public string? NodeName { get; set; }
         [Column("ALM_TAGNAME")]
-        public string TagName { get; set; }
+        public string? TagName { get; set; }
         [Column("ALM_VALUE")]
-        public string Value { get; set; }
+        public string? Value { get; set; }
         [Column("ALM_MSGTYPE")]
-        public string MessageType { get; set; }
+        public string? MessageType { get; set; }
         [Column("ALM_DESCR")]
-        public string Description { get; set; }
+        public string? Description { get; set; }
         [Column("ALM_ALMPRIORITY")]
-        public string Priority { get; set; }
+        public string? Priority { get; set; }
         [Column("ALM_ALMSTATUS")]
-        public string Status { get; set; }
+        public string? Status { get; set; }
         [Column("ALM_ALMAREA")]
-        public string Area { get; set; }
+        public string? Area { get; set; }
         [Column("ALM_OPNAME")]
-        public string OperatorName { get; set; }
+        public string? OperatorName { get; set; }
         [Column("ALM_OPFULLNAME")]
-        public string FullOperatorName { get; set; }
+        public string? FullOperatorName { get; set; }
         [Column("ALM_ACKED")]
-        public string ACKED { get; set; }
+        public string? ACKED { get; set; }
         [NotMapped]
         public string DeviceArea { get; set; }
         [NotMapped]
@@ -88,25 +88,25 @@ namespace Models
         [Column("ALM_NATIVETIMELAST")]
         public DateTime EndTime { get; set; }
         [Column("ALM_PHYSLNODE")]
-        public string NodeName { get; set; }
+        public string? NodeName { get; set; }
         [Column("ALM_TAGNAME")]
-        public string TagName { get; set; }
+        public string? TagName { get; set; }
         [Column("ALM_VALUE")]
-        public string Value { get; set; }
+        public string? Value { get; set; }
         [Column("ALM_MSGTYPE")]
-        public string MessageType { get; set; }
+        public string? MessageType { get; set; }
         [Column("ALM_DESCR")]
-        public string Description { get; set; }
+        public string? Description { get; set; }
         [Column("ALM_ALMPRIORITY")]
-        public string Priority { get; set; }
+        public string? Priority { get; set; }
         [Column("ALM_ALMSTATUS")]
-        public string Status { get; set; }
+        public string? Status { get; set; }
         [Column("ALM_ALMAREA")]
-        public string Area { get; set; }
+        public string? Area { get; set; }
         [Column("ALM_OPNAME")]
-        public string OperatorName { get; set; }
+        public string? OperatorName { get; set; }
         [Column("ALM_OPFULLNAME")]
-        public string FullOperatorName { get; set; }
+        public string? FullOperatorName { get; set; }
         [NotMapped]
         public string Grade { get; set; }
     }
