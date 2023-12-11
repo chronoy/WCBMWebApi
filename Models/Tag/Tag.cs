@@ -15,6 +15,11 @@ namespace Models
         public string Name { get; set; }
         public string Address { get; set; }
         public int StationDeviceCollectID { get; set; }
+        public bool Enable { get; set; }
+        public float HiHiLimit { get; set; }
+        public float HiLimit { get; set; }
+        public float LoLimit { get; set; }
+        public float LoLoLimit { get; set; }
     }
     public class PDBTag
     {
@@ -23,5 +28,12 @@ namespace Models
         public string Address { get; set; }
         public string Value { get; set; } = "????";
         public string Quality { get; set; } = "Uncertain";
+        public bool Enable { get;set; }
+        public float HiHiLimit { get; set; }
+        public float HiLimit { get; set; }
+        public float LoLimit { get; set; }
+        public float LoLoLimit { get; set; }
+        public string Status { get; set; } = "OK";
+        
     }
 }

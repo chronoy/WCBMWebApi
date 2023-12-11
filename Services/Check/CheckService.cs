@@ -15,10 +15,12 @@ namespace Services
     public class CheckService : ICheckService
     {
         private readonly ICheckRespository _respository;
+        private readonly IHistoricalTrendRespository _historicalTrendRespository;
         private readonly IHistoricalTrendService _historicalTrendService;
-        public CheckService(IConfiguration configuration, ICheckRespository checkRespository, IHistoricalTrendService historicalTrendService)
+        public CheckService(IConfiguration configuration, ICheckRespository checkRespository,IHistoricalTrendRespository historicalTrendRespository, IHistoricalTrendService historicalTrendService)
         {
             _respository = checkRespository;
+            _historicalTrendRespository = historicalTrendRespository;
             _historicalTrendService = historicalTrendService;
         }
 
@@ -370,12 +372,13 @@ namespace Services
             });
         }
 
-        public Task<List<UnnormalizedComponentsCheckData>> GetGCUnnormalizedComponentsCheck(string tagName, DateTime startDateTime, string interval, string duration)
+        public Task<List<UnnormalizedComponentsCheckData>> GetGCUnnormalizedComponentsCheck(int equipmentID, DateTime startDateTime, string interval, string duration)
         {
             return Task.Run(async () =>
             {
+                TrendTag tag = _historicalTrendRespository.GetTrendTag(equipmentID, "Equipment", "UNNORAMLIZED");
                 List<string> tags =new List<string>();
-                tags.Add(tagName);
+                tags.Add(tag.Address);
                 Dictionary<string, object> dic = await _historicalTrendService.GetHistoricalTrendsData(tags, startDateTime, interval, duration);
                 List<string> times = dic["Times"] as List<string>;
                 List<Dictionary<string, object>> trends = dic["Trends"] as List<Dictionary<string, object>>;

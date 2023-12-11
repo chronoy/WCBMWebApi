@@ -2,6 +2,7 @@
 using Models;
 using Newtonsoft.Json;
 using Services;
+using static iText.StyledXmlParser.Jsoup.Select.Evaluator;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -97,6 +98,26 @@ namespace CBMWebApi.Controllers
         {
             Dictionary<string, object> rtn = new Dictionary<string, object>();
             var data = await _service.GetOnlineGCRepeatabilityCheck(ID, firstDatas, secondDatas);
+            if (data == null)
+            {
+                rtn["MSG"] = "OtherError";
+                rtn["Code"] = "400";
+            }
+            else
+            {
+                rtn["MSG"] = "OK";
+                rtn["Code"] = "200";
+            }
+            rtn["Data"] = data;
+            return rtn;
+        }
+
+        [HttpPost]
+        public async Task<Dictionary<string, object>> GetGCUnnormalizedComponentsCheck([FromForm] int ID, [FromForm] DateTime startDateTime, [FromForm] DateTime endDateTime, [FromForm] string interval)
+        {
+            Dictionary<string, object> rtn = new Dictionary<string, object>();
+            string duration = endDateTime.Subtract(startDateTime).ToString(@"dd\:hh\:mm\:ss");
+            var data = await _service.GetGCUnnormalizedComponentsCheck(ID,startDateTime,interval,duration);
             if (data == null)
             {
                 rtn["MSG"] = "OtherError";

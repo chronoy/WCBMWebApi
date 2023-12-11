@@ -46,5 +46,12 @@ namespace Respository
             }
             return result.OrderBy(o => Array.IndexOf(new[] { "Loop", "Equipment" }, o.DeviceType)).ThenBy(t => t.DeviceID).ToList();
         }
+
+        public TrendTag GetTrendTag(int deviceId, string deviceType,string name)
+        {
+            return _context.TrendTags.Single(obj => obj.DeviceID == deviceId && obj.DeviceType == deviceType && obj.Name==name);
+
+        }
+
     }
 }
