@@ -12,5 +12,6 @@ namespace Respository
         public List<Trend> GetHistoricalTrend(string IFIXNodeName, List<string> trendTags);
 
         public List<TrendTag> GetTrendTags(List<int> deviceIds, List<string> deviceTypes);
+        public TrendTag GetTrendTag(int deviceId, string deviceType, string name);
     }
 }
