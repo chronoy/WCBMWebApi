@@ -51,7 +51,12 @@ namespace Respository
                                      Name = station.AbbrName + '_' + loop.AbbrName + '_' + tag.Name,
                                      Address = collector.IFixNodeName + '.' + station.AbbrName + '_' + loop.AbbrName + '_' + tag.Address,
                                      Value = "????",
-                                     Quality = "Uncertain"
+                                     Quality = "Uncertain",
+                                     Enable = tag.Enable,
+                                     HiHiLimit = tag.HiHiLimit,
+                                     HiLimit = tag.HiLimit,
+                                     LoLimit = tag.LoLimit,
+                                     LoLoLimit = tag.LoLoLimit
                                  }).Union(
                                     from tag in _context.Tags
                                     join
@@ -70,7 +75,12 @@ namespace Respository
                                         Name = station.AbbrName + '_' + equipment.AbbrName + '_' + tag.Name,
                                         Address = collector.IFixNodeName + '.' + station.AbbrName + '_' + equipment.AbbrName + '_' + tag.Address,
                                         Value = "????",
-                                        Quality = "Uncertain"
+                                        Quality = "Uncertain",
+                                        Enable = tag.Enable,
+                                        HiHiLimit = tag.HiHiLimit,
+                                        HiLimit = tag.HiLimit,
+                                        LoLimit = tag.LoLimit,
+                                        LoLoLimit = tag.LoLoLimit
                                     }
                                 ).ToList();
 

@@ -64,6 +64,7 @@ namespace Services
             return Task.Run(() =>
             {
                 List<PDBTag> stationTags = _tags.FindAll(tag => tag.Name.Split('_')[0] == station.AbbrName);
+                stationTags.ForEach(x => x.GetStatus());
                 return stationTags;
             });
         }
