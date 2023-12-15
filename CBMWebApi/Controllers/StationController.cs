@@ -56,57 +56,57 @@ namespace CBMWebApi.Controllers
             List<List<PDBTag>> EquipmentTags = new List<List<PDBTag>>();
             List<List<AlarmCount>> loopAlarmCount = new List<List<AlarmCount>>();
             List<List<AlarmCount>> equipmentAlarmCount = new List<List<AlarmCount>>();
-            foreach (StationLoop loop in loops)
-            {
-                loopTags.Add(stationTags.Where(tag => tag.Name.Split('_')[1] == loop.AbbrName).ToList());
-                loopAlarmCount.Add(alarmCounts.Where(x => x.Name == loop.AbbrName).ToList());
-                if (loop.EquipmentCategoryName == "超声流量计")
-                {
-                    Dictionary<string, bool> loopConditon = new Dictionary<string, bool>();
-                    string temp = loopTags[loopTags.Count - 1].Single(tag => tag.Name.Contains("TemperatureCondition")).Value;
-                    float temperrature = 0;
-                    if (float.TryParse(temp, out temperrature))
-                    {
-                        if (temperrature == 20f)
-                        {
-                            loopConditon["TemperatureConditon"] = false;
-                        }
-                        else
-                        {
-                            loopConditon["TemperatureConditon"] = true;
-                        }
-                    }
-                    else
-                    {
-                        loopConditon["TemperatureConditon"] = false;
-                    }
-                    string pres = loopTags[loopTags.Count - 1].Single(tag => tag.Name.Contains("PressureCondition")).Value;
-                    float pressure = 0;
-                    if (float.TryParse(pres, out pressure))
-                    {
-                        if (pressure == 101.325f)
-                        {
-                            loopConditon["PressureConditon"] = false;
-                        }
-                        else
-                        {
-                            loopConditon["PressureConditon"] = true;
-                        }
-                    }
-                    else
-                    {
-                        loopConditon["PressureConditon"] = false;
-                    }
-                    loopConditions.Add(loopConditon);
-                }
-                else
-                {
-                    Dictionary<string, bool> loopConditon = new Dictionary<string, bool>();
-                    loopConditon["TemperatureConditon"] = false;
-                    loopConditon["PressureConditon"] = false;
-                    loopConditions.Add(loopConditon);
-                }
-            }
+            //foreach (StationLoop loop in loops)
+            //{
+            //    loopTags.Add(stationTags.Where(tag => tag.Name.Split('_')[1] == loop.AbbrName).ToList());
+            //    loopAlarmCount.Add(alarmCounts.Where(x => x.Name == loop.AbbrName).ToList());
+            //    if (loop.EquipmentCategoryName == "超声流量计")
+            //    {
+            //        Dictionary<string, bool> loopConditon = new Dictionary<string, bool>();
+            //        string temp = loopTags[loopTags.Count - 1].Single(tag => tag.Name.Contains("TemperatureCondition")).Value;
+            //        float temperrature = 0;
+            //        if (float.TryParse(temp, out temperrature))
+            //        {
+            //            if (temperrature == 20f)
+            //            {
+            //                loopConditon["TemperatureConditon"] = false;
+            //            }
+            //            else
+            //            {
+            //                loopConditon["TemperatureConditon"] = true;
+            //            }
+            //        }
+            //        else
+            //        {
+            //            loopConditon["TemperatureConditon"] = false;
+            //        }
+            //        string pres = loopTags[loopTags.Count - 1].Single(tag => tag.Name.Contains("PressureCondition")).Value;
+            //        float pressure = 0;
+            //        if (float.TryParse(pres, out pressure))
+            //        {
+            //            if (pressure == 101.325f)
+            //            {
+            //                loopConditon["PressureConditon"] = false;
+            //            }
+            //            else
+            //            {
+            //                loopConditon["PressureConditon"] = true;
+            //            }
+            //        }
+            //        else
+            //        {
+            //            loopConditon["PressureConditon"] = false;
+            //        }
+            //        loopConditions.Add(loopConditon);
+            //    }
+            //    else
+            //    {
+            //        Dictionary<string, bool> loopConditon = new Dictionary<string, bool>();
+            //        loopConditon["TemperatureConditon"] = false;
+            //        loopConditon["PressureConditon"] = false;
+            //        loopConditions.Add(loopConditon);
+            //    }
+            //}
             foreach (StationEquipment equipment in equipments)
             {
                 EquipmentTags.Add(stationTags.Where(tag => tag.Name.Split('_')[1] == equipment.AbbrName).ToList());
@@ -117,7 +117,7 @@ namespace CBMWebApi.Controllers
             rtn["Loops"] = loops;
             rtn["Equipments"] = equipments;
             rtn["LoopTags"] = loopTags;
-            rtn["LoopCondition"] = loopConditions;
+            //rtn["LoopCondition"] = loopConditions;
             rtn["EquipmentTags"] = EquipmentTags;
             rtn["LoopDiagnostic"] = loopDiagnosticDatas;
             rtn["EquipmentDiagnostic"] = equipmentDiagnosticDatas;
