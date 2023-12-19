@@ -12,14 +12,15 @@ namespace Models
     {
         [Key]
         public int ID { get; set; }
-        public string Name { get; set; }
-        public string Address { get; set; }
+        public string Name { get; set; } = null!;
+        public string Address { get; set; } = null!;
         public int StationDeviceCollectID { get; set; }
         public bool Enable { get; set; }
         public double? HiHiLimit { get; set; }
         public double? HiLimit { get; set; }
         public double? LoLimit { get; set; }
         public double? LoLoLimit { get; set; }
+        public bool IsTrend {  get; set; }
     }
     public class PDBTag
     {
@@ -34,6 +35,7 @@ namespace Models
         public double? LoLimit { get; set; }
         public double? LoLoLimit { get; set; }
         public string Status { get; set; } = "OK";
+        public bool IsTrend { get; set; }
 
         public void GetStatus()
         {

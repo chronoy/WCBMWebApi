@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Respository
 {
-    public class PDBRespository:IPDBRespository
+    public class PDBRespository : IPDBRespository
     {
         private readonly SQLServerDBContext _context;
         public PDBRespository()
@@ -56,7 +56,8 @@ namespace Respository
                                      HiHiLimit = tag.HiHiLimit,
                                      HiLimit = tag.HiLimit,
                                      LoLimit = tag.LoLimit,
-                                     LoLoLimit = tag.LoLoLimit
+                                     LoLoLimit = tag.LoLoLimit,
+                                     IsTrend = tag.IsTrend
                                  }).Union(
                                     from tag in _context.Tags
                                     join
@@ -80,13 +81,14 @@ namespace Respository
                                         HiHiLimit = tag.HiHiLimit,
                                         HiLimit = tag.HiLimit,
                                         LoLimit = tag.LoLimit,
-                                        LoLoLimit = tag.LoLoLimit
+                                        LoLoLimit = tag.LoLoLimit,
+                                        IsTrend = tag.IsTrend
                                     }
                                 ).ToList();
 
 
 
-            return tags;                           
+            return tags;
         }
     }
 }
