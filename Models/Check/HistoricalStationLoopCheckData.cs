@@ -45,7 +45,7 @@ namespace Models
     public class HistoricalDanielVOSCheckData : HistoricalStationLoopCheckData
     {
         public string CompanyName { get; set; }
-        public int? CollectTimes { get; set; }
+        public double? CollectTimes { get; set; }
         public string FlowmeterProcessLocation { get; set; }
         public double? InsideDiameter { get; set; }
         public double? Pulse1FullFlowrate { get; set; }
@@ -104,7 +104,7 @@ namespace Models
         public double? PerformanceUpAverageAvg { get; set; }
         public double? PerformanceDownAverageAvg { get; set; }
         public double? PerformanceAverageAvg { get; set; }
-        public int? PerformanceAverageAvgCheckResult { get; set; }
+        public double? PerformanceAverageAvgCheckResult { get; set; }
         public double? Path1AGainAvg { get; set; }
         public int? Path1AGainAvgCheckResult { get; set; }
         public double? Path1BGainAvg { get; set; }
@@ -138,7 +138,7 @@ namespace Models
         public double? Path3BSNRAvg { get; set; }
         public int? Path3BSNRAvgCheckResult { get; set; }
         public double? Path4ASNRAvg { get; set; }
-        public int? Path4ASNRAvgCheckResult { get; set; }
+        public double? Path4ASNRAvgCheckResult { get; set; }
         public double? Path4BSNRAvg { get; set; }
         public int? Path4BSNRAvgCheckResult { get; set; }
         public double? SNRUpAverageAvg { get; set; }
@@ -212,7 +212,7 @@ namespace Models
         public double? VOSAvgMaxDeviation { get; set; }
         public double? VOSMaxDeviation { get; set; }
         public double? DensityAvg { get; set; }
-        public int? LoopStatus { get; set; }
+        public double? LoopStatus { get; set; }
         public int? CheckResult { get; set; }
         public string Remark1 { get; set; }
     }
@@ -1138,7 +1138,7 @@ namespace Models
         public double? PerformanceAverageMax { get; set; }
         public double? PerformanceAverageMin { get; set; }
         public double? PerformanceAverageAvg { get; set; }
-        public int? PerformanceAverageAvgCheckResult { get; set; }
+        public double? PerformanceAverageAvgCheckResult { get; set; }
         public double? Path1AGainMax { get; set; }
         public double? Path1AGainMin { get; set; }
         public double? Path1AGainAvg { get; set; }
