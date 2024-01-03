@@ -15,7 +15,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContextPool<SQLServerDBContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("SQLConnection")));
 builder.Services.AddScoped<ICheckRespository, CheckRespository>();
 builder.Services.AddScoped<ICheckService, CheckService>();
-//builder.Services.AddSingleton<IPDBRespository, PDBRespository>();
+builder.Services.AddSingleton<IPDBRespository, PDBRespository>();
 
 // Cors¿çÓòÅäÖÃ
 builder.Services.AddCors(options =>
