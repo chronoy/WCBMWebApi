@@ -45,5 +45,11 @@ namespace Models
         [NotMapped]
         public string? ContrastState { get; set; }
 
+        [NotMapped]
+        public string? FlowmeterModel { get; set; }
+
+        [NotMapped]
+        public string? FlowmeterManufacturer { get; set; }
+
     }
 }

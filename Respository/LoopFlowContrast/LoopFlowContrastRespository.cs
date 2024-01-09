@@ -43,7 +43,9 @@ namespace Respository
                                StationName = station.Name,
                                InUseLoopName = inUseLoop.AbbrName,
                                ContrastLoopName = contrastLoop.AbbrName,
-                               ContrastState = config.ContrastStateID == 1 ? "完成对比" : "对比中"
+                               ContrastState = config.ContrastStateID == 1 ? "完成对比" : "对比中",
+                               FlowmeterModel= inUseLoop.FlowmeterModel,
+                               FlowmeterManufacturer= inUseLoop.FlowmeterManufacturer
                            }).ToList();
             return configs;
         }
